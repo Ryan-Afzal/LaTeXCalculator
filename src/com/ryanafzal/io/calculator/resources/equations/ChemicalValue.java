@@ -1,21 +1,28 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
+import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
+
+/**
+ * Represents a chemical value, for use in an equation.
+ * @author s-afzalr
+ *
+ */
 public class ChemicalValue extends UnitValue {
 
-	private String chemical;
+	private Chemical chemical;
 	
-	public ChemicalValue(double value, String units, String chemical) {
+	public ChemicalValue(double value, String units, Chemical chemical) {
 		super(value, units);
 		this.chemical = chemical;
 	}
 	
-	public String getChemical() {
+	public Chemical getChemical() {
 		return this.chemical;
 	}
 	
 	@Override
 	public String getLaTeXString() {
-		return super.getLaTeXString() + "\\, " + this.getChemical();
+		return super.getLaTeXString() + "\\, " + this.getChemical().getLaTeXString();
 	}
 
 }
