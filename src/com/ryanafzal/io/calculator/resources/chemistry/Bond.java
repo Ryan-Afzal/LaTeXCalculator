@@ -2,19 +2,19 @@ package com.ryanafzal.io.calculator.resources.chemistry;
 
 public class Bond {
 	
-	private int atom1;
+	private Atom atom1;
 	private BondType bond;
-	private int atom2;
+	private Atom atom2;
 	
-	public Bond(int atom1, BondType bond, int atom2) {
+	public Bond(Atom atom1, BondType bond, Atom atom2) {
 		
 	}
 	
-	public int getAtom1() {
+	public Atom getAtom1() {
 		return this.atom1;
 	}
 	
-	public int getAtom2() {
+	public Atom getAtom2() {
 		return this.atom2;
 	}
 	
