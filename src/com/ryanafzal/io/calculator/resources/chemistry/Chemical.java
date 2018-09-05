@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
+import java.util.Arrays;
+
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 
 /**
@@ -18,7 +20,7 @@ public class Chemical implements ILaTeXValue {
 	}
 	
 	public double getMolarMass() {
-		return 0.0;
+		return Arrays.stream(this.atoms).map(Atom::getAtomicMass).mapToDouble(Double::doubleValue).sum();
 	}
 	
 	@Override
@@ -31,8 +33,6 @@ public class Chemical implements ILaTeXValue {
 	}
 	
 	public static void main(String[] args) {
-		/* How will the atoms be stored? Objects/Strings/Integers? */
-		
 		Atom[] atoms = {
 				Atom.HYDROGEN,
 				Atom.HYDROGEN,
@@ -60,7 +60,7 @@ public class Chemical implements ILaTeXValue {
 		};
 		
 		Chemical propane = new Chemical(atoms, bonds);
-		System.out.println(propane.getLaTeXString());
+		System.out.println(propane.getMolarMass());
 	}
 
 }
