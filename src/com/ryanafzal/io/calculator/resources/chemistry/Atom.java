@@ -11,7 +11,16 @@ public enum Atom {
 	NITROGEN("Nitrogen", "N", 7, 14.0067),
 	OXYGEN("Oxygen", "O", 8, 15.9994),
 	FLUORINE("Fluorine", "F", 9, 18.9984),
-	NEON("Neon", "Ne", 10, 20.1797);
+	NEON("Neon", "Ne", 10, 20.1797),
+	SODIUM("Sodium", "Na", 11, 22.9897),
+	MAGNESIUM("Magnesium", "Mg", 12, 24.305),
+	ALUMINUM("Aluminum", "Al", 13, 26.9815),
+	SILICON("Silicon", "Si", 14, 28.0855),
+	PHOSPHORUS("Phosphorus", "P", 15, 30.9738),
+	SULFUR("Sulfur", "S", 16, 32.065),
+	CHLORINE("Chlorine", "Cl", 17, 35.453),
+	ARGON("Argon", "Ar", 18, 39.0983);
+	
 	
 	
 	private String name;

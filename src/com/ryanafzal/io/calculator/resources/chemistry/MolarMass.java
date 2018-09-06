@@ -7,6 +7,7 @@ public class MolarMass {
 	private static HashMap<String, Double> masses = new HashMap<String, Double>();
 	
 	static {
+		/*
 		masses.put("H", 1.0079);
 		masses.put("He", 4.0026);
 		masses.put("Li", 6.941);
@@ -24,8 +25,8 @@ public class MolarMass {
 		masses.put("P", 30.9738);
 		masses.put("S", 32.065);
 		masses.put("Cl", 35.453);
-		masses.put("K", 39.0983);
-		masses.put("Ar", 39.948);
+		masses.put("Ar", 39.0983);*/
+		masses.put("K", 39.948);
 		masses.put("Ca", 40.078);
 		masses.put("Sc", 44.9559);
 		masses.put("Ti", 47.867);

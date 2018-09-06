@@ -1,5 +1,6 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
+import com.ryanafzal.io.calculator.resources.Units;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 
 /**
@@ -11,7 +12,7 @@ public class ChemicalValue extends UnitValue {
 
 	private Chemical chemical;
 	
-	public ChemicalValue(double value, String units, Chemical chemical) {
+	public ChemicalValue(double value, Units units, Chemical chemical) {
 		super(value, units);
 		this.chemical = chemical;
 	}
