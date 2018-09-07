@@ -34,9 +34,9 @@ public class Chemical implements ILaTeXValue {
 		HashMap<String, Integer> otheratoms = new HashMap<String, Integer>();
 		
 		for (Atom atom : this.atoms) {
-			if (atom.equals(Atom.CARBON)) {
+			if (atom.equals(AtomType.CARBON)) {
 				carbon++;
-			} else if (atom.equals(Atom.HYDROGEN)) {
+			} else if (atom.equals(AtomType.HYDROGEN)) {
 				hydrogen++;
 			} else {
 				String symbol = atom.getSymbol();
@@ -89,6 +89,14 @@ public class Chemical implements ILaTeXValue {
 	
 	public static Chemical makeChemicalFromFormula(String formula) {
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		Atom atom1 = new Atom(AtomType.HYDROGEN);
+		Atom atom2 = new Atom(AtomType.HYDROGEN);
+		
+		System.out.println(atom1);
+		System.out.println(atom2);
 	}
 
 }

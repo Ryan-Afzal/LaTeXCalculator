@@ -4,8 +4,8 @@ import javax.swing.*;
 
 import com.ryanafzal.io.calculator.render.Render;
 import com.ryanafzal.io.calculator.render.RenderException;
-import com.ryanafzal.io.calculator.resources.Units;
 import com.ryanafzal.io.calculator.resources.chemistry.Atom;
+import com.ryanafzal.io.calculator.resources.chemistry.AtomType;
 import com.ryanafzal.io.calculator.resources.chemistry.Bond;
 import com.ryanafzal.io.calculator.resources.chemistry.BondType;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
@@ -13,6 +13,8 @@ import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
+import com.ryanafzal.io.calculator.resources.units.MoleUnit;
+import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Main {
 	
@@ -22,14 +24,14 @@ public class Main {
 		/*
 		 * Declaring Oxygen
 		 */
-		Atom[] oxygen_atoms = new Atom[] {Atom.OXYGEN, Atom.OXYGEN};
+		Atom[] oxygen_atoms = new Atom[] {new Atom(AtomType.OXYGEN), new Atom(AtomType.OXYGEN)};
 		Chemical oxygen = new Chemical(oxygen_atoms, new Bond[]{
 				new Bond(oxygen_atoms[0], BondType.DOUBLE, oxygen_atoms[1])});
 		
 		/*
 		 * Declaring Carbon Dioxide
 		 */
-		Atom[] co2_atoms = new Atom[] {Atom.OXYGEN, Atom.CARBON, Atom.OXYGEN};
+		Atom[] co2_atoms = new Atom[] {new Atom(AtomType.OXYGEN), new Atom(AtomType.CARBON), new Atom(AtomType.OXYGEN)};
 		Chemical co2 = new Chemical(co2_atoms, new Bond[] {
 				new Bond(co2_atoms[0], BondType.DOUBLE, co2_atoms[1]), 
 				new Bond(co2_atoms[1], BondType.DOUBLE, co2_atoms[2])});
@@ -37,7 +39,7 @@ public class Main {
 		/*
 		 * Declaring Water
 		 */
-		Atom[] water_atoms = new Atom[] {Atom.HYDROGEN, Atom.OXYGEN, Atom.HYDROGEN};
+		Atom[] water_atoms = new Atom[] {new Atom(AtomType.HYDROGEN), new Atom(AtomType.OXYGEN), new Atom(AtomType.HYDROGEN)};
 		Chemical water = new Chemical(water_atoms, new Bond[] {
 				new Bond(water_atoms[0], BondType.SINGLE, water_atoms[1]), 
 				new Bond(water_atoms[1], BondType.SINGLE, water_atoms[2])});
@@ -46,17 +48,17 @@ public class Main {
 		 * Declaring Atoms in Propane
 		 */
 		Atom[] atoms = {
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.HYDROGEN,
-				Atom.CARBON,
-				Atom.CARBON,
-				Atom.CARBON
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.HYDROGEN),
+				new Atom(AtomType.CARBON),
+				new Atom(AtomType.CARBON),
+				new Atom(AtomType.CARBON)
 		};
 		
 		/*
@@ -83,18 +85,18 @@ public class Main {
 		/*
 		 * Creating starting value, 1 mol C3H8
 		 */
-		ChemicalValue start = new ChemicalValue(1, Units.MOLES, propane);
+		ChemicalValue start = new ChemicalValue(1, new MoleUnit(), propane);
 		
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O
 		 */
 		ChemicalEquation equation = new ChemicalEquation(
 				new ChemicalValue[] {
-						new ChemicalValue(1, Units.MOLES, propane),
-						new ChemicalValue(5, Units.MOLES, oxygen)}, 
+						new ChemicalValue(1, new MoleUnit(), propane),
+						new ChemicalValue(5, new MoleUnit(), oxygen)}, 
 				new ChemicalValue[] {
-						new ChemicalValue(3, Units.MOLES, co2),
-						new ChemicalValue(4, Units.MOLES, water)}
+						new ChemicalValue(3, new MoleUnit(), co2),
+						new ChemicalValue(4, new MoleUnit(), water)}
 				);
 		
 		/*
@@ -112,7 +114,7 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "$$" + problem.solveFor(water, Units.MOLES).getLaTeXString() + "$$";
+			String LaTeX = "$$" + problem.solveFor(water, new MoleUnit()).getLaTeXString() + "$$";
 		
 			/*
 			 * Displaying the solved problem

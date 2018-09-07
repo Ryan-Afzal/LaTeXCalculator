@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
-import com.ryanafzal.io.calculator.resources.Units;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
+import com.ryanafzal.io.calculator.resources.units.Unit;
 
 public class RailRoad implements ILaTeXValue {
 	
@@ -45,7 +45,7 @@ public class RailRoad implements ILaTeXValue {
 		double top = this.startingValue.getValue();
 		double bottom = 1;
 		
-		Units lastunit = this.startingValue.getUnits();
+		Unit lastunit = this.startingValue.getUnit();
 		
 		Iterator<RailRoadComponent> iterator = this.rail.iterator();
 		while (iterator.hasNext()) {
@@ -53,7 +53,7 @@ public class RailRoad implements ILaTeXValue {
 			top *= current.getNumerator().getValue();
 			bottom *= current.getDenominator().getValue();
 			
-			lastunit = current.getNumerator().getUnits();
+			lastunit = current.getNumerator().getUnit();
 		}
 		
 		return new UnitValue(top / bottom, lastunit);

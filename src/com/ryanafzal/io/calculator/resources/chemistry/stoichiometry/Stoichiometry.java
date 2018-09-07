@@ -1,12 +1,13 @@
 package com.ryanafzal.io.calculator.resources.chemistry.stoichiometry;
 
-import com.ryanafzal.io.calculator.resources.Units;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoad;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoadComponent;
+import com.ryanafzal.io.calculator.resources.units.MoleUnit;
+import com.ryanafzal.io.calculator.resources.units.Unit;
 
 public class Stoichiometry {
 	
@@ -18,14 +19,14 @@ public class Stoichiometry {
 		this.startingValue = startingValue;
 	}
 	
-	public RailRoad solveFor(Chemical chemical, Units units) throws EquationException {
+	public RailRoad solveFor(Chemical chemical, Unit unit) throws EquationException {
 		RailRoad railroad = new RailRoad(startingValue);
 		
 		//Convert units of value from 'startingValue' to moles
 		double[] conversion = this.equation.getRatioBetween(chemical, this.startingValue.getChemical());
 		railroad.addComponent(new RailRoadComponent(
-				new ChemicalValue(conversion[0], Units.MOLES, chemical), 
-				new ChemicalValue(conversion[1], Units.MOLES, this.startingValue.getChemical())));
+				new ChemicalValue(conversion[0], new MoleUnit(), chemical), 
+				new ChemicalValue(conversion[1], new MoleUnit(), this.startingValue.getChemical())));
 		
 		//Convert units from moles to 'units'
 		

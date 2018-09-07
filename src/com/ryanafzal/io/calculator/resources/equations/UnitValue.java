@@ -1,28 +1,29 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-import com.ryanafzal.io.calculator.resources.Units;
+import com.ryanafzal.io.calculator.resources.units.Unit;
+import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class UnitValue extends Value {
 
-	private Units units;
+	private Unit unit;
 	
-	public UnitValue(double value, Units units) {
+	public UnitValue(double value, Unit unit) {
 		super(value);
-		this.units = units;
+		this.unit = unit;
 	}
 	
-	public Units getUnits() {
-		return this.units;
+	public Unit getUnit() {
+		return this.unit;
 	}
 	
 	@Override
 	public String getLaTeXString() {
-		return super.getLaTeXString() + "\\, \\textup{" + this.getUnits().getValue() + "}";
+		return super.getLaTeXString() + "\\, \\textup{" + this.getUnit().getLaTeXString() + "}";
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + " " + this.getUnits().getValue();
+		return super.toString() + " " + this.getUnit().getLaTeXString();
 	}
 
 }
