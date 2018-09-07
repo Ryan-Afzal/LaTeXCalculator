@@ -1,7 +1,6 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
 import com.ryanafzal.io.calculator.resources.units.Unit;
-import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class UnitValue extends Value {
 

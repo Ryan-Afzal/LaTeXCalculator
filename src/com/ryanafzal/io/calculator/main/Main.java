@@ -14,6 +14,7 @@ import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiomet
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
+import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Main {
@@ -85,7 +86,7 @@ public class Main {
 		/*
 		 * Creating starting value, 1 mol C3H8
 		 */
-		ChemicalValue start = new ChemicalValue(1, new MoleUnit(), propane);
+		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(), propane);
 		
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O
@@ -114,7 +115,7 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "$$" + problem.solveFor(water, new MoleUnit()).getLaTeXString() + "$$";
+			String LaTeX = "$$" + problem.solveFor(water, MoleUnit.class).getLaTeXString() + "$$";
 		
 			/*
 			 * Displaying the solved problem
