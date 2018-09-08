@@ -15,6 +15,7 @@ import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
+import com.ryanafzal.io.calculator.resources.units.VolumeUnit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Main {
@@ -115,15 +116,13 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "$$" + problem.solveFor(water, MoleUnit.class).getLaTeXString() + "$$";
+			String LaTeX = "$$" + problem.solveFor(water, QuantityUnit.class).getLaTeXString() + "$$";
 		
 			/*
 			 * Displaying the solved problem
 			 */
 			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(LaTeX))));
-		} catch (RenderException e) {
-			e.printStackTrace();
-		} catch (EquationException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
