@@ -13,7 +13,7 @@ import com.ryanafzal.io.calculator.resources.ILaTeXValue;
  *
  */
 public class Chemical implements ILaTeXValue {
-
+	
 	private Atom[] atoms;
 	private Bond[] bonds;
 	
@@ -70,7 +70,7 @@ public class Chemical implements ILaTeXValue {
 		return null;
 	}
 	
-	public String getCondensedFormula() {
+	public String getIUPACName() {
 		return null;
 	}
 	
@@ -87,16 +87,12 @@ public class Chemical implements ILaTeXValue {
 		return false;
 	}
 	
-	public static Chemical makeChemicalFromFormula(String formula) {
+	public static Chemical makeChemicalFromName(String name) {
 		return null;
 	}
 	
 	public static void main(String[] args) {
-		Atom atom1 = new Atom(AtomType.HYDROGEN);
-		Atom atom2 = new Atom(AtomType.HYDROGEN);
 		
-		System.out.println(atom1);
-		System.out.println(atom2);
 	}
 
 }

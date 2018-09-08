@@ -8,6 +8,7 @@ import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoad;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoadComponent;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
+import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 
 public class Stoichiometry {
