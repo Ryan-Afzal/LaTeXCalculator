@@ -1,7 +1,7 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
 public enum BondType {
-	
+	IONIC(0),
 	SINGLE(1),
 	DOUBLE(2),
 	TRIPLE(3);

@@ -3,20 +3,17 @@ package com.ryanafzal.io.calculator.main;
 import javax.swing.*;
 
 import com.ryanafzal.io.calculator.render.Render;
-import com.ryanafzal.io.calculator.render.RenderException;
 import com.ryanafzal.io.calculator.resources.chemistry.Atom;
 import com.ryanafzal.io.calculator.resources.chemistry.AtomType;
 import com.ryanafzal.io.calculator.resources.chemistry.Bond;
 import com.ryanafzal.io.calculator.resources.chemistry.BondType;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
-import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
-import com.ryanafzal.io.calculator.resources.units.VolumeUnit;
-import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Main {
 	
@@ -87,18 +84,18 @@ public class Main {
 		/*
 		 * Creating starting value, 1 mol C3H8
 		 */
-		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(), propane);
+		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(), propane, ChemicalState.GAS);
 		
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O
 		 */
 		ChemicalEquation equation = new ChemicalEquation(
 				new ChemicalValue[] {
-						new ChemicalValue(1, new MoleUnit(), propane),
-						new ChemicalValue(5, new MoleUnit(), oxygen)}, 
+						new ChemicalValue(1, new MoleUnit(), propane, ChemicalState.GAS),
+						new ChemicalValue(5, new MoleUnit(), oxygen, ChemicalState.GAS)}, 
 				new ChemicalValue[] {
-						new ChemicalValue(3, new MoleUnit(), co2),
-						new ChemicalValue(4, new MoleUnit(), water)}
+						new ChemicalValue(3, new MoleUnit(), co2, ChemicalState.GAS),
+						new ChemicalValue(4, new MoleUnit(), water, ChemicalState.GAS)}
 				);
 		
 		/*

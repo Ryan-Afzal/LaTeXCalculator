@@ -38,6 +38,18 @@ public class ChemicalEquation implements ILaTeXValue {
 		return result;
 	}
 	
+	public ChemicalValue getChemicalValue(Chemical chemical) throws EquationException {
+		ArrayList<ChemicalValue> chemicals = new ArrayList<ChemicalValue>(Arrays.asList(this.reactants));
+		chemicals.addAll(Arrays.asList(this.products));
+		
+		ChemicalValue res = chemicals.stream().filter(c -> c.getChemical().equals(chemical)).findFirst().orElse(null);
+		if (res == null) {
+			throw new EquationException("Chemical " + chemical + " is not present in this equation.");
+		}
+		
+		return res;
+	}
+	
 	@Override
 	public String getLaTeXString() {
 		// TODO Auto-generated method stub

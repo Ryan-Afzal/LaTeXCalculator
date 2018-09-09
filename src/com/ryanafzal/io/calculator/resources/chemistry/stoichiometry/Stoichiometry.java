@@ -26,6 +26,7 @@ public class Stoichiometry {
 	
 	public RailRoad solveFor(Chemical chemical, Class<? extends Unit> unit) throws EquationException, InvalidUnitException {
 		RailRoad railroad = new RailRoad(this.startingValue);
+		ChemicalValue new_chemical = this.equation.getChemicalValue(chemical);
 		
 		//If not in moles, convert units of value from 'startingValue' to moles.
 		if (!(this.startingValue.getUnit() instanceof MoleUnit)) {
@@ -34,18 +35,23 @@ public class Stoichiometry {
 							new ChemicalValue(
 									1, 
 									new MoleUnit(), 
-									this.startingValue.getChemical()), 
+									this.startingValue.getChemical(),
+									this.startingValue.getState()
+									), 
 							new ChemicalValue(
 									this.startingValue.getChemical().getMolarMass(), 
 									this.startingValue.getUnit(), 
-									this.startingValue.getChemical())));
+									this.startingValue.getChemical(),
+									this.startingValue.getState())));
 		}
 		
 		//Convert to new chemical
 		double[] conversion = this.equation.getRatioBetween(chemical, this.startingValue.getChemical());
 		railroad.addComponent(new RailRoadComponent(
-				new ChemicalValue(conversion[0], new MoleUnit(), chemical), 
-				new ChemicalValue(conversion[1], new MoleUnit(), this.startingValue.getChemical())));
+				new ChemicalValue(conversion[0], new MoleUnit(), chemical, new_chemical.getState()), 
+				new ChemicalValue(conversion[1], new MoleUnit(), this.startingValue.getChemical(), this.startingValue.getState())));
+		
+		
 		
 		//If not in the desired units, convert units from moles to 'units'
 		if (!unit.isInstance(new MoleUnit().getClass())) {
@@ -56,12 +62,15 @@ public class Stoichiometry {
 								new ChemicalValue(
 										chemical.getMolarMass(), 
 										unit.getConstructor().newInstance(), 
-										chemical
+										chemical, 
+										new_chemical.getState()
 										),
 								new ChemicalValue(
 										1, 
 										new MoleUnit(), 
-										this.startingValue.getChemical())));
+										chemical,
+										new_chemical.getState()
+										)));
 			} catch (InstantiationException e) {
 				throw new InvalidUnitException(e);
 			} catch (IllegalAccessException e) {
