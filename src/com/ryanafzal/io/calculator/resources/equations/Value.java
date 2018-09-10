@@ -14,6 +14,10 @@ public class Value implements ILaTeXValue {
 		return this.value;
 	}
 	
+	protected void setValue(double value) {
+		this.value = value;
+	}
+	
 	@Override
 	public String getLaTeXString() {
 		return this.getValue() + "";

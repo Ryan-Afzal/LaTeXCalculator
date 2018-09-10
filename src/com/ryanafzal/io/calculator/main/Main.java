@@ -12,8 +12,10 @@ import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
+import com.ryanafzal.io.calculator.resources.units.FluidVolumeUnit;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
+import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Main {
 	
@@ -84,7 +86,7 @@ public class Main {
 		/*
 		 * Creating starting value, 1 mol C3H8
 		 */
-		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(), propane, ChemicalState.GAS);
+		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(Prefix.NONE), propane, ChemicalState.GAS);
 		
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O

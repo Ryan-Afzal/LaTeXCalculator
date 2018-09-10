@@ -13,6 +13,7 @@ import com.ryanafzal.io.calculator.resources.units.InvalidUnitException;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 import com.ryanafzal.io.calculator.resources.units.QuantityUnit;
 import com.ryanafzal.io.calculator.resources.units.Unit;
+import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Stoichiometry {
 	
@@ -28,7 +29,53 @@ public class Stoichiometry {
 		RailRoad railroad = new RailRoad(this.startingValue);
 		ChemicalValue new_chemical = this.equation.getChemicalValue(chemical);
 		
-		//If not in moles, convert units of value from 'startingValue' to moles.
+		//TODO: Since the only acceptable units are grams and moles, throw an exception if anything else is passed.
+		if (!this.startingValue.getUnit().getClass().equals(MoleUnit.class) && !this.startingValue.getUnit().getClass().equals(QuantityUnit.class)) {
+			throw new IllegalArgumentException("Unit " + unit + " is not a valid unit.");
+		}
+		
+		//Handle conversion of prefixes PREFIX -> NONE
+		if (!this.startingValue.getUnit().getPrefix().equals(Prefix.NONE)) {
+			
+			try {
+				if (this.startingValue.getUnit().getPrefix().getRatio() < Prefix.NONE.getRatio()) {
+					railroad.addComponent(
+							new RailRoadComponent(
+									new UnitValue(
+											1, 
+											this.startingValue.getUnit().getClass().newInstance()
+											), 
+									new UnitValue(
+											(1 / this.startingValue.getUnit().getPrefix().getRatio()), 
+											this.startingValue.getUnit().getClass().getConstructor(Prefix.class).newInstance(this.startingValue.getUnit().getPrefix())
+											)));
+				} else {
+					railroad.addComponent(
+							new RailRoadComponent( 
+									new UnitValue(
+											(this.startingValue.getUnit().getPrefix().getRatio()), 
+											this.startingValue.getUnit().getClass().getConstructor(Prefix.class).newInstance(this.startingValue.getUnit().getPrefix())
+											), 
+									new UnitValue(
+											1, 
+											this.startingValue.getUnit().getClass().newInstance()
+											)));
+				}
+			} catch (InstantiationException e) {
+				throw new InvalidUnitException(e);
+			} catch (IllegalAccessException e) {
+				throw new InvalidUnitException(e);
+			}catch (InvocationTargetException e) {
+				throw new InvalidUnitException(e);
+			} catch (NoSuchMethodException e) {
+				throw new InvalidUnitException(e);
+			}
+		}
+		
+		//Convert Unit to Grams
+		
+		
+		//If not in moles, convert units of value from grams to moles.
 		if (!(this.startingValue.getUnit() instanceof MoleUnit)) {
 			railroad.addComponent(
 					new RailRoadComponent(
