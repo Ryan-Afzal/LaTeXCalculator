@@ -34,12 +34,12 @@ public class UnitValue extends Value {
 	
 	@Override
 	public String getLaTeXString() {
-		return super.getLaTeXString() + "\\, \\textup{" + this.getUnit().getLaTeXString() + "}";
+		return super.getLaTeXString() + "\\, " + this.getUnit().getLaTeXString();
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + " " + this.getUnit().getLaTeXString();
+		return super.toString() + "\\, " + this.getUnit().getLaTeXString();
 	}
 
 }

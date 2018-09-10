@@ -47,7 +47,15 @@ public class Stoichiometry {
 											), 
 									new UnitValue(
 											(1 / this.startingValue.getUnit().getPrefix().getRatio()), 
-											this.startingValue.getUnit().getClass().getConstructor(Prefix.class).newInstance(this.startingValue.getUnit().getPrefix())
+											this.startingValue
+												.getUnit()
+												.getClass()
+												.getConstructor(
+														Prefix.class)
+												.newInstance(
+													this.startingValue
+														.getUnit()
+														.getPrefix())
 											)));
 				} else {
 					railroad.addComponent(
