@@ -113,7 +113,7 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "$$" + problem.solveFor(water, QuantityUnit.class).getLaTeXString() + "$$";
+			String LaTeX = "$$" + problem.solveFor(water, new QuantityUnit(Prefix.KILO)).getLaTeXString() + "$$";
 		
 			/*
 			 * Displaying the solved problem

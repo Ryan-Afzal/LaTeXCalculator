@@ -47,11 +47,11 @@ public class Stoichiometry {
 	 * @return Returns a {@code RailRoad} containing the entire stoichiometric solution. This does not include other equations, such as Gas Laws.
 	 * 
 	 */
-	public RailRoad solveFor(Chemical chemical, Class<? extends Unit> unit) throws EquationException, InvalidUnitException {
+	public RailRoad solveFor(Chemical chemical, Unit unit) throws EquationException, InvalidUnitException {
 		RailRoad railroad = new RailRoad(this.startingValue);
-		ChemicalValue new_chemical = this.equation.getChemicalValue(chemical);
+		ChemicalValue chemicalvalue = this.equation.getChemicalValue(chemical);
 		
-		
+		Unit starting_unit = this.startingValue.getUnit();
 		
 		
 		//TODO: Since the only acceptable units are grams and moles, throw an exception if anything else is passed.
@@ -60,60 +60,18 @@ public class Stoichiometry {
 		}
 		
 		
-		
-		
-		
-		//Handle conversion of prefixes PREFIX -> NONE
-		if (!this.startingValue.getUnit().getPrefix().equals(Prefix.NONE)) {
-			
-			try {
-				if (this.startingValue.getUnit().getPrefix().getRatio() < Prefix.NONE.getRatio()) {
-					railroad.addComponent(
-							new RailRoadComponent(
-									new UnitValue(
-											1, 
-											this.startingValue.getUnit().getClass().newInstance()
-											), 
-									new UnitValue(
-											(1 / this.startingValue.getUnit().getPrefix().getRatio()), 
-											this.startingValue
-												.getUnit()
-												.getClass()
-												.getConstructor(
-														Prefix.class)
-												.newInstance(
-													this.startingValue
-														.getUnit()
-														.getPrefix())
-											)));
-				} else {
-					railroad.addComponent(
-							new RailRoadComponent( 
-									new UnitValue(
-											(this.startingValue.getUnit().getPrefix().getRatio()), 
-											this.startingValue.getUnit().getClass().getConstructor(Prefix.class).newInstance(this.startingValue.getUnit().getPrefix())
-											), 
-									new UnitValue(
-											1, 
-											this.startingValue.getUnit().getClass().newInstance()
-											)));
-				}
-			} catch (InstantiationException e) {
-				throw new InvalidUnitException(e);
-			} catch (IllegalAccessException e) {
-				throw new InvalidUnitException(e);
-			}catch (InvocationTargetException e) {
-				throw new InvalidUnitException(e);
-			} catch (NoSuchMethodException e) {
-				throw new InvalidUnitException(e);
-			}
+		/*
+		 * Convert Prefix to Prefix.NONE
+		 */
+		if (!starting_unit.getPrefix().equals(Prefix.NONE)) {
+			railroad.addComponent(UnitValue.getConversionToPrefix(starting_unit, Prefix.NONE));
 		}
 		
 		
-		
-		//Convert Unit to Grams
-		//If not in moles, convert units of value from grams to moles.
-		if (!(this.startingValue.getUnit() instanceof MoleUnit)) {
+		/*
+		 * Convert Unit to QuantityUnit
+		 */
+		if (!(starting_unit instanceof MoleUnit)) {
 			railroad.addComponent(
 					new RailRoadComponent(
 							new ChemicalValue(
@@ -124,7 +82,7 @@ public class Stoichiometry {
 									), 
 							new ChemicalValue(
 									this.startingValue.getChemical().getMolarMass(), 
-									this.startingValue.getUnit(), 
+									starting_unit, 
 									this.startingValue.getChemical(),
 									this.startingValue.getState())));
 		}
@@ -133,38 +91,35 @@ public class Stoichiometry {
 		//Perform stoichiometric operation
 		double[] conversion = this.equation.getRatioBetween(chemical, this.startingValue.getChemical());
 		railroad.addComponent(new RailRoadComponent(
-				new ChemicalValue(conversion[0], new MoleUnit(), chemical, new_chemical.getState()), 
+				new ChemicalValue(conversion[0], new MoleUnit(), chemical, chemicalvalue.getState()), 
 				new ChemicalValue(conversion[1], new MoleUnit(), this.startingValue.getChemical(), this.startingValue.getState())));
 		
 		
 		
 		//If not in the desired units, convert units from moles to 'units'
-		if (!unit.isInstance(new MoleUnit().getClass())) {
-			//Only unit is 'grams', so convert to that
-			try {
+		if (!(unit instanceof MoleUnit)) {
+			//Convert to 'grams' first
 				railroad.addComponent(
 						new RailRoadComponent(
 								new ChemicalValue(
 										chemical.getMolarMass(), 
-										unit.getConstructor().newInstance(), 
+										new QuantityUnit(), 
 										chemical, 
-										new_chemical.getState()
+										chemicalvalue.getState()
 										),
 								new ChemicalValue(
 										1, 
 										new MoleUnit(), 
 										chemical,
-										new_chemical.getState()
+										chemicalvalue.getState()
 										)));
-			} catch (InstantiationException e) {
-				throw new InvalidUnitException(e);
-			} catch (IllegalAccessException e) {
-				throw new InvalidUnitException(e);
-			} catch (InvocationTargetException e) {
-				throw new InvalidUnitException(e);
-			} catch (NoSuchMethodException e) {
-				throw new InvalidUnitException(e);
-			}
+				
+			//Convert to other units
+		}
+		
+		//If unit is not in the desired prefix, convert prefix.
+		if (unit.getPrefix() != Prefix.NONE) {
+			railroad.addComponent(UnitValue.getConversionToPrefix(unit.clone(Prefix.NONE), unit.getPrefix()));
 		}
 		
 		
