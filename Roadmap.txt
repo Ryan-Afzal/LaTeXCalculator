@@ -1,0 +1,17 @@
+===========
+| ROADMAP |
+===========
+
+=====================
+
+- IUPAC Name Implementation
+
+- Additional Mathematical Functionality
+	* Additional Stoichiometric Functions
+		' Limiting Reactant
+		
+	* Gas Laws
+		' Ideal Gas Law
+		' Combined Gas Law
+
+=====================
