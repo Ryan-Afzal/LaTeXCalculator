@@ -86,6 +86,9 @@ public class Main {
 		 */
 		ChemicalValue start = new ChemicalValue(propane.getMolarMass(), new QuantityUnit(Prefix.KILO), propane, ChemicalState.GAS);
 		
+		ChemicalValue react1 = new ChemicalValue(propane.getMolarMass() * 0.99, new QuantityUnit(Prefix.NONE), propane, ChemicalState.GAS);
+		ChemicalValue react2 = new ChemicalValue(oxygen.getMolarMass(), new QuantityUnit(Prefix.NONE), oxygen, ChemicalState.GAS);
+		
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O
 		 */
@@ -113,7 +116,12 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "$$" + problem.solveFor(start, water, new QuantityUnit(Prefix.KILO)).getLaTeXString() + "$$";
+			String LaTeX = "\\[" + 
+			 
+					//problem.solveFor(start, water, new QuantityUnit(Prefix.KILO)).getLaTeXString() 
+					problem.getLimitingReactant(new ChemicalValue[] {react1, react2}).getLaTeXStrings()
+					
+			 + "\\]";
 		
 			/*
 			 * Displaying the solved problem

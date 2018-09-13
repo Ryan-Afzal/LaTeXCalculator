@@ -1,15 +1,18 @@
 package com.ryanafzal.io.calculator.resources.chemistry.stoichiometry;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
-import com.ryanafzal.io.calculator.resources.equations.LaTeXEquation;
+import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
+import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoad;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoadComponent;
 import com.ryanafzal.io.calculator.resources.units.InvalidUnitException;
@@ -32,7 +35,7 @@ public class Stoichiometry {
 	 * @return Returns a LaTeXEquation containing the problem.
 	 * @throws EquationException
 	 */
-	public LaTeXEquation getLimitingReactant(ChemicalValue[] inputs) throws EquationException {
+	public LaTeXBlock getLimitingReactant(ChemicalValue[] inputs) throws EquationException {
 		ChemicalValue firstproduct = this.equation.getFirstProduct();
 		RailRoad[] mole_values_solved = new RailRoad[inputs.length];
 		
@@ -48,14 +51,30 @@ public class Stoichiometry {
 			}
 		}
 		
+		/*
+		 * Solve the RailRoads, and MergeSort their values.
+		 */
+		Value[] values = Value.mergeSort((Arrays.asList(mole_values_solved).stream().map(RailRoad::solve).collect(Collectors.toList()).toArray(new UnitValue[] {})));
+		Value min = values[0];
 		
+		String get = min.getLaTeXString();
 		
-		double min = Arrays.asList(mole_values_solved).stream().map(RailRoad::solve).map(UnitValue::getValue).mapToDouble(d -> d).min().orElse(0);
-		ChemicalValue limitingreactant = Arrays.asList(inputs).stream().filter(input -> input.getValue() == min).findFirst().orElse(null);
+		for (int i = 0; i < values.length; i++) {
+			get += " < " + values[i].getLaTeXString();
+		}
 		
+		final String out_string = get;
 		
+		LinkedList<ILaTeXValue> output = new LinkedList<ILaTeXValue>(Arrays.asList(mole_values_solved));
 		
-		return null;
+		output.add(new ILaTeXValue() {
+			@Override
+			public String getLaTeXString() {
+				return out_string;
+			}
+		});
+		
+		return new LaTeXBlock(output.toArray(new ILaTeXValue[] {}));
 	}
 	
 	/**
