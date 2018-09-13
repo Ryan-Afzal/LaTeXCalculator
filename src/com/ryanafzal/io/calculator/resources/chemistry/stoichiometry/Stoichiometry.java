@@ -1,6 +1,8 @@
 package com.ryanafzal.io.calculator.resources.chemistry.stoichiometry;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
@@ -19,30 +21,39 @@ import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 public class Stoichiometry {
 	
 	private ChemicalEquation equation;
-	private ChemicalValue startingValue;
 	
-	public Stoichiometry(ChemicalEquation equation, ChemicalValue startingValue) {
+	public Stoichiometry(ChemicalEquation equation) {
 		this.equation = equation;
-		this.startingValue = startingValue;
 	}
 	
 	/**
 	 * Gets the limiting reactant from a set of inputs
-	 * @param inputs
+	 * @param inputs A {@code ChemicalValue} array containing the values to solve for. 
 	 * @return Returns a LaTeXEquation containing the problem.
 	 * @throws EquationException
 	 */
 	public LaTeXEquation getLimitingReactant(ChemicalValue[] inputs) throws EquationException {
-		
+		ChemicalValue firstproduct = this.equation.getFirstProduct();
 		RailRoad[] mole_values_solved = new RailRoad[inputs.length];
+		
+		if (inputs.length <= 0) {
+			throw new IllegalArgumentException("Cannot except an empty input array.");
+		}
 		
 		for (int i = 0; i < inputs.length; i++) {
 			try {
-				mole_values_solved[i] = this.solveFor(inputs[i].getChemical(), new MoleUnit());
+				mole_values_solved[i] = this.solveFor(inputs[i], firstproduct.getChemical(), new MoleUnit());
 			} catch (InvalidUnitException e) {
 				throw new EquationException("==You should never see this==");
 			}
 		}
+		
+		
+		
+		double min = Arrays.asList(mole_values_solved).stream().map(RailRoad::solve).map(UnitValue::getValue).mapToDouble(d -> d).min().orElse(0);
+		ChemicalValue limitingreactant = Arrays.asList(inputs).stream().filter(input -> input.getValue() == min).findFirst().orElse(null);
+		
+		
 		
 		return null;
 	}
@@ -67,16 +78,16 @@ public class Stoichiometry {
 	 * @return Returns a {@code RailRoad} containing the entire stoichiometric solution. This does not include other equations, such as Gas Laws.
 	 * 
 	 */
-	public RailRoad solveFor(Chemical chemical, Unit unit) throws EquationException, InvalidUnitException {
-		RailRoad railroad = new RailRoad(this.startingValue);
+	public RailRoad solveFor(ChemicalValue startingValue, Chemical chemical, Unit unit) throws EquationException, InvalidUnitException {
+		RailRoad railroad = new RailRoad(startingValue);
 		ChemicalValue chemicalvalue = this.equation.getChemicalValue(chemical);
 		
-		Unit starting_unit = this.startingValue.getUnit();
+		Unit starting_unit = startingValue.getUnit();
 		
 		
 		//TODO: Since the only acceptable units are grams and moles, throw an exception if anything else is passed.
-		if (!this.startingValue.getUnit().getClass().equals(MoleUnit.class) && !this.startingValue.getUnit().getClass().equals(QuantityUnit.class)) {
-			throw new IllegalArgumentException("Unit " + unit + " is not a valid unit.");
+		if (!startingValue.getUnit().getClass().equals(MoleUnit.class) && !startingValue.getUnit().getClass().equals(QuantityUnit.class)) {
+			throw new InvalidUnitException("Unit " + unit + " is not a valid unit.");
 		}
 		
 		
@@ -97,22 +108,22 @@ public class Stoichiometry {
 							new ChemicalValue(
 									1, 
 									new MoleUnit(), 
-									this.startingValue.getChemical(),
-									this.startingValue.getState()
+									startingValue.getChemical(),
+									startingValue.getState()
 									), 
 							new ChemicalValue(
-									this.startingValue.getChemical().getMolarMass(), 
+									startingValue.getChemical().getMolarMass(), 
 									starting_unit, 
-									this.startingValue.getChemical(),
-									this.startingValue.getState())));
+									startingValue.getChemical(),
+									startingValue.getState())));
 		}
 		
 		
 		//Perform stoichiometric operation
-		double[] conversion = this.equation.getRatioBetween(chemical, this.startingValue.getChemical());
+		double[] conversion = this.equation.getRatioBetween(chemical, startingValue.getChemical());
 		railroad.addComponent(new RailRoadComponent(
 				new ChemicalValue(conversion[0], new MoleUnit(), chemical, chemicalvalue.getState()), 
-				new ChemicalValue(conversion[1], new MoleUnit(), this.startingValue.getChemical(), this.startingValue.getState())));
+				new ChemicalValue(conversion[1], new MoleUnit(), startingValue.getChemical(), startingValue.getState())));
 		
 		
 		

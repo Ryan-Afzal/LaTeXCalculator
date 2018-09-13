@@ -38,6 +38,10 @@ public class ChemicalEquation implements ILaTeXValue {
 		return result;
 	}
 	
+	public ChemicalValue getFirstProduct() {
+		return this.products[0];
+	}
+	
 	public ChemicalValue getChemicalValue(Chemical chemical) throws EquationException {
 		ArrayList<ChemicalValue> chemicals = new ArrayList<ChemicalValue>(Arrays.asList(this.reactants));
 		chemicals.addAll(Arrays.asList(this.products));
