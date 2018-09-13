@@ -6,10 +6,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
+import com.ryanafzal.io.calculator.resources.equations.ISolvable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 
-public class RailRoad implements ILaTeXValue {
+public class RailRoad implements ILaTeXValue, ISolvable {
 	
 	private UnitValue startingValue;
 	private ArrayList<RailRoadComponent> rail;
@@ -41,7 +42,7 @@ public class RailRoad implements ILaTeXValue {
 		this.addComponents(Arrays.asList(list));
 	}
 	
-	public UnitValue solveRailroad() {
+	public UnitValue solve() {
 		double top = this.startingValue.getValue();
 		double bottom = 1;
 		
@@ -68,7 +69,7 @@ public class RailRoad implements ILaTeXValue {
 			output += ("\\cdot" + iterator.next().getLaTeXString());
 		}
 		
-		output += (" = " + this.solveRailroad().getLaTeXString());
+		output += (" = " + this.solve().getLaTeXString());
 		
 		return output;
 	}

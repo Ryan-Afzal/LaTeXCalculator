@@ -1,11 +1,12 @@
 package com.ryanafzal.io.calculator.resources.chemistry.stoichiometry;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
+import com.ryanafzal.io.calculator.resources.equations.LaTeXEquation;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoad;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoadComponent;
@@ -25,7 +26,26 @@ public class Stoichiometry {
 		this.startingValue = startingValue;
 	}
 	
-	
+	/**
+	 * Gets the limiting reactant from a set of inputs
+	 * @param inputs
+	 * @return Returns a LaTeXEquation containing the problem.
+	 * @throws EquationException
+	 */
+	public LaTeXEquation getLimitingReactant(ChemicalValue[] inputs) throws EquationException {
+		
+		RailRoad[] mole_values_solved = new RailRoad[inputs.length];
+		
+		for (int i = 0; i < inputs.length; i++) {
+			try {
+				mole_values_solved[i] = this.solveFor(inputs[i].getChemical(), new MoleUnit());
+			} catch (InvalidUnitException e) {
+				throw new EquationException("==You should never see this==");
+			}
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Solves the stoichiometry problem for the given {@code Chemical}, in the given {@code Unit}.
