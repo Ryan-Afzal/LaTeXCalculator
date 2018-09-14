@@ -22,6 +22,11 @@ public abstract class Unit implements ILaTeXValue {
 		return this.getPrefix().getSymbol() + this.getSymbol();
 	}
 	
+	@Override
+	public boolean isMath() {
+		return true;
+	}
+	
 	public abstract String getName();
 	public abstract String getSymbol();
 	

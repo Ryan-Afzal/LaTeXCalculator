@@ -73,5 +73,10 @@ public class RailRoad implements ILaTeXValue, ISolvable {
 		
 		return output;
 	}
+
+	@Override
+	public boolean isMath() {
+		return true;
+	}
 	
 }

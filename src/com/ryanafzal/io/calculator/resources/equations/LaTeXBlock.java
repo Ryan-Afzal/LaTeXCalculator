@@ -1,22 +1,66 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import com.ryanafzal.io.calculator.ILaTeXMultiple;
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 
-public class LaTeXBlock implements ILaTeXMultiple {
+public class LaTeXBlock implements ISolvable {
 
 	private ILaTeXValue[] parts;
+	private UnitValue value;
 	
-	public LaTeXBlock(ILaTeXValue[] parts) {
+	public LaTeXBlock(ILaTeXValue[] parts, UnitValue value) {
 		this.parts = parts;
+		this.value = value;
 	}
 	
+	public LaTeXBlock(ILaTeXValue[] parts) {
+		this(parts, null);
+	}
+	
+	public ILaTeXValue getPart(int i) {
+		return this.parts[i];
+	}
+	
+	/**
+	 * Do not use, use getLaTeXStrings() instead.
+	 */
+	@Deprecated
 	@Override
+	public String getLaTeXString() {
+		String output = "";
+		
+		for (int i = 0; i < this.parts.length; i++) {
+			if (this.parts[i].isMath()) {
+				output += ("$$" + this.parts[i].getLaTeXString() + "$$ ");
+			} else {
+				output += this.parts[i].getLaTeXString();
+			}
+		}
+		
+		return output;
+	}
+
+	@Override
+	public boolean isMath() {
+		return false;
+	}
+
+	@Override
+	public UnitValue solve() {
+		return this.value;
+	}
+	
 	public String[] getLaTeXStrings() {
-		return Arrays.asList(this.parts).stream().map(ILaTeXValue::getLaTeXString).collect(Collectors.toList()).toArray(new String[] {});
+		String[] output = new String[this.parts.length];
+		
+		for (int i = 0; i < this.parts.length; i++) {
+			if (this.parts[i].isMath()) {
+				output[i] = ("$$" + this.parts[i].getLaTeXString() + "$$ ");
+			} else {
+				output[i] = this.parts[i].getLaTeXString();
+			}
+		}
+		
+		return output;
 	}
 
 }

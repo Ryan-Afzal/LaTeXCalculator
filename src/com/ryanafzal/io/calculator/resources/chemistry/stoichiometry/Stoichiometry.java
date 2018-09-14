@@ -2,7 +2,6 @@ package com.ryanafzal.io.calculator.resources.chemistry.stoichiometry;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
@@ -59,7 +58,7 @@ public class Stoichiometry {
 		
 		String get = min.getLaTeXString();
 		
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 1; i < values.length; i++) {
 			get += " < " + values[i].getLaTeXString();
 		}
 		
@@ -73,6 +72,8 @@ public class Stoichiometry {
 				return out_string;
 			}
 		});
+		
+		output.add(0, this.equation);
 		
 		return new LaTeXBlock(output.toArray(new ILaTeXValue[] {}));
 	}

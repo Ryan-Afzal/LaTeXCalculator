@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.main;
 
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 
 import com.ryanafzal.io.calculator.render.Render;
@@ -12,6 +14,7 @@ import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
+import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;
 import com.ryanafzal.io.calculator.resources.units.*;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
@@ -116,19 +119,16 @@ public class Main {
 			/*
 			 * Solving Stoichiometric ratio between C3H8 and H2O in equation: C3H8 + 5O2 -> 3CO2 + 4H2O, and storing value in a LaTeX-Formatted String.
 			 */
-			String LaTeX = "\\[" + 
-			 
-					//problem.solveFor(start, water, new QuantityUnit(Prefix.KILO)).getLaTeXString() 
-					problem.getLimitingReactant(new ChemicalValue[] {react1, react2}).getLaTeXStrings()
-					
-			 + "\\]";
-		
+			String LaTeX = "$$" + problem.solveFor(start, water, new QuantityUnit(Prefix.KILO)).getLaTeXString()  + "$$";
+			
+			LaTeXBlock block = problem.getLimitingReactant(new ChemicalValue[] {react1, react2});
+			
 			/*
 			 * Displaying the solved problem
 			 */
 			
-			System.out.println(LaTeX);
-			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(LaTeX))));
+			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(block))));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

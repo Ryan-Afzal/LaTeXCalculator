@@ -25,5 +25,10 @@ public class RailRoadComponent implements ILaTeXValue {
 	public String getLaTeXString() {
 		return "\\frac{" + this.getNumerator().getLaTeXString() + "}{" + this.getDenominator().getLaTeXString() + "}";
 	}
+
+	@Override
+	public boolean isMath() {
+		return true;
+	}
 	
 }

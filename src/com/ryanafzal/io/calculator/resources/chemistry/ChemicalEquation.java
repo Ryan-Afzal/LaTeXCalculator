@@ -56,8 +56,12 @@ public class ChemicalEquation implements ILaTeXValue {
 	
 	@Override
 	public String getLaTeXString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "10";
+	}
+
+	@Override
+	public boolean isMath() {
+		return true;
 	}
 	
 }

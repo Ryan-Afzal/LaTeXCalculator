@@ -6,4 +6,7 @@ public interface ILaTeXValue {
 	 * @return Returns a LaTeX-Formatted {@code String}
 	 */
 	public String getLaTeXString();
+	public default boolean isMath() {
+		return true;
+	}
 }

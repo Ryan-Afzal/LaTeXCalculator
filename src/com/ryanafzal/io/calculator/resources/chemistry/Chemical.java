@@ -49,18 +49,30 @@ public class Chemical implements ILaTeXValue {
 		}
 		
 		if (carbon > 0) {
-			result += " C_" + carbon;
+			if (carbon > 1) {
+				result += " C_" + carbon;
+			} else {
+				result += " C";
+			}
 		}
 		
 		if (hydrogen > 0) {
-			result += " H_" + hydrogen;
+			if (hydrogen > 1) {
+				result += " H_" + hydrogen;
+			} else {
+				result += " H";
+			}
 		}
 		
 		Set<String> keys = otheratoms.keySet();
 		Set<String> new_keys = new TreeSet<String>(keys);
 		
 		for (String s : new_keys) {
-			result += (" " + s + "_" + otheratoms.get(s));
+			if (otheratoms.get(s) > 1) {
+				result += (" " + s + "_" + otheratoms.get(s));
+			} else {
+				result += (" " + s);
+			}
 		}
 		
 		return result;
@@ -89,6 +101,11 @@ public class Chemical implements ILaTeXValue {
 	
 	public static Chemical makeChemicalFromName(String name) {
 		return null;
+	}
+
+	@Override
+	public boolean isMath() {
+		return true;
 	}
 
 }

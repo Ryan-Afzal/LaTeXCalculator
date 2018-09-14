@@ -67,5 +67,10 @@ public class Value implements ILaTeXValue {
         
         return merge(mergeSort(a), mergeSort(b));
     }
+    
+    @Override
+    public boolean isMath() {
+    	return true;
+    }
 	
 }
