@@ -1,7 +1,5 @@
 package com.ryanafzal.io.calculator.main;
 
-import java.awt.image.BufferedImage;
-
 import javax.swing.*;
 
 import com.ryanafzal.io.calculator.render.Render;
@@ -18,6 +16,7 @@ import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;
 import com.ryanafzal.io.calculator.resources.units.*;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
+@SuppressWarnings("unused")
 public class Main {
 	
 	public static void main(String[] args) {
@@ -127,7 +126,7 @@ public class Main {
 			 * Displaying the solved problem
 			 */
 			
-			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(block))));
+			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(block.getLaTeXString()))));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -20,13 +20,9 @@ public class LaTeXBlock implements ISolvable {
 		return this.parts[i];
 	}
 	
-	/**
-	 * Do not use, use getLaTeXStrings() instead.
-	 */
-	@Deprecated
 	@Override
 	public String getLaTeXString() {
-		String output = "";
+		String output = "\\[";
 		
 		for (int i = 0; i < this.parts.length; i++) {
 			if (this.parts[i].isMath()) {
@@ -36,31 +32,17 @@ public class LaTeXBlock implements ISolvable {
 			}
 		}
 		
-		return output;
+		return output + "\\]";
 	}
-
+	
 	@Override
 	public boolean isMath() {
 		return false;
 	}
-
+	
 	@Override
 	public UnitValue solve() {
 		return this.value;
-	}
-	
-	public String[] getLaTeXStrings() {
-		String[] output = new String[this.parts.length];
-		
-		for (int i = 0; i < this.parts.length; i++) {
-			if (this.parts[i].isMath()) {
-				output[i] = ("$$" + this.parts[i].getLaTeXString() + "$$ ");
-			} else {
-				output[i] = this.parts[i].getLaTeXString();
-			}
-		}
-		
-		return output;
 	}
 
 }
