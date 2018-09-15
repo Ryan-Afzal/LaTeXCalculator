@@ -17,7 +17,7 @@ public class ChemicalEquation implements ILaTeXValue {
 		this.products = products;
 	}
 	
-	public double[] getRatioBetween(Chemical numerator, Chemical denominator) throws EquationException {
+	public double[] getRatioBetween(IChemical numerator, IChemical denominator) throws EquationException {
 		ArrayList<ChemicalValue> chemicals = new ArrayList<ChemicalValue>(Arrays.asList(this.reactants));
 		chemicals.addAll(Arrays.asList(this.products));
 		
@@ -42,7 +42,7 @@ public class ChemicalEquation implements ILaTeXValue {
 		return this.products[0];
 	}
 	
-	public ChemicalValue getChemicalValue(Chemical chemical) throws EquationException {
+	public ChemicalValue getChemicalValue(IChemical chemical) throws EquationException {
 		ArrayList<ChemicalValue> chemicals = new ArrayList<ChemicalValue>(Arrays.asList(this.reactants));
 		chemicals.addAll(Arrays.asList(this.products));
 		

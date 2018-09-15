@@ -5,27 +5,30 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
-
 /**
  * Stores data about a chemical, such as molar mass.
  * @author s-afzalr
  *
  */
-public class Chemical implements ILaTeXValue {
+public class Chemical implements IChemical {
 	
 	private Atom[] atoms;
 	private Bond[] bonds;
 	
-	public Chemical(Atom[] atoms, Bond[] bonds) {
+	private int charge = 0;
+	
+	public Chemical(Atom[] atoms, Bond[] bonds, int charge) {
 		this.atoms = atoms;
 		this.bonds = bonds;
+		this.charge = charge;
 	}
 	
+	@Override
 	public double getMolarMass() {
 		return Arrays.stream(this.atoms).map(Atom::getAtomicMass).mapToDouble(Double::doubleValue).sum();
 	}
-	
+
+	@Override
 	public String getMolecularFormula() {
 		String result = "";
 		
@@ -77,11 +80,13 @@ public class Chemical implements ILaTeXValue {
 		
 		return result;
 	}
-	
+
+	@Override
 	public String getEmpiricalFormula() {
 		return null;
 	}
-	
+
+	@Override
 	public String getIUPACName() {
 		return null;
 	}
@@ -102,10 +107,15 @@ public class Chemical implements ILaTeXValue {
 	public static Chemical makeChemicalFromName(String name) {
 		return null;
 	}
-
+	
 	@Override
 	public boolean isMath() {
 		return true;
+	}
+
+	@Override
+	public int getCharge() {
+		return this.charge;
 	}
 
 }

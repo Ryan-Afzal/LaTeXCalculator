@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;
@@ -98,7 +99,7 @@ public class Stoichiometry {
 	 * @return Returns a {@code RailRoad} containing the entire stoichiometric solution. This does not include other equations, such as Gas Laws.
 	 * 
 	 */
-	public RailRoad solveFor(ChemicalValue startingValue, Chemical chemical, Unit unit) throws EquationException, InvalidUnitException {
+	public RailRoad solveFor(ChemicalValue startingValue, IChemical chemical, Unit unit) throws EquationException, InvalidUnitException {
 		RailRoad railroad = new RailRoad(startingValue);
 		ChemicalValue chemicalvalue = this.equation.getChemicalValue(chemical);
 		

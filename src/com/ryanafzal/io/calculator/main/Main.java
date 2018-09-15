@@ -10,6 +10,7 @@ import com.ryanafzal.io.calculator.resources.chemistry.BondType;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
+import com.ryanafzal.io.calculator.resources.chemistry.IonicChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;
@@ -27,7 +28,7 @@ public class Main {
 		 */
 		Atom[] oxygen_atoms = new Atom[] {new Atom(AtomType.OXYGEN), new Atom(AtomType.OXYGEN)};
 		Chemical oxygen = new Chemical(oxygen_atoms, new Bond[]{
-				new Bond(oxygen_atoms[0], BondType.DOUBLE, oxygen_atoms[1])});
+				new Bond(oxygen_atoms[0], BondType.DOUBLE, oxygen_atoms[1])}, 0);
 		
 		/*
 		 * Declaring Carbon Dioxide
@@ -35,7 +36,7 @@ public class Main {
 		Atom[] co2_atoms = new Atom[] {new Atom(AtomType.OXYGEN), new Atom(AtomType.CARBON), new Atom(AtomType.OXYGEN)};
 		Chemical co2 = new Chemical(co2_atoms, new Bond[] {
 				new Bond(co2_atoms[0], BondType.DOUBLE, co2_atoms[1]), 
-				new Bond(co2_atoms[1], BondType.DOUBLE, co2_atoms[2])});
+				new Bond(co2_atoms[1], BondType.DOUBLE, co2_atoms[2])}, 0);
 		
 		/*
 		 * Declaring Water
@@ -43,7 +44,7 @@ public class Main {
 		Atom[] water_atoms = new Atom[] {new Atom(AtomType.HYDROGEN), new Atom(AtomType.OXYGEN), new Atom(AtomType.HYDROGEN)};
 		Chemical water = new Chemical(water_atoms, new Bond[] {
 				new Bond(water_atoms[0], BondType.SINGLE, water_atoms[1]), 
-				new Bond(water_atoms[1], BondType.SINGLE, water_atoms[2])});
+				new Bond(water_atoms[1], BondType.SINGLE, water_atoms[2])}, 0);
 		
 		/*
 		 * Declaring Atoms in Propane
@@ -81,7 +82,7 @@ public class Main {
 		/*
 		 * Declaring Propane
 		 */
-		Chemical propane = new Chemical(atoms, bonds);
+		Chemical propane = new Chemical(atoms, bonds, 0);
 		
 		/*
 		 * Creating starting value, 1 mol C3H8

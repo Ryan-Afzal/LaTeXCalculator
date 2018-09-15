@@ -1,6 +1,6 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
+import com.ryanafzal.io.calculator.resources.chemistry.IChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 
@@ -11,16 +11,16 @@ import com.ryanafzal.io.calculator.resources.units.Unit;
  */
 public class ChemicalValue extends UnitValue {
 
-	private Chemical chemical;
+	private IChemical chemical;
 	private ChemicalState state;
 	
-	public ChemicalValue(double value, Unit unit, Chemical chemical, ChemicalState state) {
+	public ChemicalValue(double value, Unit unit, IChemical chemical, ChemicalState state) {
 		super(value, unit);
 		this.chemical = chemical;
 		this.state = state;
 	}
 	
-	public Chemical getChemical() {
+	public IChemical getChemical() {
 		return this.chemical;
 	}
 	

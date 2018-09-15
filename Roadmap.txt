@@ -15,3 +15,10 @@
 		' Combined Gas Law
 
 =====================
+
+
+==========
+| ISSUES |
+==========
+
+* How to store Ions - Needs [Chemical, Amount], but does not have units
