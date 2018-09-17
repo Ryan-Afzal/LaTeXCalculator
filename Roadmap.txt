@@ -21,4 +21,5 @@
 | ISSUES |
 ==========
 
-* How to store Ions - Needs [Chemical, Amount], but does not have units
+* ! Unable to display Multi-Equation Results
+* Ions can have multiple bonds, but the cation and anion need to be the same. Or do they?
