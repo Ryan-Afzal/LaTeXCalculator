@@ -1,6 +1,6 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
-public class Atom {
+public class Atom implements IChemical {
 	
 	private String name;
 	private String symbol;
@@ -28,6 +28,37 @@ public class Atom {
 	
 	public double getAtomicMass() {
 		return this.mass;
+	}
+
+	@Override
+	public String getLaTeXString() {
+		return this.getMolecularFormula();
+	}
+
+	@Override
+	public double getMolarMass() {
+		return this.getAtomicMass();
+	}
+
+	@Override
+	public String getMolecularFormula() {
+		return this.getSymbol();
+	}
+
+	@Override
+	public String getEmpiricalFormula() {
+		return this.getMolecularFormula();
+	}
+
+	@Override
+	public String getIUPACName() {
+		return this.getMolecularFormula();
+	}
+
+	@Override
+	public int getCharge() {
+		// TODO Atom charges
+		return 0;
 	}
 	
 }
