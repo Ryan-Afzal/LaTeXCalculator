@@ -8,7 +8,7 @@ import com.ryanafzal.io.calculator.resources.chemistry.AtomType;
 import com.ryanafzal.io.calculator.resources.chemistry.Bond;
 import com.ryanafzal.io.calculator.resources.chemistry.BondType;
 import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
-import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.MolecularEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.chemistry.IonicChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
@@ -95,7 +95,7 @@ public class Main {
 		/*
 		 * Creating Chemical Equation, C3H8 + 5O2 -> 4CO2 + 3H2O
 		 */
-		ChemicalEquation equation = new ChemicalEquation(
+		MolecularEquation equation = new MolecularEquation(
 				new ChemicalValue[] {
 						new ChemicalValue(1, new MoleUnit(), propane, ChemicalState.GAS),
 						new ChemicalValue(5, new MoleUnit(), oxygen, ChemicalState.GAS)}, 

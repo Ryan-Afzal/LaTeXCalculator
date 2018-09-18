@@ -7,8 +7,8 @@ import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 
-public class ChemicalEquation implements ILaTeXValue {
-	
+public abstract class ChemicalEquation implements ILaTeXValue {
+
 	private ChemicalValue[] reactants;
 	private ChemicalValue[] products;
 	
@@ -54,11 +54,12 @@ public class ChemicalEquation implements ILaTeXValue {
 		return res;
 	}
 	
+	//TODO
 	@Override
 	public String getLaTeXString() {
 		return "10";
 	}
-
+	
 	@Override
 	public boolean isMath() {
 		return true;

@@ -2,7 +2,8 @@ package com.ryanafzal.io.calculator.resources.chemistry;
 
 import java.util.HashMap;
 
-public class MolarMass {
+@Deprecated
+public abstract class MolarMass {
 	
 	private static HashMap<String, Double> masses = new HashMap<String, Double>();
 	
