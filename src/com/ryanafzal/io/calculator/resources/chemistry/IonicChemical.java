@@ -1,5 +1,6 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 //TODO Everything
@@ -8,7 +9,27 @@ public class IonicChemical implements IChemical {
 	private IChemical[] cations;
 	private IChemical[] anions;
 	
-	public IonicChemical(Chemical[] cations, Chemical[] anions) {
+	public IonicChemical(IChemical[] cations, IChemical[] anions) {
+		String cation_name = cations[0].getIUPACName();
+		String anion_name = anions[0].getIUPACName();
+		
+		for (int i = 0; i < cations.length; i++) {
+			if (!cations[i].getIUPACName().equals(cation_name)) {
+				throw new IllegalArgumentException("Cations must be of the same chemical type.");
+			}
+		}
+		
+		for (int i = 0; i < cations.length; i++) {
+			if (!cations[i].getIUPACName().equals(anion_name)) {
+				throw new IllegalArgumentException("Anions must be of the same chemical type.");
+			}
+		}
+		
+		if ((Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum() + 
+			Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum()) != 0) {
+			throw new IllegalArgumentException("Ionic Compounds must have a net charge of 0.");
+		}
+		
 		this.cations = cations;
 		this.anions = anions;
 	}
