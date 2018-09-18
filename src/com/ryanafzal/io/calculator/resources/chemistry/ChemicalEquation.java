@@ -54,10 +54,21 @@ public abstract class ChemicalEquation implements ILaTeXValue {
 		return res;
 	}
 	
-	//TODO
 	@Override
 	public String getLaTeXString() {
-		return "10";
+		String output = this.reactants[0].getLaTeXString();
+		
+		for (int i = 1; i < this.reactants.length; i++) {
+			output += (" + " + this.reactants[i].getLaTeXString());
+		}
+		
+		output += (" -> " + this.products[0].getLaTeXString());
+		
+		for (int i = 1; i < this.products.length; i++) {
+			output += this.products[i].getLaTeXString();
+		}
+		
+		return output;
 	}
 	
 	@Override

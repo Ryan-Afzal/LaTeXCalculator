@@ -8,4 +8,8 @@ public class CompleteIonicEquation extends ChemicalEquation {
 		super(reactants, products);
 	}
 	
+	public NetIonicEquation getNetIonicEquation() {
+		return null;
+	}
+	
 }

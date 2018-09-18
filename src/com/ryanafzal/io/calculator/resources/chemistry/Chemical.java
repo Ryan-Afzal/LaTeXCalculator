@@ -78,6 +78,10 @@ public class Chemical implements IChemical {
 			}
 		}
 		
+		if (this.charge != 0) {
+			result += ("^" + this.charge);
+		}
+		
 		return result;
 	}
 

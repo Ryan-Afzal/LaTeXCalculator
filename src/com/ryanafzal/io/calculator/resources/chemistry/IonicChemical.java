@@ -1,12 +1,7 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
+//TODO Everything
 public class IonicChemical implements IChemical {
-
-	private Chemical cation;
-	private Chemical anion;
-	
-	private int num_cation;
-	private int num_anion;
 	
 	public IonicChemical() {
 		
@@ -19,7 +14,7 @@ public class IonicChemical implements IChemical {
 
 	@Override
 	public double getMolarMass() {
-		return (cation.getMolarMass() * num_cation) + (anion.getMolarMass() * num_anion);
+		return 0.0;
 	}
 
 	@Override
