@@ -5,8 +5,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
-import com.ryanafzal.io.calculator.resources.chemistry.Chemical;
-import com.ryanafzal.io.calculator.resources.chemistry.MolecularEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
@@ -23,9 +22,9 @@ import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public class Stoichiometry {
 	
-	private MolecularEquation equation;
+	private ChemicalEquation equation;
 	
-	public Stoichiometry(MolecularEquation equation) {
+	public Stoichiometry(ChemicalEquation equation) {
 		this.equation = equation;
 	}
 	

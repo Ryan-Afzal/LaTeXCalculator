@@ -85,14 +85,16 @@ public class Chemical implements IChemical {
 		return result;
 	}
 
+	//TODO
 	@Override
 	public String getEmpiricalFormula() {
 		return null;
 	}
 
+	//TODO
 	@Override
 	public String getIUPACName() {
-		return null;
+		return this.getMolecularFormula();
 	}
 	
 	@Override
@@ -102,7 +104,7 @@ public class Chemical implements IChemical {
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Chemical && ((Chemical) o).getLaTeXString().equals(this.getLaTeXString())) {
+		if (o instanceof IChemical && ((IChemical) o).getLaTeXString().equals(this.getLaTeXString())) {
 			return true;
 		}
 		return false;

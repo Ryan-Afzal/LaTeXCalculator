@@ -57,7 +57,7 @@ public class Atom implements IChemical {
 
 	@Override
 	public int getCharge() {
-		// TODO Atom charges
+		// TODO NEEDS IMPLEMENTATION!!!!!!!!!!
 		return 0;
 	}
 	

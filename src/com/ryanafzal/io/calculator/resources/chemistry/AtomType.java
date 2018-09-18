@@ -21,8 +21,6 @@ public enum AtomType {
 	CHLORINE("Chlorine", "Cl", 17, 35.453),
 	ARGON("Argon", "Ar", 18, 39.0983);
 	
-	
-	
 	private String name;
 	private String symbol;
 	private int number;

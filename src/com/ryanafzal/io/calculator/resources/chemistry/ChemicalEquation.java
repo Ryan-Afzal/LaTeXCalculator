@@ -12,7 +12,7 @@ public abstract class ChemicalEquation implements ILaTeXValue {
 	private ChemicalValue[] reactants;
 	private ChemicalValue[] products;
 	
-	public ChemicalEquation(ChemicalValue[] reactants, ChemicalValue[] products) {
+	public ChemicalEquation(ChemicalValue[] reactants, ChemicalValue[] products) {		
 		this.reactants = reactants;
 		this.products = products;
 	}

@@ -19,14 +19,16 @@ public class IonicChemical implements IChemical {
 			}
 		}
 		
-		for (int i = 0; i < cations.length; i++) {
-			if (!cations[i].getIUPACName().equals(anion_name)) {
+		for (int i = 0; i < anions.length; i++) {
+			if (!anions[i].getIUPACName().equals(anion_name)) {
 				throw new IllegalArgumentException("Anions must be of the same chemical type.");
 			}
 		}
 		
-		if ((Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum() + 
-			Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum()) != 0) {
+		double cation_sum = Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum();
+		double anion_sum = Arrays.asList(anions).stream().map(IChemical::getCharge).mapToInt(num -> num).sum();
+		
+		if ((cation_sum + anion_sum) != 0) {
 			throw new IllegalArgumentException("Ionic Compounds must have a net charge of 0.");
 		}
 		
