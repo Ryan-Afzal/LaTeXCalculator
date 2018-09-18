@@ -3,8 +3,18 @@ package com.ryanafzal.io.calculator.resources.chemistry;
 //TODO Everything
 public class IonicChemical implements IChemical {
 	
-	public IonicChemical() {
-		
+	/*
+	 * {
+	 * 	{chemicals}
+	 *  {cooefficients}
+	 * }
+	 */
+	private Chemical[] cations;
+	private Chemical[] anions;
+	
+	public IonicChemical(Chemical[] cations, Chemical[] anions) {
+		this.cations = cations;
+		this.anions = anions;
 	}
 	
 	@Override
@@ -14,7 +24,17 @@ public class IonicChemical implements IChemical {
 
 	@Override
 	public double getMolarMass() {
-		return 0.0;
+		double mass = 0;
+		
+		for (int i = 0; i < cations.length; i++) {
+			mass += (cations[i].getMolarMass());
+		}
+		
+		for (int i = 0; i < anions.length; i++) {
+			mass += (anions[i].getMolarMass());
+		}
+		
+		return mass;
 	}
 
 	@Override
