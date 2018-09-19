@@ -6,12 +6,14 @@ public class Atom implements IChemical {
 	private String symbol;
 	private int number;
 	private double mass;
+	private int charge;
 	
-	public Atom(AtomType atom) {
+	public Atom(AtomType atom, int charge) {
 		this.name = atom.getName();
 		this.symbol = atom.getSymbol();
 		this.number = atom.getAtomicNumber();
 		this.mass = atom.getAtomicMass();
+		this.charge = charge;
 	}
 	
 	public String getName() {
@@ -57,8 +59,7 @@ public class Atom implements IChemical {
 
 	@Override
 	public int getCharge() {
-		// TODO NEEDS IMPLEMENTATION!!!!!!!!!!
-		return 0;
+		return this.charge;
 	}
 	
 }

@@ -25,7 +25,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Atom[] water_atoms = new Atom[] {new Atom(AtomType.HYDROGEN), new Atom(AtomType.OXYGEN), new Atom(AtomType.HYDROGEN)};
+		Atom[] water_atoms = new Atom[] {new Atom(AtomType.HYDROGEN, 1), new Atom(AtomType.OXYGEN, -2), new Atom(AtomType.HYDROGEN, 1)};
 		Chemical water = new Chemical(water_atoms, new Bond[] {
 				new Bond(water_atoms[0], BondType.SINGLE, water_atoms[1]), 
 				new Bond(water_atoms[1], BondType.SINGLE, water_atoms[2])}, 0);
@@ -104,20 +104,20 @@ public class Main {
 						new ChemicalValue(3, new MoleUnit(), co2, ChemicalState.GAS),
 						new ChemicalValue(4, new MoleUnit(), water, ChemicalState.GAS)}
 				);*/
-		Atom[] NaOH_a = new Atom[] {new Atom(AtomType.OXYGEN), new Atom(AtomType.HYDROGEN)};
+		Atom[] NaOH_a = new Atom[] {new Atom(AtomType.OXYGEN, -2), new Atom(AtomType.HYDROGEN, 1)};
 		
 		IChemical NaOH = new IonicChemical(
 				new Atom[] {
-						new Atom(AtomType.SODIUM)}, 
+						new Atom(AtomType.SODIUM, 1)}, 
 				new Chemical[] {
 						new Chemical(
 								NaOH_a, 
 								new Bond[] {new Bond(NaOH_a[0], BondType.SINGLE, NaOH_a[1])}, 
 								-1)});
 		
-		IChemical HCl = new IonicChemical(new Atom[] {new Atom(AtomType.HYDROGEN)}, new Atom[] {new Atom(AtomType.CHLORINE)});
+		IChemical HCl = new IonicChemical(new Atom[] {new Atom(AtomType.HYDROGEN, 1)}, new Atom[] {new Atom(AtomType.CHLORINE, -1)});
 		
-		IChemical NaCl = new IonicChemical(new Atom[] {new Atom(AtomType.SODIUM)}, new Atom[] {new Atom(AtomType.CHLORINE)});
+		IChemical NaCl = new IonicChemical(new Atom[] {new Atom(AtomType.SODIUM, 1)}, new Atom[] {new Atom(AtomType.CHLORINE, -1)});
 		
 		ChemicalEquation equation = new MolecularEquation(
 				new ChemicalValue[] {
@@ -151,7 +151,7 @@ public class Main {
 			 * Displaying the solved problem
 			 */
 			
-			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage(output.getLaTeXString()))));
+			frame.add(new JLabel(new ImageIcon(new Render().getRenderedImage("\\[" + output.getLaTeXString() + "\\]"))));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
