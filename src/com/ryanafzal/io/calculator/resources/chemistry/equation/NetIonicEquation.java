@@ -1,4 +1,4 @@
-package com.ryanafzal.io.calculator.resources.chemistry;
+package com.ryanafzal.io.calculator.resources.chemistry.equation;
 
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 

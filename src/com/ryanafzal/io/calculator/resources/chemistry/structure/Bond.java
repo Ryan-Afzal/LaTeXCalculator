@@ -1,4 +1,4 @@
-package com.ryanafzal.io.calculator.resources.chemistry;
+package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
 public class Bond {
 	

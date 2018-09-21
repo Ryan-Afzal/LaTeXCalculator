@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
-import com.ryanafzal.io.calculator.resources.chemistry.ChemicalEquation;
-import com.ryanafzal.io.calculator.resources.chemistry.IChemical;
+import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.equations.LaTeXBlock;

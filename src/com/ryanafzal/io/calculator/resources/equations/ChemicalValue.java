@@ -1,7 +1,7 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-import com.ryanafzal.io.calculator.resources.chemistry.IChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 
 /**
