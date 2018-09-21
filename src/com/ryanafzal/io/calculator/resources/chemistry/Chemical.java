@@ -110,10 +110,6 @@ public class Chemical implements IChemical {
 		return false;
 	}
 	
-	public static Chemical makeChemicalFromName(String name) {
-		return null;
-	}
-	
 	@Override
 	public boolean isMath() {
 		return true;
