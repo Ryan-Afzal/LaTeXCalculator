@@ -38,7 +38,7 @@ public class Group {
 	 * @param RIndex The index of the R placeholder on the new group.
 	 * @param atomIndex The index of the atom or R placeholder on this group. If it is an atom, then it will be replaced. 
 	 */
-	public void attachGroup(Group group, int RIndex, int atomIndex) {
+	public void attachGroup(Group group, int RIndex, int atomIndex) throws StructuralException {
 		
 		if (!(this.subs[atomIndex] instanceof RConstruct)) {
 			this.subs[atomIndex] = new RConstruct();
@@ -52,19 +52,42 @@ public class Group {
 		ArrayList<BondConstruct> bonds_this = new ArrayList<BondConstruct>(Arrays.asList(this.bonds));
 		List<BondConstruct> bonds_other = Arrays.asList(group.getBondConstructs());
 		
-		for (BondConstruct bond : bonds_other) {
-			
+		RIndex = RIndex + subs_other.size();
+		
+		subs_this.addAll(subs_other);
+		bonds_this.addAll(bonds_other);
+		
+		//Find the bond that is attached to atomIndex
+		BondConstruct bond_from_this = bonds_this.stream().filter(bond -> bond.getAtom1() == atomIndex || bond.getAtom2() == atomIndex).findFirst().orElse(null);
+		
+		if (bond_from_this == null) {
+			throw new StructuralException();
 		}
 		
-		for (BondConstruct bond: bonds_other) {
-			
+		int attachment_point_this;
+		
+		if (bond_from_this.getAtom1() == atomIndex) {
+			attachment_point_this = bond_from_this.getAtom2();
+		} else {
+			attachment_point_this = bond_from_this.getAtom1();
 		}
 		
-		//Remove the R values, and merge the two lists.
-		SubstituentConstruct r_this = subs_this.get(atomIndex);
-		SubstituentConstruct r_other = subs_other.get(RIndex);
+		//Find the bond that is attached to RIndex
+		BondConstruct bond_from_other = bonds_this.stream().filter(bond -> bond.getAtom1() == atomIndex || bond.getAtom2() == atomIndex).findFirst().orElse(null);
 		
+		if (bond_from_other == null) {
+			throw new StructuralException();
+		}
 		
+		int attachment_point_other;
+		
+		if (bond_from_other.getAtom1() == atomIndex) {
+			attachment_point_other = bond_from_other.getAtom2();
+		} else {
+			attachment_point_other = bond_from_other.getAtom1();
+		}
+		
+		//bonds_this.remove(bond_from_this);
 		
 	}
 	

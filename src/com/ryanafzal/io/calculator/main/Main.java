@@ -41,21 +41,33 @@ public class Main {
 			 * Displaying the solved problem
 			 */
 			
-			Chemical methane = new Group(
+			Group methylgroup = new Group(
 					new SubstituentConstruct[] {
 							new AtomConstruct(AtomType.HYDROGEN, 1),
 							new AtomConstruct(AtomType.HYDROGEN, 1),
 							new AtomConstruct(AtomType.HYDROGEN, 1),
 							new AtomConstruct(AtomType.CARBON, -4),
-							new AtomConstruct(AtomType.HYDROGEN, 1)
+							new RConstruct()
 					}, 
 					new BondConstruct[] {
 							new BondConstruct(0, BondType.SINGLE, 3),
 							new BondConstruct(1, BondType.SINGLE, 3),
 							new BondConstruct(2, BondType.SINGLE, 3),
-							new BondConstruct(3, BondType.SINGLE, 4)
-					})
-			.createChemicalFromGroup();
+							new BondConstruct(4, BondType.SINGLE, 3),
+					});
+			
+			Group hydrogengroup = new Group(
+					new SubstituentConstruct[] {
+							new AtomConstruct(AtomType.HYDROGEN, 1),
+							new RConstruct()
+							}, 
+					new BondConstruct[] {
+							new BondConstruct(0, BondType.SINGLE, 1)
+							});
+			
+			methylgroup.attachGroup(hydrogengroup, 1, 4);
+			
+			Chemical methane = methylgroup.createChemicalFromGroup();
 			
 			System.out.println(methane.getMolecularFormula());
 			
