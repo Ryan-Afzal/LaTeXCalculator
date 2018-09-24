@@ -52,7 +52,14 @@ public class Group {
 		ArrayList<BondConstruct> bonds_this = new ArrayList<BondConstruct>(Arrays.asList(this.bonds));
 		List<BondConstruct> bonds_other = Arrays.asList(group.getBondConstructs());
 		
-		RIndex = RIndex + subs_other.size();
+		
+		RIndex = RIndex + subs_this.size();
+		
+		//Apply the index shift on bonds_other
+		for (BondConstruct bond : bonds_other) {
+			bond.setAtom1(bond.getAtom1() + subs_this.size());
+			bond.setAtom2(bond.getAtom2() + subs_this.size());
+		}
 		
 		subs_this.addAll(subs_other);
 		bonds_this.addAll(bonds_other);
@@ -72,23 +79,43 @@ public class Group {
 			attachment_point_this = bond_from_this.getAtom1();
 		}
 		
+		final int temp_RIndex = RIndex;
+		
 		//Find the bond that is attached to RIndex
-		BondConstruct bond_from_other = bonds_this.stream().filter(bond -> bond.getAtom1() == atomIndex || bond.getAtom2() == atomIndex).findFirst().orElse(null);
+		BondConstruct bond_from_other = bonds_other.stream().filter(bond -> bond.getAtom1() == temp_RIndex || bond.getAtom2() == temp_RIndex).findFirst().orElse(null);
 		
 		if (bond_from_other == null) {
 			throw new StructuralException();
 		}
 		
-		int attachment_point_other;
-		
 		if (bond_from_other.getAtom1() == atomIndex) {
-			attachment_point_other = bond_from_other.getAtom2();
+			bond_from_other.setAtom2(attachment_point_this);
 		} else {
-			attachment_point_other = bond_from_other.getAtom1();
+			bond_from_other.setAtom1(attachment_point_this);
 		}
 		
-		//bonds_this.remove(bond_from_this);
+		bonds_this.remove(bond_from_this);
 		
+		//Apply the index shift on bonds_other
+		for (BondConstruct bond : bonds_other) {
+			if (bond.getAtom1() > RIndex) {
+				bond.setAtom1(bond.getAtom1() - 2);
+			} else if (bond.getAtom1() > atomIndex) {
+				bond.setAtom1(bond.getAtom1() - 1);
+			}
+			
+			if (bond.getAtom2() > RIndex) {
+				bond.setAtom2(bond.getAtom2() - 2);
+			} else if (bond.getAtom2() > atomIndex) {
+				bond.setAtom2(bond.getAtom2() - 1);
+			}
+		}
+		
+		subs_this.remove(RIndex);
+		subs_this.remove(atomIndex);
+		
+		this.subs = subs_this.toArray(new SubstituentConstruct[] {});
+		this.bonds = bonds_this.toArray(new BondConstruct[] {});
 	}
 	
 	/**

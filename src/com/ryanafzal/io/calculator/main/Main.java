@@ -56,20 +56,25 @@ public class Main {
 							new BondConstruct(4, BondType.SINGLE, 3),
 					});
 			
-			Group hydrogengroup = new Group(
+			Group carboxylgroup = new Group(
 					new SubstituentConstruct[] {
+							new RConstruct(),
 							new AtomConstruct(AtomType.HYDROGEN, 1),
-							new RConstruct()
+							new AtomConstruct(AtomType.OXYGEN, -2),
+							new AtomConstruct(AtomType.OXYGEN, -2),
+							new AtomConstruct(AtomType.CARBON, -4),
 							}, 
 					new BondConstruct[] {
-							new BondConstruct(0, BondType.SINGLE, 1)
+							new BondConstruct(0, BondType.SINGLE, 4),
+							new BondConstruct(4, BondType.DOUBLE, 3),
+							new BondConstruct(4, BondType.SINGLE, 2),
+							new BondConstruct(1, BondType.SINGLE, 2),
 							});
 			
-			methylgroup.attachGroup(hydrogengroup, 1, 4);
+			methylgroup.attachGroup(carboxylgroup, 0, 4);
 			
-			Chemical methane = methylgroup.createChemicalFromGroup();
-			
-			System.out.println(methane.getMolecularFormula());
+			Chemical ethanoic_acid = methylgroup.createChemicalFromGroup();
+			System.out.println(ethanoic_acid.getMolecularFormula());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
