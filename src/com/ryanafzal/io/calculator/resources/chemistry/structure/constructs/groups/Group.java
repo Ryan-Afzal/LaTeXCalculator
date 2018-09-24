@@ -1,5 +1,6 @@
 package com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.groups;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +32,47 @@ public class Group {
 		return this.bonds;
 	}
 	
-	public void attachGroup(Group group, int RIndex, int atomIndex) throws StructuralException {
-		SubstituentConstruct[] subs_other = group.getConstructs();
+	/**
+	 * 
+	 * @param group The group to attach.
+	 * @param RIndex The index of the R placeholder on the new group.
+	 * @param atomIndex The index of the atom or R placeholder on this group. If it is an atom, then it will be replaced. 
+	 */
+	public void attachGroup(Group group, int RIndex, int atomIndex) {
+		
+		if (!(this.subs[atomIndex] instanceof RConstruct)) {
+			this.subs[atomIndex] = new RConstruct();
+		}
+		
+		//Make two lists, one for each Constructs array.
+		ArrayList<SubstituentConstruct> subs_this = new ArrayList<SubstituentConstruct>(Arrays.asList(this.subs));
+		List<SubstituentConstruct> subs_other = Arrays.asList(group.getConstructs());
+		
+		//Make two lists, one for each BondConstructs array.
+		ArrayList<BondConstruct> bonds_this = new ArrayList<BondConstruct>(Arrays.asList(this.bonds));
+		List<BondConstruct> bonds_other = Arrays.asList(group.getBondConstructs());
+		
+		for (BondConstruct bond : bonds_other) {
+			
+		}
+		
+		for (BondConstruct bond: bonds_other) {
+			
+		}
+		
+		//Remove the R values, and merge the two lists.
+		SubstituentConstruct r_this = subs_this.get(atomIndex);
+		SubstituentConstruct r_other = subs_other.get(RIndex);
+		
 		
 		
 	}
 	
+	/**
+	 * Creates a new <tt>Chemical</tt> from this <tt>Group</tt>.
+	 * @return Returns a new <tt>Chemical</tt> represented by this <tt>Groups</tt>
+	 * @throws StructuralException If there is still an <tt>RConstruct</tt> in this <tt>Group</tt>.
+	 */
 	public Chemical createChemicalFromGroup() throws StructuralException {
 		List<SubstituentConstruct> subs_list = Arrays.asList(this.subs);
 		

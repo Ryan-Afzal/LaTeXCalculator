@@ -30,6 +30,14 @@ public class BondConstruct {
 		return this.atom2;
 	}
 	
+	public void setAtom1(int atom1) {
+		this.atom1 = atom1;
+	}
+	
+	public void setAtom2(int atom2) {
+		this.atom2 = atom2;
+	}
+	
 	public Bond getBondFromConstruct(Atom[] atoms) {
 		return new Bond(atoms[this.atom1], this.bond, atoms[this.atom2]);
 	}
