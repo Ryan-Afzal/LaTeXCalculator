@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Atom;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.AtomType;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Bond;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Chemical;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.AtomConstruct;
@@ -16,8 +17,8 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.Subs
 
 public class Group {
 
-	SubstituentConstruct[] subs;
-	BondConstruct[] bonds;
+	private SubstituentConstruct[] subs;
+	private BondConstruct[] bonds;
 	
 	public Group(SubstituentConstruct[] subs, BondConstruct[] bonds) {
 		this.subs = subs;
@@ -33,10 +34,22 @@ public class Group {
 	}
 	
 	/**
-	 * 
-	 * @param group The group to attach.
-	 * @param RIndex The index of the R placeholder on the new group.
-	 * @param atomIndex The index of the atom or R placeholder on this group. If it is an atom, then it will be replaced. 
+	 * Replaces the <tt>RConstructs</tt> in this Group with Hydrogen <tt>AtomConstructs</tt>.
+	 */
+	public void replaceRValues() {
+		for (int i = 0; i < this.subs.length; i++) {
+			if (this.subs[i] instanceof RConstruct) {
+				this.subs[i] = new AtomConstruct(AtomType.HYDROGEN, 1);
+			}
+		}
+	}
+	
+	/**
+	 * Attaches another Group to this group.
+	 * @param group The Group to attach.
+	 * @param RIndex The index of the RConstruct on the provided group.
+	 * @param atomIndex The index of the attachment point on this Group, if it is not an RConstruct, it will be turned into one.
+	 * @throws StructuralException If there is a problem in attaching the Group.
 	 */
 	public void attachGroup(Group group, int RIndex, int atomIndex) throws StructuralException {
 		
@@ -68,7 +81,7 @@ public class Group {
 		BondConstruct bond_from_this = bonds_this.stream().filter(bond -> bond.getAtom1() == atomIndex || bond.getAtom2() == atomIndex).findFirst().orElse(null);
 		
 		if (bond_from_this == null) {
-			throw new StructuralException();
+			throw new StructuralException("The R Construct is not bonded to anything.");
 		}
 		
 		int attachment_point_this;

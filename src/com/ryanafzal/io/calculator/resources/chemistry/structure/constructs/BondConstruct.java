@@ -42,4 +42,9 @@ public class BondConstruct {
 		return new Bond(atoms[this.atom1], this.bond, atoms[this.atom2]);
 	}
 	
+	@Override
+	public BondConstruct clone() {
+		return new BondConstruct(this.atom1, this.bond, this.atom2);
+	}
+	
 }

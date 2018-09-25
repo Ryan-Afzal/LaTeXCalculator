@@ -16,5 +16,10 @@ public class AtomConstruct implements SubstituentConstruct {
 	public Atom getAtomFromConstruct() {
 		return new Atom(this.atom, this.charge);
 	}
+	
+	@Override
+	public AtomConstruct clone() {
+		return new AtomConstruct(this.atom, this.charge);
+	}
 
 }

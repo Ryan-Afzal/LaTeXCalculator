@@ -5,7 +5,7 @@ public class StructuralException extends Exception {
 	private static final long serialVersionUID = -1309153004531638471L;
 
 	public StructuralException() {
-		
+		this("Structural Exception");
 	}
 
 	public StructuralException(String arg0) {

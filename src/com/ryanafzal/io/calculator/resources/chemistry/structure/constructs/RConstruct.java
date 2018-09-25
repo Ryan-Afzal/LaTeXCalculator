@@ -10,5 +10,10 @@ public class RConstruct implements SubstituentConstruct {
 	public RConstruct() {
 		
 	}
+	
+	@Override
+	public RConstruct clone() {
+		return new RConstruct();
+	}
 
 }
