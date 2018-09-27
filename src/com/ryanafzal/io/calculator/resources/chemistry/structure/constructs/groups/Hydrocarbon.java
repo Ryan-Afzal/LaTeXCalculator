@@ -11,26 +11,20 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.Subs
 
 public class Hydrocarbon extends Group {
 
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * REPLACE WITH CH3-CH2-CH3 Style BONDING SYSTEM!
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
 	private Hydrocarbon(SubstituentConstruct[] subs, BondConstruct[] bonds) {
 		super(subs, bonds);
 	}
 	
-	public static Hydrocarbon getAliphaticHydrocarbon(int num_carbon, boolean cyclic, BondType[] carbon_bond_pattern) {
+	
+	
+	/**
+	 * Generates a new <tt>Hydrocarbon</tt> 
+	 * @param num_carbon
+	 * @param cyclic
+	 * @param carbon_bond_pattern
+	 * @return
+	 */
+	public static Hydrocarbon getHydrocarbon(int num_carbon, boolean cyclic, BondType[] carbon_bond_pattern) {
 		
 		if (cyclic && num_carbon < 3) {
 			throw new IllegalArgumentException("A cyclic hydrocarbon must have at least 3 carbon atoms.");
@@ -50,6 +44,24 @@ public class Hydrocarbon extends Group {
 			throw new IllegalArgumentException("The supplied bond pattern of " + Arrays.toString(carbon_bond_pattern) + " is not the correct length.");
 		}
 		
+		if (num_carbon < 1) {
+			throw new IllegalArgumentException("A hydrocarbon must contain at least one carbon atom.");
+		} else if (num_carbon == 1) {
+			return new Hydrocarbon(
+					new SubstituentConstruct[] {
+						new AtomConstruct(AtomType.CARBON, -4), 
+						new RConstruct(),
+						new RConstruct(),
+						new RConstruct(),
+						new RConstruct()},
+					new BondConstruct[] {
+							new BondConstruct(0, BondType.SINGLE, 1),
+							new BondConstruct(0, BondType.SINGLE, 2),
+							new BondConstruct(0, BondType.SINGLE, 3),
+							new BondConstruct(0, BondType.SINGLE, 4)
+					});
+		}
+		
 		for (BondType i : carbon_bond_pattern) {
 			if (i == BondType.TRIPLE) {
 				num_triple++;
@@ -64,6 +76,7 @@ public class Hydrocarbon extends Group {
 		if (!cyclic) {
 			num_r += 2;
 		}
+		
 		SubstituentConstruct[] subs = new SubstituentConstruct[num_r + num_carbon];
 		
 		BondConstruct[] bonds;
@@ -85,84 +98,88 @@ public class Hydrocarbon extends Group {
 			subs[i] = new RConstruct();
 		}
 		
+		BondType bond_previous;
+		BondType bond_this = carbon_bond_pattern[0];
 		
-		int start = num_carbon;
-		int bond = 0;
-		//Attach the carbon atoms to their corresponding values
-		for (int c = 0; c < num_carbon - 1; c++) {
-			int depth;
-			BondType bond_pattern = carbon_bond_pattern[c];
-			if (bond_pattern == BondType.TRIPLE) {
-				depth = 0;
-			} else if (bond_pattern == BondType.DOUBLE) {
-				depth = 1;
-			} else {
-				depth = 2;
+		//If the molecule is cyclic 
+		if (cyclic) {
+			bond_previous = carbon_bond_pattern[num_carbon - 1];
+		} else {
+			bond_previous = BondType.SINGLE;
+		}
+		
+		int current_carbon = 0;
+		int current_bond = 0;
+		int current_R = num_carbon;
+		
+		int num_attached_r = getNumR(bond_previous, bond_this);
+		
+		bonds[current_bond] = new BondConstruct(current_carbon, bond_this, current_carbon + 1);
+		current_bond++;
+		
+		for (int i = 0; i < num_attached_r; i++) {
+			bonds[current_bond] = new BondConstruct(current_carbon, BondType.SINGLE, current_R);
+			current_bond++;
+			current_R++;
+		}
+		
+		//Rest of carbon chain
+		for (current_carbon = 1; current_carbon < num_carbon - 1; current_carbon++) {
+			bond_previous = carbon_bond_pattern[current_carbon - 1];
+			bond_this = carbon_bond_pattern[current_carbon];
+			
+			num_attached_r = getNumR(bond_previous, bond_this);
+			
+			bonds[current_bond] = new BondConstruct(current_carbon, bond_this, current_carbon + 1);
+			current_bond++;
+			
+			for (int k = 0; k < num_attached_r; k++) {
+				bonds[current_bond] = new BondConstruct(current_carbon, BondType.SINGLE, current_R);
+				current_bond++;
+				current_R++;
 			}
-			
-			bonds[bond] = new BondConstruct(c, bond_pattern, c + 1);
-			bond++;
-			
-			for (int i = start; i < start + depth; i++) {
-				bonds[bond] = new BondConstruct(c, BondType.SINGLE, i);
-				bond++;
-			}
-			
-			start += depth;
+		}
+		
+		//Polish the final carbon, and either attach the two ends, or attach final R-components
+		bond_previous = carbon_bond_pattern[num_carbon - 2];
+		if (cyclic) {
+			bond_this = carbon_bond_pattern[num_carbon - 1];
+		} else {
+			bond_this = BondType.SINGLE;
+		}
+		
+		num_attached_r = getNumR(bond_previous, bond_this);
+		for (int k = 0; k < num_attached_r; k++) {
+			bonds[current_bond] = new BondConstruct(current_carbon, BondType.SINGLE, current_R);
+			current_bond++;
+			current_R++;
 		}
 		
 		if (cyclic) {
-			int c = num_carbon - 1;
-			int depth;
-			BondType bond_pattern = carbon_bond_pattern[c];
-			if (bond_pattern == BondType.TRIPLE) {
-				depth = 0;
-			} else if (bond_pattern == BondType.DOUBLE) {
-				depth = 1;
-			} else {
-				depth = 2;
-			}
-			
-			bonds[bond] = new BondConstruct(c, bond_pattern, 0);
-			bond++;
-			
-			for (int i = start; i < start + depth; i++) {
-				bonds[bond] = new BondConstruct(c, BondType.SINGLE, i);
-				bond++;
-			}
-			
-			start += depth;
-		} else if (num_carbon == 1) {
-			for (int i = start; i < start + 2; i++) {
-				bonds[bond] = new BondConstruct(0, BondType.SINGLE, i);
-				bond++;
-			}
-			
-			bonds[bonds.length - 2] = new BondConstruct(0, BondType.SINGLE, subs.length - 2);
-			bonds[bonds.length - 1] = new BondConstruct(num_carbon - 1, BondType.SINGLE, subs.length - 1);
+			bonds[current_bond] = new BondConstruct(current_carbon, bond_this, 0);
 		} else {
-			int c = num_carbon - 2;
-			int depth;
-			BondType bond_pattern = carbon_bond_pattern[c];
-			if (bond_pattern == BondType.TRIPLE) {
-				depth = 0;
-			} else if (bond_pattern == BondType.DOUBLE) {
-				depth = 1;
-			} else {
-				depth = 2;
-			}
-			
-			c++;
-			
-			for (int i = start; i < start + depth; i++) {
-				bonds[bond] = new BondConstruct(c, BondType.SINGLE, i);
-				bond++;
-			}
-			bonds[bonds.length - 2] = new BondConstruct(0, BondType.SINGLE, subs.length - 2);
-			bonds[bonds.length - 1] = new BondConstruct(num_carbon - 1, BondType.SINGLE, subs.length - 1);
+			bonds[current_bond] = new BondConstruct(0, BondType.SINGLE, current_R);
+			bonds[current_bond + 1] = new BondConstruct(current_carbon, BondType.SINGLE, current_R + 1);
 		}
 		
 		return new Hydrocarbon(subs, bonds);
+	}
+	
+	private static int getNumR(BondType previous_bond, BondType this_bond) {
+		if (previous_bond == BondType.SINGLE && this_bond == BondType.SINGLE) {
+			return 2;
+		} else if ((previous_bond == BondType.SINGLE && this_bond == BondType.DOUBLE) || (previous_bond == BondType.DOUBLE && this_bond == BondType.SINGLE)) {
+			return 1;
+		} else if (
+				(previous_bond == BondType.DOUBLE && this_bond == BondType.DOUBLE) 
+				|| (previous_bond == BondType.TRIPLE && this_bond == BondType.SINGLE) 
+				|| (previous_bond == BondType.SINGLE && this_bond == BondType.TRIPLE)) {
+			
+			return 0;
+		} else {
+			throw new IllegalArgumentException("The bond values " + previous_bond.getBond() + ", "  + this_bond.getBond() + "are invalid.");
+		}
+		
 	}
 
 }

@@ -14,19 +14,21 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			
-			Group hydrocarbon = Hydrocarbon.getAliphaticHydrocarbon(
-				4, 
+			Group hydrocarbon = Hydrocarbon.getHydrocarbon(
+				6, 
 				true, 
 				new BondType[] {
 					BondType.SINGLE,
 					BondType.DOUBLE, 
 					BondType.SINGLE, 
-					BondType.SINGLE}
+					BondType.DOUBLE,
+					BondType.SINGLE,
+					BondType.DOUBLE,}
 				);
 			hydrocarbon.replaceRValues();
-			Chemical propane_chemical = hydrocarbon.createChemicalFromGroup();
+			Chemical chemical = hydrocarbon.createChemicalFromGroup();
 			
-			System.out.println(propane_chemical.getLaTeXString());
+			System.out.println(chemical.getLaTeXString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
