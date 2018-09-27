@@ -11,6 +11,21 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.Subs
 
 public class Hydrocarbon extends Group {
 
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * REPLACE WITH CH3-CH2-CH3 Style BONDING SYSTEM!
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
 	private Hydrocarbon(SubstituentConstruct[] subs, BondConstruct[] bonds) {
 		super(subs, bonds);
 	}
@@ -45,7 +60,7 @@ public class Hydrocarbon extends Group {
 			}
 		}
 		
-		int num_r = ((num_carbon * 2) - (num_double * 2) - (num_triple * 3));
+		int num_r = ((num_carbon * 2) - (num_double * 2) - (num_triple * 4));
 		if (!cyclic) {
 			num_r += 2;
 		}

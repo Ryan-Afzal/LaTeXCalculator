@@ -14,10 +14,17 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			
-			
-			Group propane = Hydrocarbon.getAliphaticHydrocarbon(2, false, new BondType[] {BondType.SINGLE});
-			propane.replaceRValues();
-			Chemical propane_chemical = propane.createChemicalFromGroup();
+			Group hydrocarbon = Hydrocarbon.getAliphaticHydrocarbon(
+				4, 
+				true, 
+				new BondType[] {
+					BondType.SINGLE,
+					BondType.DOUBLE, 
+					BondType.SINGLE, 
+					BondType.SINGLE}
+				);
+			hydrocarbon.replaceRValues();
+			Chemical propane_chemical = hydrocarbon.createChemicalFromGroup();
 			
 			System.out.println(propane_chemical.getLaTeXString());
 		} catch (Exception e) {
