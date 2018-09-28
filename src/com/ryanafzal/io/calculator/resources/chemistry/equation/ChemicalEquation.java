@@ -13,6 +13,11 @@ public abstract class ChemicalEquation implements ILaTeXValue {
 	private ChemicalValue[] reactants;
 	private ChemicalValue[] products;
 	
+	/**
+	 * Creates a new <tt>ChemicalEquation</tt> from the specified reactants and products. 
+	 * @param reactants An array of the reactants. Units must be <tt>MoleUnit</tt>!
+	 * @param products An array of the products. Units must be <tt>MoleUnit</tt>!
+	 */
 	public ChemicalEquation(ChemicalValue[] reactants, ChemicalValue[] products) {		
 		this.reactants = reactants;
 		this.products = products;
