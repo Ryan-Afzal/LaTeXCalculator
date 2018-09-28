@@ -15,6 +15,11 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.RCon
 import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.StructuralException;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.SubstituentConstruct;
 
+/**
+ * Represents a functional group, or more broadly a blueprint for a unique chemical.
+ * @author s-afzalr
+ *
+ */
 public class Group {
 
 	private SubstituentConstruct[] subs;
@@ -36,12 +41,14 @@ public class Group {
 	/**
 	 * Replaces the <tt>RConstructs</tt> in this Group with Hydrogen <tt>AtomConstructs</tt>.
 	 */
-	public void replaceRValues() {
+	public Group replaceRValues() {
 		for (int i = 0; i < this.subs.length; i++) {
 			if (this.subs[i] instanceof RConstruct) {
 				this.subs[i] = new AtomConstruct(AtomType.HYDROGEN, 1);
 			}
 		}
+		
+		return this;
 	}
 	
 	/**

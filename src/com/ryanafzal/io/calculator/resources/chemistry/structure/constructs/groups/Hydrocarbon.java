@@ -9,6 +9,11 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.Bond
 import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.RConstruct;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.SubstituentConstruct;
 
+/**
+ * Represents a hydrocarbon. Used as the backbone of an organic compound.
+ * @author s-afzalr
+ *
+ */
 public class Hydrocarbon extends Group {
 
 	private Hydrocarbon(SubstituentConstruct[] subs, BondConstruct[] bonds) {

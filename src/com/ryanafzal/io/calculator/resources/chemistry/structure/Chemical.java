@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Stores data about a chemical, such as molar mass.
+ * Stores data about a chemical. It stores the atoms, and the bonds between them.
  * @author s-afzalr
  *
  */

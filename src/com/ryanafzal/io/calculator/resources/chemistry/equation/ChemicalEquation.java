@@ -8,6 +8,11 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 
+/**
+ * Represents a chemical equation. 
+ * @author s-afzalr
+ *
+ */
 public abstract class ChemicalEquation implements ILaTeXValue {
 
 	private ChemicalValue[] reactants;
