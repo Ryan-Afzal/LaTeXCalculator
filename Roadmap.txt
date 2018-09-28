@@ -5,7 +5,7 @@
 =====================
 
 - IUPAC Name Implementation
-
+	* PubChem implementation
 - Additional Mathematical Functionality
 	* Additional Stoichiometric Functions
 		' Limiting Reactant
@@ -13,6 +13,17 @@
 	* Gas Laws
 		' Ideal Gas Law
 		' Combined Gas Law
+
+	* Thermochemistry
+		' Heat Transfer
+	
+	* Electrochemistry
+	
+	* Predicting Reactions
+		' Predicting Ionic Reactions
+		' Solubility Rules
+		' Activity Series
+	* Redox Reactions
 
 =====================
 
@@ -23,3 +34,4 @@
 
 * ! Unable to display Multi-Equation Results
 * Ions can have multiple bonds, but the cation and anion need to be the same. Or do they?
+	| FIX | Ionic compounds will be modeled in the same way as covalent chemicals.
