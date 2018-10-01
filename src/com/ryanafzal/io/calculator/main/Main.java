@@ -25,6 +25,8 @@ public class Main {
 					.replaceRValues()
 					.createChemicalFromGroup();
 			
+			System.out.println(propane.getLaTeXString());
+			
 			Atom[] atoms_oxygen = {
 					new Atom(AtomType.OXYGEN, -2),
 					new Atom(AtomType.OXYGEN, -2)
@@ -72,7 +74,17 @@ public class Main {
 							new ChemicalValue(4, new MoleUnit(), water, ChemicalState.GAS)
 					});
 			
+			System.out.println(equation.getLaTeXString());
+			
 			Stoichiometry stoichiometry = new Stoichiometry(equation);
+			
+			ChemicalValue startingvalue = new ChemicalValue(
+					100, 
+					new QuantityUnit(), 
+					propane, 
+					ChemicalState.GAS);
+			
+			System.out.println(startingvalue);
 			
 			JFrame frame = new JFrame("LaTeXCalculator Test");
 			
@@ -80,11 +92,7 @@ public class Main {
 					.getRenderedImage(
 							"$$" + stoichiometry
 								.solveFor(
-										new ChemicalValue(
-												100, 
-												new QuantityUnit(), 
-												propane, 
-												ChemicalState.GAS), 
+										startingvalue, 
 										water, 
 										new QuantityUnit())
 								.getLaTeXString()

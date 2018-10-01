@@ -99,7 +99,13 @@ public class Chemical implements IChemical {
 	
 	@Override
 	public String getLaTeXString() {
-		return this.getMolecularFormula();
+		String output = this.getMolecularFormula();
+		
+		if (this.charge != 0) {
+			output += ("^" + this.charge);
+		}
+		
+		return output;
 	}
 	
 	@Override

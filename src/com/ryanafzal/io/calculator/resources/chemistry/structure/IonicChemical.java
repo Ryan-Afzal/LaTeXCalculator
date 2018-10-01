@@ -2,29 +2,22 @@ package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
+import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
+import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 
 //TODO Everything
 public class IonicChemical implements IChemical {
 	
 	private IChemical[] cations;
 	private IChemical[] anions;
+	private Bond[] bonds;
 	
-	public IonicChemical(IChemical[] cations, IChemical[] anions) {
-		String cation_name = cations[0].getIUPACName();
-		String anion_name = anions[0].getIUPACName();
-		
-		for (int i = 0; i < cations.length; i++) {
-			if (!cations[i].getIUPACName().equals(cation_name)) {
-				throw new IllegalArgumentException("Cations must be of the same chemical type.");
-			}
-		}
-		
-		for (int i = 0; i < anions.length; i++) {
-			if (!anions[i].getIUPACName().equals(anion_name)) {
-				throw new IllegalArgumentException("Anions must be of the same chemical type.");
-			}
-		}
-		
+	public IonicChemical(IChemical[] cations, IChemical[] anions, Bond[] bonds) {
 		double cation_sum = Arrays.asList(cations).stream().map(IChemical::getCharge).mapToInt(num -> num).sum();
 		double anion_sum = Arrays.asList(anions).stream().map(IChemical::getCharge).mapToInt(num -> num).sum();
 		
@@ -34,6 +27,44 @@ public class IonicChemical implements IChemical {
 		
 		this.cations = cations;
 		this.anions = anions;
+		this.bonds = bonds;
+	}
+	
+	public ChemicalValue[] splitAqueous() {		
+		HashMap<IChemical, Integer> cations = new HashMap<IChemical, Integer>();
+		HashMap<IChemical, Integer> anions = new HashMap<IChemical, Integer>();
+		
+		for (int i = 0; i < this.cations.length; i++) {
+			IChemical cation = this.cations[i];
+			
+			if (cations.containsKey(cation)) {
+				cations.put(cation, cations.get(cation) + 1);
+			} else {
+				cations.put(cation, 1);
+			}
+		}
+		
+		for (int i = 0; i < this.anions.length; i++) {
+			IChemical anion = this.anions[i];
+			
+			if (anions.containsKey(anion)) {
+				anions.put(anion, anions.get(anion) + 1);
+			} else {
+				anions.put(anion, 1);
+			}
+		}
+		
+		Set<ChemicalValue> output = new HashSet<ChemicalValue>();
+		cations.putAll(anions);
+
+		Iterator<IChemical> i = cations.keySet().iterator();
+		
+		while (i.hasNext()) {
+			IChemical key = i.next();
+			output.add(new ChemicalValue(cations.get(key), new MoleUnit(), key,  ChemicalState.AQUEOUS));
+		}
+		
+		return output.toArray(new ChemicalValue[] {});
 	}
 	
 	@Override
@@ -119,5 +150,5 @@ public class IonicChemical implements IChemical {
 	public int getCharge() {
 		return 0;
 	}
-
+	
 }

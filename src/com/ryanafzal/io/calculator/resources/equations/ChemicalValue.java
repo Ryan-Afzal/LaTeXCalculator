@@ -30,7 +30,13 @@ public class ChemicalValue extends UnitValue {
 	
 	@Override
 	public String getLaTeXString() {
-		return super.getLaTeXString() + "\\, " + this.getChemical().getLaTeXString() + "\\left(" + this.state.getSymbol() + "\\right)";
+		String string = this.getChemical().getLaTeXString();
+		
+		if (Character.isAlphabetic(string.charAt(string.length() - 1))) {
+			return super.getLaTeXString() + "\\, " + string + "_(" + this.state.getSymbol() + ")";
+		} else {
+			return super.getLaTeXString() + "\\, " + string + "\\,_(" + this.state.getSymbol() + ")";
+		}
 	}
 
 }

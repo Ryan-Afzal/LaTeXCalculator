@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 
+import net.sourceforge.jeuclid.LayoutContext;
 import net.sourceforge.jeuclid.MathMLParserSupport;
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
 import net.sourceforge.jeuclid.converter.Converter;

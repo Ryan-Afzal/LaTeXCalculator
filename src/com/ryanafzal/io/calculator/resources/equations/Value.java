@@ -14,7 +14,7 @@ public class Value implements ILaTeXValue {
 		return this.value;
 	}
 	
-	protected void setValue(double value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 	

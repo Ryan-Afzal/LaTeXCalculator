@@ -15,8 +15,8 @@ import com.ryanafzal.io.calculator.resources.equations.EquationException;
  */
 public abstract class ChemicalEquation implements ILaTeXValue {
 
-	private ChemicalValue[] reactants;
-	private ChemicalValue[] products;
+	protected ChemicalValue[] reactants;
+	protected ChemicalValue[] products;
 	
 	/**
 	 * Creates a new <tt>ChemicalEquation</tt> from the specified reactants and products. 
