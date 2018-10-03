@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -22,7 +23,6 @@ public class Calculator extends Application {
 		primaryStage.setTitle(TITLE);
 		
 		TextField inputField = new TextField();
-		inputField.setPromptText("command");
 		inputField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -33,7 +33,7 @@ public class Calculator extends Application {
 		});
 		
 		BorderPane root = new BorderPane();
-		root.getChildren().add(inputField);
+		root.setCenter(new StackPane(inputField));
 		
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
 		primaryStage.show();
