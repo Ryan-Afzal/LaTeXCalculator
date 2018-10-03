@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -18,22 +17,47 @@ public class Calculator extends Application {
 	
 	private Processor processor;
 	
+	private OutputArea outputArea;
+	private TextField inputField;
+	
+	public Calculator() {
+		super();
+		
+		this.processor = new Processor(this);
+	}
+	
+	protected OutputArea getOutputArea() {
+		return this.outputArea;
+	}
+	
+	protected TextField getInputField() {
+		return this.inputField;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(TITLE);
 		
-		TextField inputField = new TextField();
+		this.outputArea = new OutputArea();
+		this.outputArea.setEditable(false);
+		
+		this.inputField = new TextField();
 		inputField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				processor.processCommand(inputField.getText());
-				
+				String text = inputField.getText();
+				processor.processCommand(text);
+				outputArea.addLine(text);
 				inputField.setText("");
 			}
 		});
 		
+		StackPane centerPane = new StackPane();
+		centerPane.getChildren().add(this.outputArea);
+		centerPane.getChildren().add(this.inputField);
+		
 		BorderPane root = new BorderPane();
-		root.setCenter(new StackPane(inputField));
+		root.setCenter(centerPane);
 		
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
 		primaryStage.show();

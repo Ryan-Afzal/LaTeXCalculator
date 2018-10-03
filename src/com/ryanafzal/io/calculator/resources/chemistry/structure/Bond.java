@@ -2,21 +2,21 @@ package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
 public class Bond {
 	
-	private Atom atom1;
+	private IChemical atom1;
 	private BondType bond;
-	private Atom atom2;
+	private IChemical atom2;
 	
-	public Bond(Atom atom1, BondType bond, Atom atom2) {
+	public Bond(IChemical atom1, BondType bond, IChemical atom2) {
 		this.atom1 = atom1;
 		this.bond = bond;
 		this.atom2 = atom2;
 	}
 	
-	public Atom getAtom1() {
+	public IChemical getIChemical1() {
 		return this.atom1;
 	}
 	
-	public Atom getAtom2() {
+	public IChemical getIChemical2() {
 		return this.atom2;
 	}
 	
