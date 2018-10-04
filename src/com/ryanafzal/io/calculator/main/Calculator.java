@@ -1,14 +1,18 @@
 package com.ryanafzal.io.calculator.main;
 
+import com.ryanafzal.io.calculator.environment.Environment;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -19,7 +23,7 @@ public class Calculator extends Application {
 	public static final double HEIGHT = 250;
 	
 	private Processor processor;
-	
+	private Environment environment;
 	
 	
 	//Toolbar
@@ -44,6 +48,11 @@ public class Calculator extends Application {
 		super();
 		
 		this.processor = new Processor(this);
+		this.environment = new Environment(this);
+	}
+	
+	protected Environment getEnvironment() {
+		return this.environment;
 	}
 	
 	protected OutputArea getOutputArea() {
@@ -67,10 +76,13 @@ public class Calculator extends Application {
 		this.fileMenu = new Menu("File");
 		
 		this.file_item_new = new MenuItem("New");
+		this.file_item_new.setOnAction((ActionEvent e) -> this.environment.makeNewExperiment());
 		this.fileMenu.getItems().add(this.file_item_new);
 		
 		this.file_item_open = new MenuItem("Open");
 		this.fileMenu.getItems().add(this.file_item_open);
+		
+		this.fileMenu.getItems().add(new SeparatorMenuItem());
 		
 		this.file_item_save = new MenuItem("Save");
 		this.fileMenu.getItems().add(this.file_item_save);
@@ -92,10 +104,9 @@ public class Calculator extends Application {
 		root.setTop(this.menubar);
 		
 		//Center
-		StackPane centerPane = new StackPane();
+		VBox centerPane = new VBox();
 		
 		this.outputArea = new OutputArea();
-		this.outputArea.setEditable(false);
 		centerPane.getChildren().add(this.outputArea);
 		
 		this.inputField = new TextField();
