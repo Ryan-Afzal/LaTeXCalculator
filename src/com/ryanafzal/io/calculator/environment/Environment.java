@@ -1,5 +1,6 @@
 package com.ryanafzal.io.calculator.environment;
 
+import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -31,6 +32,18 @@ public class Environment {
 	
 	public boolean isSaved() {
 		return this.isSaved;
+	}
+	
+	public void open(File file) {
+		//TODO
+	}
+	
+	public void save() {
+		//TODO
+	}
+	
+	public void saveas() {
+		//TODO
 	}
 	
 	public void undo() {

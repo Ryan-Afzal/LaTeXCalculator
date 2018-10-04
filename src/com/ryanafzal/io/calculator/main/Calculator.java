@@ -1,5 +1,8 @@
 package com.ryanafzal.io.calculator.main;
 
+import java.awt.Desktop;
+import java.io.File;
+
 import com.ryanafzal.io.calculator.environment.Environment;
 
 import javafx.application.Application;
@@ -14,6 +17,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Calculator extends Application {
@@ -25,6 +29,7 @@ public class Calculator extends Application {
 	private Processor processor;
 	private Environment environment;
 	
+	private Desktop desktop = Desktop.getDesktop();
 	
 	//Toolbar
 	private MenuBar menubar;
@@ -67,6 +72,14 @@ public class Calculator extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(TITLE);
 		
+		final FileChooser filechooser = new FileChooser();
+		filechooser.setTitle("View Pictures");
+        filechooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        filechooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("All Files", "*.*"),
+            new FileChooser.ExtensionFilter("Experiment", "*.txt")
+        );
+		
 		BorderPane root = new BorderPane();
 		
 		//Menu Bar
@@ -80,6 +93,12 @@ public class Calculator extends Application {
 		this.fileMenu.getItems().add(this.file_item_new);
 		
 		this.file_item_open = new MenuItem("Open");
+		this.file_item_open.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+			}
+		});
 		this.fileMenu.getItems().add(this.file_item_open);
 		
 		this.fileMenu.getItems().add(new SeparatorMenuItem());
