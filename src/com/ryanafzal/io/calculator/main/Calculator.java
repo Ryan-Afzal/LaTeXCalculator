@@ -26,6 +26,9 @@ public class Calculator extends Application {
 	public static final double WIDTH = 300;
 	public static final double HEIGHT = 250;
 	
+	public static final String FILEPATH = "C:/Users/s-afzalr/Documents/LaTeXCalculator/";
+	public static final String EXPERIMENT_FILE_EXTENSION = "txt";
+	
 	private Processor processor;
 	private Environment environment;
 	
@@ -72,14 +75,6 @@ public class Calculator extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(TITLE);
 		
-		final FileChooser filechooser = new FileChooser();
-		filechooser.setTitle("View Pictures");
-        filechooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        filechooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("All Files", "*.*"),
-            new FileChooser.ExtensionFilter("Experiment", "*.txt")
-        );
-		
 		BorderPane root = new BorderPane();
 		
 		//Menu Bar
@@ -96,7 +91,18 @@ public class Calculator extends Application {
 		this.file_item_open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Open Experiment");
+				fileChooser.setInitialDirectory(new File(FILEPATH));
+				fileChooser.getExtensionFilters().addAll(
+		                new FileChooser.ExtensionFilter("All Files", "*.*"),
+		                new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION)
+		                );
 				
+				File file = fileChooser.showOpenDialog(primaryStage);
+                if (file != null) {
+                    environment.open(file);
+                }
 			}
 		});
 		this.fileMenu.getItems().add(this.file_item_open);
@@ -107,6 +113,23 @@ public class Calculator extends Application {
 		this.fileMenu.getItems().add(this.file_item_save);
 		
 		this.file_item_saveas = new MenuItem("Save As");
+		this.file_item_saveas.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Save Experiment As");
+				fileChooser.setInitialDirectory(new File(FILEPATH));
+				fileChooser.getExtensionFilters().addAll(
+		                new FileChooser.ExtensionFilter("All Files", "*.*"),
+		                new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION)
+		                );
+				
+				File file = fileChooser.showOpenDialog(primaryStage);
+                if (file != null) {
+                    environment.open(file);
+                }
+			}
+		});
 		this.fileMenu.getItems().add(this.file_item_saveas);
 		
 		this.menubar.getMenus().add(this.fileMenu);

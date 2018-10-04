@@ -38,11 +38,11 @@ public class Environment {
 		//TODO
 	}
 	
-	public void save() {
+	public void save(File file) {
 		//TODO
 	}
 	
-	public void saveas() {
+	public void saveas(File file) {
 		//TODO
 	}
 	
