@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -17,6 +20,23 @@ public class Calculator extends Application {
 	
 	private Processor processor;
 	
+	
+	
+	//Toolbar
+	private MenuBar menubar;
+	
+	private Menu fileMenu;
+	private MenuItem file_item_new;
+	private MenuItem file_item_open;
+	private MenuItem file_item_save;
+	private MenuItem file_item_saveas;
+	
+	private Menu editMenu;
+	private MenuItem edit_item_undo;
+	private MenuItem edit_item_redo;
+	
+	
+	//UI Controls
 	private OutputArea outputArea;
 	private TextField inputField;
 	
@@ -38,8 +58,45 @@ public class Calculator extends Application {
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle(TITLE);
 		
+		BorderPane root = new BorderPane();
+		
+		//Menu Bar
+		this.menubar = new MenuBar();
+		
+		//File Menu
+		this.fileMenu = new Menu("File");
+		
+		this.file_item_new = new MenuItem("New");
+		this.fileMenu.getItems().add(this.file_item_new);
+		
+		this.file_item_open = new MenuItem("Open");
+		this.fileMenu.getItems().add(this.file_item_open);
+		
+		this.file_item_save = new MenuItem("Save");
+		this.fileMenu.getItems().add(this.file_item_save);
+		
+		this.file_item_saveas = new MenuItem("Save As");
+		this.fileMenu.getItems().add(this.file_item_saveas);
+		
+		this.menubar.getMenus().add(this.fileMenu);
+		
+		//Edit Menu
+		this.editMenu = new Menu();
+		this.editMenu.setText("Edit");
+		
+		
+		
+		this.menubar.getMenus().add(this.editMenu);
+		
+		//Finalize Menu Bar
+		root.setTop(this.menubar);
+		
+		//Center
+		StackPane centerPane = new StackPane();
+		
 		this.outputArea = new OutputArea();
 		this.outputArea.setEditable(false);
+		centerPane.getChildren().add(this.outputArea);
 		
 		this.inputField = new TextField();
 		inputField.setOnAction(new EventHandler<ActionEvent>() {
@@ -51,14 +108,11 @@ public class Calculator extends Application {
 				inputField.setText("");
 			}
 		});
-		
-		StackPane centerPane = new StackPane();
-		centerPane.getChildren().add(this.outputArea);
 		centerPane.getChildren().add(this.inputField);
 		
-		BorderPane root = new BorderPane();
-		root.setCenter(centerPane);
 		
+		
+		root.setCenter(centerPane);
 		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
 		primaryStage.show();
 	}
