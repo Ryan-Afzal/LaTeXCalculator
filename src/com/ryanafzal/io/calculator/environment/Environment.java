@@ -12,9 +12,10 @@ public class Environment {
 	//TODO Redo
 	
 	private Experiment currentExperiment;
-	private Calculator calculator;
-	
+	private File experimentFile = null;
 	private boolean isSaved;
+	
+	private Calculator calculator;
 	
 	public Environment(Calculator calculator) {
 		this.calculator = calculator;
@@ -35,10 +36,19 @@ public class Environment {
 	}
 	
 	public void open(File file) {
+		if (!isSaved) {
+			//TODO Make a dialgo box and confirm 'open'.
+			return;
+		}
+		
 		//TODO
 	}
 	
-	public void save(File file) {
+	public void save() {
+		if (this.experimentFile == null) {
+			//TODO Save As
+		}
+		
 		//TODO
 	}
 	

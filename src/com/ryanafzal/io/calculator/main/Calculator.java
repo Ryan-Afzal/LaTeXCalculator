@@ -47,7 +47,6 @@ public class Calculator extends Application {
 	private MenuItem edit_item_undo;
 	private MenuItem edit_item_redo;
 	
-	
 	//UI Controls
 	private OutputArea outputArea;
 	private TextField inputField;
@@ -110,6 +109,12 @@ public class Calculator extends Application {
 		this.fileMenu.getItems().add(new SeparatorMenuItem());
 		
 		this.file_item_save = new MenuItem("Save");
+		this.file_item_save.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				environment.save();
+			}
+		});
 		this.fileMenu.getItems().add(this.file_item_save);
 		
 		this.file_item_saveas = new MenuItem("Save As");
@@ -125,9 +130,7 @@ public class Calculator extends Application {
 		                );
 				
 				File file = fileChooser.showOpenDialog(primaryStage);
-                if (file != null) {
-                    environment.open(file);
-                }
+                environment.saveas(file);
 			}
 		});
 		this.fileMenu.getItems().add(this.file_item_saveas);
