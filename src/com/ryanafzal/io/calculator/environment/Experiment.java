@@ -1,9 +1,11 @@
 package com.ryanafzal.io.calculator.environment;
 
-public class Experiment {
+import java.io.Serializable;
 
+public class Experiment implements Serializable {
+	
 	public Experiment() {
-		// TODO Auto-generated constructor stub
+		//TODO
 	}
 	
 	public static Experiment getBlankExperiment() {

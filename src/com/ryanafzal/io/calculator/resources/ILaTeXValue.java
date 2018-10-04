@@ -1,6 +1,8 @@
 package com.ryanafzal.io.calculator.resources;
 
-public interface ILaTeXValue {
+import java.io.Serializable;
+
+public interface ILaTeXValue extends Serializable {
 	/**
 	 * Returns a LaTeX {@code String} representing this object.
 	 * @return Returns a LaTeX-Formatted {@code String}

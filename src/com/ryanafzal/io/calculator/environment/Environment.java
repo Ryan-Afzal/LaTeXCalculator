@@ -1,6 +1,10 @@
 package com.ryanafzal.io.calculator.environment;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -37,23 +41,62 @@ public class Environment {
 	
 	public void open(File file) {
 		if (!isSaved) {
-			//TODO Make a dialgo box and confirm 'open'.
+			//TODO Make a dialog box and confirm 'open'.
 			return;
 		}
 		
-		//TODO
+		Experiment exp = this.readFromFile(file);
+		if (exp != null) {
+			this.currentExperiment = exp;
+		}
+	}
+	
+	private void writeToFile(File file, Experiment experiment) {		
+		try {
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file));
+			
+			output.writeObject(experiment);
+			output.flush();
+			
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private Experiment readFromFile(File file) {
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream(file));
+			Experiment experiment = (Experiment) input.readObject();
+			input.close();
+			
+			return experiment;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public void save() {
 		if (this.experimentFile == null) {
-			//TODO Save As
+			this.saveas();
+		} else {
+			this.writeToFile(this.experimentFile, this.currentExperiment);
 		}
-		
-		//TODO
 	}
 	
-	public void saveas(File file) {
-		//TODO
+	public void saveas() {
+		this.experimentFile = this.calculator.getFileFromSaveDialog("Save As");
+		if (this.experimentFile != null) {
+			this.save();
+		}
 	}
 	
 	public void undo() {

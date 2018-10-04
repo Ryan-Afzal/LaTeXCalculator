@@ -1,6 +1,5 @@
 package com.ryanafzal.io.calculator.main;
 
-import java.awt.Desktop;
 import java.io.File;
 
 import com.ryanafzal.io.calculator.environment.Environment;
@@ -14,7 +13,6 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -23,16 +21,16 @@ import javafx.stage.Stage;
 public class Calculator extends Application {
 	
 	public static final String TITLE = "Advanced Calculator";
-	public static final double WIDTH = 300;
-	public static final double HEIGHT = 250;
+	public static final double WIDTH = 1000;
+	public static final double HEIGHT = 750;
 	
 	public static final String FILEPATH = "C:/Users/s-afzalr/Documents/LaTeXCalculator/";
-	public static final String EXPERIMENT_FILE_EXTENSION = "txt";
+	public static final String EXPERIMENT_FILE_EXTENSION = "exp";
+	
+	private Stage primaryStage;
 	
 	private Processor processor;
 	private Environment environment;
-	
-	private Desktop desktop = Desktop.getDesktop();
 	
 	//Toolbar
 	private MenuBar menubar;
@@ -62,6 +60,30 @@ public class Calculator extends Application {
 		return this.environment;
 	}
 	
+	public File getFileFromDialog(String name) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(name);
+		fileChooser.setInitialDirectory(new File(FILEPATH));
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+                );
+		
+		return fileChooser.showOpenDialog(this.primaryStage);
+	}
+	
+	public File getFileFromSaveDialog(String name) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(name);
+		fileChooser.setInitialDirectory(new File(FILEPATH));
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+                );
+		
+		return fileChooser.showSaveDialog(this.primaryStage);
+	}
+	
 	protected OutputArea getOutputArea() {
 		return this.outputArea;
 	}
@@ -70,8 +92,13 @@ public class Calculator extends Application {
 		return this.inputField;
 	}
 	
+	public void outputMessage(String message) {
+		this.outputArea.addLine(message);
+	}
+	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
+		this.primaryStage = stage;
 		primaryStage.setTitle(TITLE);
 		
 		BorderPane root = new BorderPane();
@@ -90,18 +117,7 @@ public class Calculator extends Application {
 		this.file_item_open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Open Experiment");
-				fileChooser.setInitialDirectory(new File(FILEPATH));
-				fileChooser.getExtensionFilters().addAll(
-		                new FileChooser.ExtensionFilter("All Files", "*.*"),
-		                new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION)
-		                );
-				
-				File file = fileChooser.showOpenDialog(primaryStage);
-                if (file != null) {
-                    environment.open(file);
-                }
+				environment.open(getFileFromDialog("Open Experiment"));
 			}
 		});
 		this.fileMenu.getItems().add(this.file_item_open);
@@ -121,16 +137,7 @@ public class Calculator extends Application {
 		this.file_item_saveas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Save Experiment As");
-				fileChooser.setInitialDirectory(new File(FILEPATH));
-				fileChooser.getExtensionFilters().addAll(
-		                new FileChooser.ExtensionFilter("All Files", "*.*"),
-		                new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION)
-		                );
-				
-				File file = fileChooser.showOpenDialog(primaryStage);
-                environment.saveas(file);
+                environment.saveas();
 			}
 		});
 		this.fileMenu.getItems().add(this.file_item_saveas);
