@@ -17,5 +17,9 @@ public class Variable {
 	public IVariable getValue() {
 		return this.value;
 	}
+	
+	public void setValue(IVariable value) {
+		this.value = value;
+	}
 
 }

@@ -1,15 +1,13 @@
 package com.ryanafzal.io.calculator.command;
 
-import java.util.List;
-
 import com.ryanafzal.io.calculator.environment.Environment;
 
 public abstract class UndoableCommand extends Command {
 
-	protected UndoableCommand(List<String> names, CommandRegistry registry) {
-		super(names, registry);
+	public UndoableCommand(String name, Environment environment) {
+		super(name, environment);
 	}
 	
-	public abstract void undo(Environment environment);
+	public abstract void undo(String[] args);
 
 }

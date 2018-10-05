@@ -2,13 +2,24 @@ package com.ryanafzal.io.calculator.environment;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
+import com.ryanafzal.io.calculator.command.Command;
+import com.ryanafzal.io.calculator.command.ListCommand;
+import com.ryanafzal.io.calculator.command.SetVariableCommand;
 import com.ryanafzal.io.calculator.main.Calculator;
+import com.ryanafzal.io.calculator.main.Constants;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 
 public class Environment {
 
@@ -17,12 +28,18 @@ public class Environment {
 	
 	private Experiment currentExperiment;
 	private File experimentFile = null;
-	private boolean isSaved;
+	private boolean isSaved = true;
 	
 	private Calculator calculator;
 	
+	private ArrayList<Command> commands;
+	
 	public Environment(Calculator calculator) {
 		this.calculator = calculator;
+		
+		this.commands = new ArrayList<Command>();
+		this.commands.add(new ListCommand(this));
+		this.commands.add(new SetVariableCommand(this));
 		
 		//Config I/O
 		
@@ -30,12 +47,15 @@ public class Environment {
 	}
 	
 	public void makeNewExperiment() {
-		if (!isSaved) {
-			//TODO Make a dialog box and confirm 'new'.
+		if (!isSaved && !confirmOverride("New Experiment")) {
 			return;
 		}
 		
 		this.currentExperiment = Experiment.getBlankExperiment();
+	}
+	
+	public Experiment getCurrentExperiment() {
+		return this.currentExperiment;
 	}
 	
 	public boolean isSaved() {
@@ -43,8 +63,7 @@ public class Environment {
 	}
 	
 	public void open(File file) {
-		if (!isSaved) {
-			//TODO Make a dialog box and confirm 'open'.
+		if (!isSaved && !confirmOverride("Open")) {
 			return;
 		}
 		
@@ -52,6 +71,30 @@ public class Environment {
 		if (exp != null) {
 			this.currentExperiment = exp;
 		}
+	}
+	
+	private boolean confirmOverride(String type) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirm " + type);
+		alert.setContentText("The current experiment is unsaved. Do you wish to proceed?");
+		
+		ButtonType buttonSave = new ButtonType("Save");
+		ButtonType buttonNoSave = new ButtonType("Don't Save");
+		ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonSave, buttonNoSave, buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonSave) {
+			this.save();
+			return true;
+		} else if (result.get() == buttonNoSave) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		
 	}
 	
 	private void writeToFile(File file, Experiment experiment) {		
@@ -108,6 +151,35 @@ public class Environment {
 	
 	public void redo() {
 		//TODO
+	}
+	
+	public Command getCommandAt(int i) {
+		return this.commands.get(i);
+	}
+	
+	public Command getCommandFromName(String name) {
+		return this.commands.stream().filter(command -> command.getName().equals(name)).findFirst().orElse(null);
+	}
+	
+	public int size() {
+		return this.commands.size();
+	}
+	
+	public void processCommand(String command) {
+		String outputString = "";
+		
+		String[] args = command.split(" ");
+		
+		Command c = this.getCommandFromName(command.substring(1));
+		
+		if (args[0].charAt(0) != Constants.COMMAND_OPERATOR || c == null) {
+			this.calculator.outputMessage("\"" + command + "\" is not a valid command. Type " + Constants.COMMAND_OPERATOR + "list for a list of commands.");
+		} else {
+			outputString = c.run(Arrays.copyOf(args, 1));
+		}
+		if (!outputString.equals("")) {
+			this.calculator.outputMessage(outputString);
+		}
 	}
 
 }

@@ -22,7 +22,6 @@ public class Calculator extends Application {
 	
 	private Stage primaryStage;
 	
-	private Processor processor;
 	private Environment environment;
 	
 	//Toolbar
@@ -45,16 +44,11 @@ public class Calculator extends Application {
 	public Calculator() {
 		super();
 		
-		this.processor = new Processor(this);
 		this.environment = new Environment(this);
 	}
 	
 	protected Environment getEnvironment() {
 		return this.environment;
-	}
-	
-	protected Processor getProcessor() {
-		return this.processor;
 	}
 	
 	public File getFileFromDialog(String name) {
@@ -137,7 +131,11 @@ public class Calculator extends Application {
 		this.editMenu = new Menu();
 		this.editMenu.setText("Edit");
 		
+		this.edit_item_undo = new MenuItem("Undo");
+		this.editMenu.getItems().add(this.edit_item_undo);
 		
+		this.edit_item_redo = new MenuItem("Redo");
+		this.editMenu.getItems().add(this.edit_item_redo);
 		
 		this.menubar.getMenus().add(this.editMenu);
 		
@@ -156,7 +154,7 @@ public class Calculator extends Application {
 			public void handle(ActionEvent event) {
 				String text = inputField.getText();
 				outputArea.addLine(text);
-				processor.processCommand(text);
+				environment.processCommand(text);
 				inputField.setText("");
 			}
 		});

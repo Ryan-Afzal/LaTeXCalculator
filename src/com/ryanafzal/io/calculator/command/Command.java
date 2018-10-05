@@ -1,28 +1,26 @@
 package com.ryanafzal.io.calculator.command;
 
-import java.util.List;
-
 import com.ryanafzal.io.calculator.environment.Environment;
 
 public abstract class Command {
 
-	private List<String> names;
-	private CommandRegistry registry;
+	private String name;
+	private Environment environment;
 	
-	protected Command(List<String> names, CommandRegistry registry) {
-		this.names = names;
-		this.registry = registry;
+	public Command(String name, Environment registry) {
+		this.name = name;
+		this.environment = registry;
 	}
 	
-	public List<String> getAllNames() {
-		return this.names;
+	public String getName() {
+		return this.name;
 	}
 	
-	protected CommandRegistry getRegistry() {
-		return this.registry;
+	protected Environment getEnvironment() {
+		return this.environment;
 	}
 	
-	public abstract String run(Environment environment);
+	public abstract String run(String[] args);
 	public abstract String getDescription();
 	
 }
