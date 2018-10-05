@@ -100,7 +100,10 @@ public class Calculator extends Application {
 		this.file_item_open.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				environment.open(getFileFromDialog("Open Experiment"));
+				File file = getFileFromDialog("Open Experiment");
+				if (file != null) {
+					environment.open(file);
+				}
 			}
 		});
 		this.fileMenu.getItems().add(this.file_item_open);
@@ -153,9 +156,11 @@ public class Calculator extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				String text = inputField.getText();
-				outputArea.addLine(text);
-				environment.processCommand(text);
-				inputField.setText("");
+				if (!text.equals("")) {
+					outputArea.addLine(text);
+					environment.processCommand(text);
+					inputField.setText("");
+				}
 			}
 		});
 		centerPane.getChildren().add(this.inputField);

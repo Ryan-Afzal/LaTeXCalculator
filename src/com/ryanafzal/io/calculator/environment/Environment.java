@@ -169,13 +169,12 @@ public class Environment {
 		String outputString = "";
 		
 		String[] args = command.split(" ");
-		
-		Command c = this.getCommandFromName(command.substring(1));
+		Command c = this.getCommandFromName(args[0].substring(1));
 		
 		if (args[0].charAt(0) != Constants.COMMAND_OPERATOR || c == null) {
 			this.calculator.outputMessage("\"" + command + "\" is not a valid command. Type " + Constants.COMMAND_OPERATOR + "list for a list of commands.");
 		} else {
-			outputString = c.run(Arrays.copyOf(args, 1));
+			outputString = c.run(Arrays.copyOf(args, 1));//PROBLEM [-command]
 		}
 		if (!outputString.equals("")) {
 			this.calculator.outputMessage(outputString);

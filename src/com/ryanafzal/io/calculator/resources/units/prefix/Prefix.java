@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.resources.units.prefix;
 
+import java.util.Arrays;
+
 public enum Prefix {
 
 	// p > 1
@@ -38,6 +40,10 @@ public enum Prefix {
 	
 	public double getRatio() {
 		return this.ratio;
+	}
+	
+	public static Prefix getPrefixFromString(String string) {
+		return Arrays.asList(Prefix.values()).stream().filter(prefix -> prefix.getSymbol().equals(string)).findFirst().orElse(NONE);
 	}
 	
 }

@@ -52,4 +52,23 @@ public abstract class Unit implements ILaTeXValue {
 		}
 	}
 	
+	public static Unit getUnitFromString(String string, Prefix prefix) {
+		switch (string) {
+		case "g":
+			return new QuantityUnit(prefix);
+		case "m":
+			return new LengthUnit(prefix);
+		case "m^3":
+			return new VolumeUnit(prefix);
+		case "L":
+			return new FluidVolumeUnit(prefix);
+		default:
+			throw new IllegalArgumentException("String \"" + string + " \" is not a valid unit.");
+		}
+	}
+	
+	public static Unit getUnitFromString(String string) {
+		return getUnitFromString(string, Prefix.NONE);
+	}
+	
 }

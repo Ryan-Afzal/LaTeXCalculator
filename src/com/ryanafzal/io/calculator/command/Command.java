@@ -1,6 +1,7 @@
 package com.ryanafzal.io.calculator.command;
 
 import com.ryanafzal.io.calculator.environment.Environment;
+import com.ryanafzal.io.calculator.main.Constants;
 
 public abstract class Command {
 
@@ -14,6 +15,10 @@ public abstract class Command {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public String getUsage() {
+		return Constants.COMMAND_OPERATOR + this.getName();
 	}
 	
 	protected Environment getEnvironment() {
