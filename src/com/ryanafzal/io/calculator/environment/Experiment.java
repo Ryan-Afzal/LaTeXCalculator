@@ -29,7 +29,7 @@ public class Experiment implements Serializable {
 	}
 	
 	public void setVariable(String variable, IVariable value) {
-		if (doesVariableExist(variable)) {
+		if (!doesVariableExist(variable)) {
 			this.variables.put(variable, new Variable(variable, value));
 		} else {
 			this.variables.get(variable).setValue(value);
@@ -61,6 +61,10 @@ public class Experiment implements Serializable {
 	
 	public boolean doesVariableExist(String variable) {
 		return this.variables.containsKey(variable);
+	}
+	
+	public Variable getVariable(String key) {
+		return this.variables.get(key);
 	}
 	
 	public static Experiment getBlankExperiment() {

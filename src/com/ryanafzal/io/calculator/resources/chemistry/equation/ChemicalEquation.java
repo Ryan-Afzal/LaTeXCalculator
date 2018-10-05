@@ -14,7 +14,7 @@ import com.ryanafzal.io.calculator.resources.equations.IVariable;
  * @author s-afzalr
  *
  */
-public abstract class ChemicalEquation implements ILaTeXValue, IVariable {
+public abstract class ChemicalEquation implements ILaTeXValue {
 
 	protected ChemicalValue[] reactants;
 	protected ChemicalValue[] products;

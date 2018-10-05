@@ -25,6 +25,7 @@ public final class SetVariableCommand extends UndoableCommand {
 		String value = args[1];
 		Experiment exp = this.getEnvironment().getCurrentExperiment();
 		exp.setVariable(variable, exp.getValueFromKey(value));
+		this.getEnvironment().setUnsaved();
 		return "Set variable " + variable + " to " + value;
 	}
 

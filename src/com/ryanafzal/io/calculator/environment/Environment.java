@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import com.ryanafzal.io.calculator.command.Command;
+import com.ryanafzal.io.calculator.command.GetVariableCommand;
 import com.ryanafzal.io.calculator.command.ListCommand;
 import com.ryanafzal.io.calculator.command.SetVariableCommand;
 import com.ryanafzal.io.calculator.main.Calculator;
@@ -40,6 +41,7 @@ public class Environment {
 		this.commands = new ArrayList<Command>();
 		this.commands.add(new ListCommand(this));
 		this.commands.add(new SetVariableCommand(this));
+		this.commands.add(new GetVariableCommand(this));
 		
 		//Config I/O
 		
@@ -52,6 +54,7 @@ public class Environment {
 		}
 		
 		this.currentExperiment = Experiment.getBlankExperiment();
+		this.isSaved = true;
 	}
 	
 	public Experiment getCurrentExperiment() {
@@ -70,6 +73,8 @@ public class Environment {
 		Experiment exp = this.readFromFile(file);
 		if (exp != null) {
 			this.currentExperiment = exp;
+			this.experimentFile = file;
+			this.isSaved = true;
 		}
 	}
 	
@@ -136,6 +141,7 @@ public class Environment {
 		} else {
 			this.writeToFile(this.experimentFile, this.currentExperiment);
 		}
+		this.isSaved = true;
 	}
 	
 	public void saveas() {
@@ -174,11 +180,15 @@ public class Environment {
 		if (args[0].charAt(0) != Constants.COMMAND_OPERATOR || c == null) {
 			this.calculator.outputMessage("\"" + command + "\" is not a valid command. Type " + Constants.COMMAND_OPERATOR + "list for a list of commands.");
 		} else {
-			outputString = c.run(Arrays.copyOf(args, 1));//PROBLEM [-command]
+			outputString = c.run(Arrays.copyOfRange(args, 1, args.length));
 		}
 		if (!outputString.equals("")) {
 			this.calculator.outputMessage(outputString);
 		}
+	}
+	
+	public void setUnsaved() {
+		this.isSaved = false;
 	}
 
 }
