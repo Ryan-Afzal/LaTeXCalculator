@@ -20,13 +20,6 @@ import javafx.stage.Stage;
 
 public class Calculator extends Application {
 	
-	public static final String TITLE = "Advanced Calculator";
-	public static final double WIDTH = 1000;
-	public static final double HEIGHT = 750;
-	
-	public static final String FILEPATH = "C:/Users/s-afzalr/Documents/LaTeXCalculator/";
-	public static final String EXPERIMENT_FILE_EXTENSION = "exp";
-	
 	private Stage primaryStage;
 	
 	private Processor processor;
@@ -60,12 +53,16 @@ public class Calculator extends Application {
 		return this.environment;
 	}
 	
+	protected Processor getProcessor() {
+		return this.processor;
+	}
+	
 	public File getFileFromDialog(String name) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(name);
-		fileChooser.setInitialDirectory(new File(FILEPATH));
+		fileChooser.setInitialDirectory(new File(Constants.FILEPATH));
 		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION),
+				new FileChooser.ExtensionFilter("Experiments", "*." + Constants.EXPERIMENT_FILE_EXTENSION),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
                 );
 		
@@ -75,21 +72,13 @@ public class Calculator extends Application {
 	public File getFileFromSaveDialog(String name) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(name);
-		fileChooser.setInitialDirectory(new File(FILEPATH));
+		fileChooser.setInitialDirectory(new File(Constants.FILEPATH));
 		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("Experiments", "*." + EXPERIMENT_FILE_EXTENSION),
+				new FileChooser.ExtensionFilter("Experiments", "*." + Constants.EXPERIMENT_FILE_EXTENSION),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
                 );
 		
 		return fileChooser.showSaveDialog(this.primaryStage);
-	}
-	
-	protected OutputArea getOutputArea() {
-		return this.outputArea;
-	}
-	
-	protected TextField getInputField() {
-		return this.inputField;
 	}
 	
 	public void outputMessage(String message) {
@@ -99,7 +88,7 @@ public class Calculator extends Application {
 	@Override
 	public void start(Stage stage) {
 		this.primaryStage = stage;
-		primaryStage.setTitle(TITLE);
+		primaryStage.setTitle(Constants.TITLE);
 		
 		BorderPane root = new BorderPane();
 		
@@ -166,17 +155,15 @@ public class Calculator extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				String text = inputField.getText();
-				processor.processCommand(text);
 				outputArea.addLine(text);
+				processor.processCommand(text);
 				inputField.setText("");
 			}
 		});
 		centerPane.getChildren().add(this.inputField);
 		
-		
-		
 		root.setCenter(centerPane);
-		primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+		primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT));
 		primaryStage.show();
 	}
 	

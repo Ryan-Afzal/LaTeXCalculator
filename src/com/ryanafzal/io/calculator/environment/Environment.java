@@ -23,6 +23,9 @@ public class Environment {
 	
 	public Environment(Calculator calculator) {
 		this.calculator = calculator;
+		
+		//Config I/O
+		
 		makeNewExperiment();
 	}
 	

@@ -7,13 +7,14 @@ import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
+import com.ryanafzal.io.calculator.resources.equations.IVariable;
 
 /**
  * Represents a chemical equation. 
  * @author s-afzalr
  *
  */
-public abstract class ChemicalEquation implements ILaTeXValue {
+public abstract class ChemicalEquation implements ILaTeXValue, IVariable {
 
 	protected ChemicalValue[] reactants;
 	protected ChemicalValue[] products;
