@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.command;
 
+import java.util.Arrays;
+
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
@@ -22,7 +24,7 @@ public final class SetVariableCommand extends UndoableCommand {
 		}
 		
 		String variable = args[0];
-		String value = args[1];
+		String[] value = Arrays.copyOfRange(args, 1, args.length - 1);
 		Experiment exp = this.getEnvironment().getCurrentExperiment();
 		exp.setVariable(variable, exp.getValueFromKey(value));
 		this.getEnvironment().setUnsaved();

@@ -1,6 +1,8 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-public class Variable {
+import java.io.Serializable;
+
+public class Variable implements Serializable {
 	
 	private String symbol;
 	private IVariable value;

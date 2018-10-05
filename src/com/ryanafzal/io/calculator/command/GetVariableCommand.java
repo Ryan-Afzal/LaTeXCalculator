@@ -1,6 +1,7 @@
 package com.ryanafzal.io.calculator.command;
 
 import com.ryanafzal.io.calculator.environment.Environment;
+import com.ryanafzal.io.calculator.main.Constants;
 
 public class GetVariableCommand extends Command {
 
@@ -10,7 +11,11 @@ public class GetVariableCommand extends Command {
 
 	@Override
 	public String run(String[] args) {
-		return ">> " + args[0] + " = " + this.getEnvironment().getCurrentExperiment().getVariable(args[0]).getValue().getValue();
+		if (this.getEnvironment().getCurrentExperiment().doesVariableExist(args[0])) {
+			return Constants.COMMAND_CARAT + " " + args[0] + " = " + this.getEnvironment().getCurrentExperiment().getVariable(args[0]).getValue().getValue();
+		} else {
+			return Constants.COMMAND_CARAT + " Variable " + args[0] + " does not exist.";
+		}
 	}
 
 	@Override

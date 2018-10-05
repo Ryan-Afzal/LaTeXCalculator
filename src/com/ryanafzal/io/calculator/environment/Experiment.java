@@ -36,8 +36,8 @@ public class Experiment implements Serializable {
 		}
 	}
 	
-	public IVariable getValueFromKey(String key) {
-		String[] keys = key.split(" ");
+	public IVariable getValueFromKey(String[] keys) {
+		String key = keys[0];
 		
 		if (keys.length == 4) {
 			//Chemical Value
@@ -49,7 +49,14 @@ public class Experiment implements Serializable {
 		
 		if (keys.length == 2) {
 			//Unit value
-			return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(1), Prefix.getPrefixFromString("" + keys[1].charAt(0))));
+			for (Prefix p : Prefix.values()) {
+				int i = keys[1].indexOf(p.getSymbol());
+				
+				if (i != -1) {
+					return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(i), p));
+				}
+			}
+			return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(1)));
 		}
 		
 		if (this.doesVariableExist(key)) {

@@ -13,7 +13,7 @@ public class OutputArea extends TextArea {
 				+ "-fx-highlight-fill: #00ff00; "
 				+ "-fx-highlight-text-fill: #000000; "
 				+ "-fx-text-fill: #00ff00;");
-		this.setPrefRowCount(20);
+		this.setPrefRowCount(40);
 		this.setPrefColumnCount(100);
 	}
 	

@@ -43,9 +43,7 @@ public class Environment {
 		this.commands.add(new SetVariableCommand(this));
 		this.commands.add(new GetVariableCommand(this));
 		
-		//Config I/O
-		
-		makeNewExperiment();
+		this.makeNewExperiment();
 	}
 	
 	public void makeNewExperiment() {
