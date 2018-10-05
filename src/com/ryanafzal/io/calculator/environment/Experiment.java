@@ -2,6 +2,7 @@ package com.ryanafzal.io.calculator.environment;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Arrays;
 import java.util.HashMap;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Chemical;
@@ -38,7 +39,7 @@ public class Experiment implements Serializable {
 	
 	public IVariable getValueFromKey(String[] keys) {
 		String key = keys[0];
-		
+		System.out.println(Arrays.toString(keys));
 		if (keys.length == 4) {
 			//Chemical Value
 		}
