@@ -38,5 +38,10 @@ public class ChemicalValue extends UnitValue {
 			return super.getLaTeXString() + "\\, " + string + "\\,_(" + this.state.getSymbol() + ")";
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + this.chemical.getIUPACName() + "" + this.state.getSymbol();
+	}
 
 }

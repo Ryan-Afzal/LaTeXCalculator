@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Chemical;
+import com.ryanafzal.io.calculator.resources.equations.ExperimentVariable;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
@@ -27,6 +28,9 @@ public class Experiment implements Serializable {
 		this.equations = new HashSet<ChemicalEquation>();
 		
 		this.variables = new HashMap<String, Variable>();
+		/*this.variables.put(
+				"temperature", 
+				new ExperimentVariable("temperature", new UnitValue(25)));*/
 	}
 	
 	public void setVariable(String variable, IVariable value) {
@@ -39,7 +43,6 @@ public class Experiment implements Serializable {
 	
 	public IVariable getValueFromKey(String[] keys) {
 		String key = keys[0];
-		System.out.println(Arrays.toString(keys));
 		if (keys.length == 4) {
 			//Chemical Value
 		}
@@ -51,13 +54,17 @@ public class Experiment implements Serializable {
 		if (keys.length == 2) {
 			//Unit value
 			for (Prefix p : Prefix.values()) {
+				if (p == Prefix.NONE) {
+					continue;
+				}
+				
 				int i = keys[1].indexOf(p.getSymbol());
 				
 				if (i != -1) {
-					return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(i), p));
+					return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(i + p.getSymbol().length()), p));
 				}
 			}
-			return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1].substring(1)));
+			return new UnitValue(Double.parseDouble(keys[0]), Unit.getUnitFromString(keys[1]));
 		}
 		
 		if (this.doesVariableExist(key)) {
