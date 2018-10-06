@@ -62,6 +62,8 @@ public abstract class Unit implements ILaTeXValue {
 			return new VolumeUnit(prefix);
 		case "L":
 			return new FluidVolumeUnit(prefix);
+		case "K":
+			return new TemperatureUnit(prefix);
 		default:
 			throw new IllegalArgumentException("String \"" + string + " \" is not a valid unit.");
 		}

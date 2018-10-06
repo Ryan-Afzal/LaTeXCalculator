@@ -11,6 +11,7 @@ import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.Variable;
+import com.ryanafzal.io.calculator.resources.units.TemperatureUnit;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
@@ -28,9 +29,17 @@ public class Experiment implements Serializable {
 		this.equations = new HashSet<ChemicalEquation>();
 		
 		this.variables = new HashMap<String, Variable>();
-		/*this.variables.put(
-				"temperature", 
-				new ExperimentVariable("temperature", new UnitValue(25)));*/
+		this.variables.put(
+				"T", 
+				new ExperimentVariable(
+						"T", 
+						new UnitValue(
+								25, 
+								new TemperatureUnit()
+								)
+						)
+				);
+		//P variable
 	}
 	
 	public void setVariable(String variable, IVariable value) {
