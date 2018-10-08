@@ -20,15 +20,11 @@ public class GetVariableCommand extends Command {
 		String variable = args[0];
 		
 		//Make sure that 'variable' is a variable
-		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
+		if (!exp.doesVariableExist(variable)) {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
 		}
 		
-		if (this.getEnvironment().getCurrentExperiment().doesVariableExist(args[0])) {
-			return Constants.COMMAND_CARAT + " " + variable + " = " + this.getEnvironment().getCurrentExperiment().getVariable(variable).getValue().toString();
-		} else {
-			return Constants.COMMAND_CARAT + " Variable " + variable + " does not exist.";
-		}
+		return Constants.COMMAND_CARAT + " " + variable + " = " + this.getEnvironment().getCurrentExperiment().getVariable(variable).getValue().toString();
 	}
 
 	@Override

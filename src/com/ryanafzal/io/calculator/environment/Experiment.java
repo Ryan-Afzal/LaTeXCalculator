@@ -73,6 +73,10 @@ public class Experiment implements Serializable {
 		this.variables.remove(variable);
 	}
 	
+	public void deleteChemical(String chemical) {
+		this.chemicals.remove(chemical);
+	}
+	
 	public void addKeyword(String keyword) {
 		this.keywords.add(keyword);
 	}
@@ -136,6 +140,10 @@ public class Experiment implements Serializable {
 	
 	public Variable getVariable(String key) {
 		return this.variables.get(key);
+	}
+	
+	public IChemical getChemical(String key) {
+		return this.chemicals.get(key);
 	}
 	
 	public static Experiment getBlankExperiment() {

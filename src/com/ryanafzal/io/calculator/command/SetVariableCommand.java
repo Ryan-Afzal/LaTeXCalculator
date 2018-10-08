@@ -7,7 +7,7 @@ import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 
-public final class SetVariableCommand extends UndoableCommand {
+public class SetVariableCommand extends UndoableCommand {
 
 	public SetVariableCommand(Environment environment) {
 		super("setvar", environment);
@@ -28,7 +28,7 @@ public final class SetVariableCommand extends UndoableCommand {
 		String variable = args[0];
 		
 		//Make sure that 'variable' is a variable
-		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
+		if (exp.isKeyword(variable) || !exp.doesVariableExist(variable)) {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
 		}
 		

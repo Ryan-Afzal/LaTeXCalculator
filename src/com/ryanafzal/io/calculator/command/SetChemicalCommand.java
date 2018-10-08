@@ -1,13 +1,11 @@
 package com.ryanafzal.io.calculator.command;
 
-import java.util.Arrays;
-
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 
-public final class SetChemicalCommand extends UndoableCommand {
+public class SetChemicalCommand extends UndoableCommand {
 
 	public SetChemicalCommand(Environment environment) {
 		super("setchem", environment);
@@ -28,8 +26,8 @@ public final class SetChemicalCommand extends UndoableCommand {
 		String variable = args[0];
 		
 		//Make sure that 'variable' is a variable
-		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
-			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
+		if (exp.isKeyword(variable) && !exp.doesChemicalExist(variable)) {
+			return Constants.COMMAND_CARAT + " " + variable + " is not a chemical variable.";
 		}
 		
 		//Make sure that the 'chemical' is a chemical
@@ -46,12 +44,12 @@ public final class SetChemicalCommand extends UndoableCommand {
 
 	@Override
 	public String getDescription() {
-		return "Sets the specified chemical to the specified value.";
+		return "Sets the specified variable to the specified chemical.";
 	}
 	
 	@Override
 	public String getUsage() {
-		return super.getUsage() + " <chemical> <value>";
+		return super.getUsage() + " <variable> <chemical>";
 	}
 	
 }

@@ -11,9 +11,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import com.ryanafzal.io.calculator.command.Command;
+import com.ryanafzal.io.calculator.command.DeleteChemicalCommand;
 import com.ryanafzal.io.calculator.command.DeleteVariableCommand;
+import com.ryanafzal.io.calculator.command.GetChemicalCommand;
 import com.ryanafzal.io.calculator.command.GetVariableCommand;
 import com.ryanafzal.io.calculator.command.ListCommand;
+import com.ryanafzal.io.calculator.command.SetChemicalCommand;
 import com.ryanafzal.io.calculator.command.SetVariableCommand;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
@@ -44,6 +47,9 @@ public class Environment {
 		this.commands.add(new SetVariableCommand(this));
 		this.commands.add(new GetVariableCommand(this));
 		this.commands.add(new DeleteVariableCommand(this));
+		this.commands.add(new SetChemicalCommand(this));
+		this.commands.add(new GetChemicalCommand(this));
+		this.commands.add(new DeleteChemicalCommand(this));
 		
 		this.makeNewExperiment();
 	}

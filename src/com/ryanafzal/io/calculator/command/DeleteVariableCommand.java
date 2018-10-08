@@ -25,7 +25,7 @@ public class DeleteVariableCommand extends UndoableCommand {
 		String variable = args[0];
 		
 		//Make sure that 'variable' is a variable
-		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
+		if (!exp.doesVariableExist(variable)) {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
 		}
 		
