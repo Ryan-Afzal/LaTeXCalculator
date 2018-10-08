@@ -1,6 +1,7 @@
 package com.ryanafzal.io.calculator.command;
 
 import com.ryanafzal.io.calculator.environment.Environment;
+import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
 
 public class GetVariableCommand extends Command {
@@ -11,10 +12,22 @@ public class GetVariableCommand extends Command {
 
 	@Override
 	public String run(String[] args) {
+		if (args.length != 1 || !Constants.isValidVariableName(args[0])) {
+			return Constants.COMMAND_CARAT + " ERROR: Incompatible Arguments.";
+		}
+		
+		Experiment exp = this.getEnvironment().getCurrentExperiment();
+		String variable = args[0];
+		
+		//Make sure that 'variable' is a variable
+		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
+			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
+		}
+		
 		if (this.getEnvironment().getCurrentExperiment().doesVariableExist(args[0])) {
-			return Constants.COMMAND_CARAT + " " + args[0] + " = " + this.getEnvironment().getCurrentExperiment().getVariable(args[0]).getValue().getValue();
+			return Constants.COMMAND_CARAT + " " + variable + " = " + this.getEnvironment().getCurrentExperiment().getVariable(variable).getValue().toString();
 		} else {
-			return Constants.COMMAND_CARAT + " Variable " + args[0] + " does not exist.";
+			return Constants.COMMAND_CARAT + " Variable " + variable + " does not exist.";
 		}
 	}
 

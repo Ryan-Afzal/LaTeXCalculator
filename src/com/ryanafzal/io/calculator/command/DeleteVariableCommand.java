@@ -1,26 +1,23 @@
 package com.ryanafzal.io.calculator.command;
 
-import java.util.Arrays;
-
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
-import com.ryanafzal.io.calculator.resources.equations.IVariable;
 
-public final class SetVariableCommand extends UndoableCommand {
+public class DeleteVariableCommand extends UndoableCommand {
 
-	public SetVariableCommand(Environment environment) {
-		super("setvar", environment);
+	public DeleteVariableCommand(Environment environment) {
+		super("deletevar", environment);
 	}
 
 	@Override
 	public void undo(String[] args) {
-		//Unknown
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public String run(String[] args) {
-		if (args.length < 2 || args.length > 4 || !Constants.isValidVariableName(args[0])) {
+		if (args.length != 1 || !Constants.isValidVariableName(args[0])) {
 			return Constants.COMMAND_CARAT + " ERROR: Incompatible Arguments.";
 		}
 		
@@ -32,22 +29,20 @@ public final class SetVariableCommand extends UndoableCommand {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
 		}
 		
-		String[] values = Arrays.copyOfRange(args, 1, args.length);
-		IVariable value = exp.getValueFromKey(values);
-		exp.setVariable(variable, value);
-		exp.addKeyword(variable);
-		this.getEnvironment().setUnsaved();
-		return Constants.COMMAND_CARAT + " Set variable " + variable + " to " + value.toString();
+		exp.deleteKeyword(variable);
+		exp.deleteVariable(variable);
+		
+		return Constants.COMMAND_CARAT + " Deleted variable " + variable;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Sets the specified variable to the specified value.";
+		return "Deletes the specified variable";
 	}
 	
 	@Override
 	public String getUsage() {
-		return super.getUsage() + " <variable> <value>";
+		return super.getUsage() + " <variable>";
 	}
-	
+
 }

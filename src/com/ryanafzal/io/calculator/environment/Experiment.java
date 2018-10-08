@@ -4,8 +4,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.AbstractChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.Chemical;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IUPACNames;
 import com.ryanafzal.io.calculator.resources.equations.ExperimentVariable;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
@@ -19,15 +24,19 @@ public class Experiment implements Serializable {
 	
 	private static final long serialVersionUID = 1337L;
 	
-	private HashSet<Chemical> chemicals;
-	private HashSet<ChemicalEquation> equations;
+	private HashSet<String> keywords;
+	
+	private HashMap<String, IChemical> chemicals;
+	private HashMap<String, ChemicalEquation> equations;
 	
 	private HashMap<String, Variable> variables;
 	private HashMap<String, ExperimentVariable> experimentVariables;
 	
 	public Experiment() {
-		this.chemicals = new HashSet<Chemical>();
-		this.equations = new HashSet<ChemicalEquation>();
+		this.keywords = new HashSet<String>();
+		
+		this.chemicals = new HashMap<String, IChemical>();
+		this.equations = new HashMap<String, ChemicalEquation>();
 		
 		this.variables = new HashMap<String, Variable>();
 		this.experimentVariables = new HashMap<String, ExperimentVariable>();
@@ -49,6 +58,38 @@ public class Experiment implements Serializable {
 			this.variables.put(variable, new Variable(variable, value));
 		} else {
 			this.variables.get(variable).setValue(value);
+		}
+	}
+	
+	public void setChemical(String chemical, IChemical value) {
+		if (!doesChemicalExist(chemical)) {
+			this.chemicals.put(chemical, value);
+		} else {
+			this.chemicals.put(chemical, value);
+		}
+	}
+	
+	public void deleteVariable(String variable) {
+		this.variables.remove(variable);
+	}
+	
+	public void addKeyword(String keyword) {
+		this.keywords.add(keyword);
+	}
+	
+	public boolean isKeyword(String keyword) {
+		return this.keywords.contains(keyword);
+	}
+	
+	public void deleteKeyword(String keyword) {
+		this.keywords.remove(keyword);
+	}
+	
+	public IChemical getChemicalFromKey(String input) {
+		if (Constants.isMolecularFormula(input)) {
+			return AbstractChemical.getAbstractChemicalFromString(input);
+		} else {
+			return IUPACNames.getChemicalFromIUPACName(input);
 		}
 	}
 	
@@ -87,6 +128,10 @@ public class Experiment implements Serializable {
 	
 	public boolean doesVariableExist(String variable) {
 		return this.variables.containsKey(variable);
+	}
+	
+	public boolean doesChemicalExist(String chemical) {
+		return this.chemicals.containsKey(chemical);
 	}
 	
 	public Variable getVariable(String key) {

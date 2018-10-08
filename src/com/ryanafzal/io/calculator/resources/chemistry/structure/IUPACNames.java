@@ -4,11 +4,15 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.constructs.grou
 
 public abstract class IUPACNames {
 	
-	public static Chemical getCovalentChemicalFromIUPACName(String name) {
+	public static IChemical getChemicalFromIUPACName(String name) {
 		return null;
 	}
 	
-	public static IonicChemical getIonicChemicalFromIUPACName(String name) {
+	private static Chemical getCovalentChemicalFromIUPACName(String name) {
+		return null;
+	}
+	
+	private static IonicChemical getIonicChemicalFromIUPACName(String name) {
 		return null;
 	}
 	

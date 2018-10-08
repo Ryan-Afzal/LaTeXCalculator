@@ -5,12 +5,12 @@ import java.util.Arrays;
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.main.Constants;
-import com.ryanafzal.io.calculator.resources.equations.IVariable;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 
-public final class SetVariableCommand extends UndoableCommand {
+public final class SetChemicalCommand extends UndoableCommand {
 
-	public SetVariableCommand(Environment environment) {
-		super("setvar", environment);
+	public SetChemicalCommand(Environment environment) {
+		super("setchem", environment);
 	}
 
 	@Override
@@ -32,22 +32,26 @@ public final class SetVariableCommand extends UndoableCommand {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
 		}
 		
-		String[] values = Arrays.copyOfRange(args, 1, args.length);
-		IVariable value = exp.getValueFromKey(values);
-		exp.setVariable(variable, value);
+		//Make sure that the 'chemical' is a chemical
+		if (!Constants.isValidChemicalInput(args[1])) {
+			return Constants.COMMAND_CARAT + " " + args[1] + " is not a valid chemical.";
+		}
+		
+		IChemical value = exp.getChemicalFromKey(args[1].substring(1, args[1].length() - 1));
+		exp.setChemical(variable, value);
 		exp.addKeyword(variable);
 		this.getEnvironment().setUnsaved();
-		return Constants.COMMAND_CARAT + " Set variable " + variable + " to " + value.toString();
+		return Constants.COMMAND_CARAT + " Set chemical " + variable + " to " + value.toString();
 	}
 
 	@Override
 	public String getDescription() {
-		return "Sets the specified variable to the specified value.";
+		return "Sets the specified chemical to the specified value.";
 	}
 	
 	@Override
 	public String getUsage() {
-		return super.getUsage() + " <variable> <value>";
+		return super.getUsage() + " <chemical> <value>";
 	}
 	
 }
