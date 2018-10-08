@@ -23,9 +23,5 @@ public class Variable implements Serializable {
 	public void setValue(IVariable value) {
 		this.value = value;
 	}
-	
-	public boolean deletable() {
-		return true;
-	}
 
 }

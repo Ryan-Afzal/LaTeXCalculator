@@ -6,9 +6,4 @@ public class ExperimentVariable extends Variable {
 		super(symbol, value);
 	}
 	
-	@Override
-	public boolean deletable() {
-		return false;
-	}
-	
 }

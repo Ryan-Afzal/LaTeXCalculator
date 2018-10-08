@@ -23,13 +23,15 @@ public class Experiment implements Serializable {
 	private HashSet<ChemicalEquation> equations;
 	
 	private HashMap<String, Variable> variables;
+	private HashMap<String, ExperimentVariable> experimentVariables;
 	
 	public Experiment() {
 		this.chemicals = new HashSet<Chemical>();
 		this.equations = new HashSet<ChemicalEquation>();
 		
 		this.variables = new HashMap<String, Variable>();
-		this.variables.put(
+		this.experimentVariables = new HashMap<String, ExperimentVariable>();
+		this.experimentVariables.put(
 				"T", 
 				new ExperimentVariable(
 						"T", 
