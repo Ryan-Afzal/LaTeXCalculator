@@ -180,7 +180,11 @@ public class Environment {
 	public void processCommand(String command) {
 		String outputString = "";
 		
-		String[] args = command.split(" ");
+		String regex = "\\{([^\\{]*)\\}|(\\S+)";
+		
+		String[] args = Constants.splitString(command, regex);
+		
+		System.out.println(Arrays.toString(args));
 		Command c = this.getCommandFromName(args[0].substring(1));
 		
 		if (args[0].charAt(0) != Constants.COMMAND_OPERATOR || c == null) {
@@ -188,6 +192,7 @@ public class Environment {
 		} else {
 			outputString = c.run(Arrays.copyOfRange(args, 1, args.length));
 		}
+		
 		if (!outputString.equals("")) {
 			this.calculator.outputMessage(outputString);
 		}

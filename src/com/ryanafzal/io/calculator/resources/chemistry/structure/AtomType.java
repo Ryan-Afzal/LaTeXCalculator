@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
+import java.util.Arrays;
+
 public enum AtomType {
 	
 	HYDROGEN("Hydrogen", "H", 1, 1.0079),
@@ -47,6 +49,22 @@ public enum AtomType {
 	
 	public double getAtomicMass() {
 		return this.mass;
+	}
+	
+	public static AtomType getAtomTypeFromSymbol(String symbol) {
+		AtomType result = Arrays.asList(AtomType.values())
+				.stream()
+				.filter(atomtype -> atomtype
+						.getSymbol()
+						.equals(symbol))
+				.findFirst()
+				.orElse(null);
+		
+		if (result == null) {
+			throw new IllegalArgumentException("No atom has this symbol.");
+		} else {
+			return result;
+		}
 	}
 	
 }

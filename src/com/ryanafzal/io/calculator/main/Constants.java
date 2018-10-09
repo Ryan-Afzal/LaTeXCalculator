@@ -1,5 +1,14 @@
 package com.ryanafzal.io.calculator.main;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Constants and various helper methods.
+ * @author s-afzalr
+ *
+ */
 public abstract class Constants {
 	
 	public static final String TITLE = "Advanced Calculator";
@@ -39,8 +48,23 @@ public abstract class Constants {
 		return (string.indexOf("[") == 0 && string.indexOf("]") == string.length() - 1);
 	}
 	
-	public static boolean isMolecularFormula(String string) {
-		return false;
+	public static boolean isMolecularFormula(String string) {		
+		return string.chars().allMatch(Character::isLetterOrDigit);
+	}
+	
+	public static String[] splitString(String input, String regex) {
+		ArrayList<String> strings = new ArrayList<String>();
+
+	    Matcher m = Pattern.compile(regex).matcher(input);
+	    while (m.find()) {
+	        if (m.group(1) != null) {
+	        	strings.add(m.group(1));
+	        } else {
+	            strings.add(m.group(2));
+	        }
+	    }
+	    
+	    return strings.toArray(new String[] {});
 	}
 	
 }

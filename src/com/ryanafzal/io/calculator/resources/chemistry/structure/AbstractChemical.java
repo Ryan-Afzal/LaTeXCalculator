@@ -1,7 +1,9 @@
 package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -10,13 +12,83 @@ public class AbstractChemical implements IChemical {
 	private Atom[] atoms;
 	private int charge = 0;
 	
-	public AbstractChemical(Atom[] atoms, int charge) {
+	public AbstractChemical(Atom[] atoms) {
 		this.atoms = atoms;
-		this.charge = charge;
 	}
 	
 	public static AbstractChemical getAbstractChemicalFromString(String string) {
-		return null;
+		//Chadkladsflkfdsa;lkj12982987324897352
+		// ([A-Z]{1}[a-z]{0,2}([1-9]{1}[0-9]*|))+
+		
+		if (!Character.isUpperCase(string.charAt(0))) {
+			throw new IllegalArgumentException(string + " is not a valid chemical formula.");
+		}
+		
+		HashMap<AtomType, Integer> atoms = new HashMap<>();
+		
+		String type = string.charAt(0) + "";
+		String num = "";
+		
+		boolean type_or_num = true;
+		
+		for (int i = 1; i < string.length(); i++) {
+			if (type_or_num && Character.isDigit(string.charAt(i))) {
+				type_or_num = false;
+			} else if (Character.isUpperCase(string.charAt(i))) {
+				type_or_num = true;
+				
+				AtomType type_ = AtomType.getAtomTypeFromSymbol(type);
+				int num_;
+				
+				if (num.equals("")) {
+					num_ = 1;
+				} else {
+					num_ = Integer.parseInt(num);
+				}
+				
+				atoms.put(type_, num_);
+				
+				type = "";
+				num = "";
+			}
+			
+			if (type_or_num) {
+				type += ("" + string.charAt(i));
+			} else {
+				num += ("" + string.charAt(i));
+			}
+			
+			if (i == string.length() - 1) {
+				type_or_num = true;
+				
+				AtomType type_ = AtomType.getAtomTypeFromSymbol(type);
+				int num_;
+				
+				if (num.equals("")) {
+					num_ = 1;
+				} else {
+					num_ = Integer.parseInt(num);
+				}
+				
+				atoms.put(type_, num_);
+				
+				type = "";
+				num = "";
+			}
+		}
+		
+		ArrayList<Atom> atoms_ = new ArrayList<Atom>();
+		
+		Iterator<AtomType> it = atoms.keySet().iterator();
+		while (it.hasNext()) {
+			AtomType atom_t = it.next();
+			int current = atoms.get(atom_t);
+			for (int i = 0; i < current; i++) {
+				atoms_.add(new Atom(atom_t, 0));
+			}
+		}
+		
+		return new AbstractChemical(atoms_.toArray(new Atom[] {}));
 	}
 	
 	@Override
@@ -121,5 +193,10 @@ public class AbstractChemical implements IChemical {
 	public int getCharge() {
 		return this.charge;
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.getMolecularFormula().replaceAll(" ", "_").replaceAll("_", "");
+	}
+	
 }

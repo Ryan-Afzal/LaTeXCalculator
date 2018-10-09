@@ -37,7 +37,18 @@ public class Calculator extends Application {
 	private MenuItem edit_item_undo;
 	private MenuItem edit_item_redo;
 	
-	//UI Controls
+	//Variable display
+	/*
+	 * TreeItem<String> rootItem = new TreeItem<> ("Inbox", rootIcon);
+        rootItem.setExpanded(true);
+        for (int i = 1; i < 6; i++) {
+            TreeItem<String> item = new TreeItem<> ("Message" + i);            
+            rootItem.getChildren().add(item);
+        }        
+        TreeView<String> tree = new TreeView<> (rootItem);        
+	 */
+	
+	//Console
 	private OutputArea outputArea;
 	private TextField inputField;
 	

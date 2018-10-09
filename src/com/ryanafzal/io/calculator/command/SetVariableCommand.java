@@ -28,8 +28,17 @@ public class SetVariableCommand extends UndoableCommand {
 		String variable = args[0];
 		
 		//Make sure that 'variable' is a variable
-		if (exp.isKeyword(variable) || !exp.doesVariableExist(variable)) {
+		if (exp.isKeyword(variable) && !exp.doesVariableExist(variable)) {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a variable.";
+		}
+		
+		//If the argument is a variable, assign this to the value of the variable
+		if (exp.doesVariableExist(args[1])) {
+			IVariable value = exp.getVariable(args[1]).getValue();
+			exp.setVariable(variable, value);
+			exp.addKeyword(variable);
+			this.getEnvironment().setUnsaved();
+			return Constants.COMMAND_CARAT + " Set variable " + variable + " to " + value.toString();
 		}
 		
 		String[] values = Arrays.copyOfRange(args, 1, args.length);

@@ -30,6 +30,15 @@ public class SetChemicalCommand extends UndoableCommand {
 			return Constants.COMMAND_CARAT + " " + variable + " is not a chemical variable.";
 		}
 		
+		//If the argument is a chemical variable, set this to the value of it.
+		if (exp.doesChemicalExist(args[1])) {
+			IChemical value = exp.getChemical(args[1]);
+			exp.setChemical(variable, value);
+			exp.addKeyword(variable);
+			this.getEnvironment().setUnsaved();
+			return Constants.COMMAND_CARAT + " Set chemical " + variable + " to " + value.toString();
+		}
+		
 		//Make sure that the 'chemical' is a chemical
 		if (!Constants.isValidChemicalInput(args[1])) {
 			return Constants.COMMAND_CARAT + " " + args[1] + " is not a valid chemical.";
