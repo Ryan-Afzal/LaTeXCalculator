@@ -1,7 +1,6 @@
 package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
 import com.ryanafzal.io.calculator.resources.ILaTeXValue;
-import com.ryanafzal.io.calculator.resources.equations.IVariable;
 
 public interface IChemical extends ILaTeXValue {
 	public double getMolarMass();
