@@ -1,18 +1,14 @@
 package com.ryanafzal.io.calculator.main;
 
-import java.awt.Color;
-
-import javafx.scene.control.ListView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class OutputArea extends ListView<FlowPane> {
+public class OutputArea extends VBox {
 
-	public static final Color BASE_TEXT_COLOR = Color.BLACK;
+	public static final String BASE_TEXT_COLOR = "green";
 	
 	public OutputArea() {
 		super();
-		this.setEditable(false);
 		this.setStyle(
 				"-fx-control-inner-background:#000000; "
 				+ "-fx-font-family: Consolas; "
@@ -25,22 +21,11 @@ public class OutputArea extends ListView<FlowPane> {
 		addLine(line, BASE_TEXT_COLOR);
 	}
 	
-	public void addLine(String line, Color color) {
-		
+	public void addLine(String line, String color) {
+		Text text = new Text();
+		text.setText(line);
+		text.setStyle("-fx-control-text-fill: " + color + "; -fx-font-family: Consolas; -fx-font-size: 20");
+		this.getChildren().add(text);
 	}
 	
-	public void addLines(Text[] text) {
-		addPane(createTextPane(text));
-	}
-	
-	public void addPane(FlowPane pane) {
-		this.getChildren().add(pane);
-	}
-	
-	private FlowPane createTextPane(Text[] text) {
-		FlowPane pane = new FlowPane();
-		pane.getChildren().addAll(text);
-		return pane;
-	}
-
 }
