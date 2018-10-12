@@ -170,18 +170,16 @@ public class Environment {
 		String regex = "\\{([^\\{]*)\\}|(\\S+)";
 		
 		String[] args = Constants.splitString(command, regex);
-		
-		System.out.println(Arrays.toString(args));
 		Command c = this.getCommandFromName(args[0].substring(1));
 		
 		if (args[0].charAt(0) != Constants.COMMAND_OPERATOR || c == null) {
-			this.calculator.outputMessage("\"" + command + "\" is not a valid command. Type " + Constants.COMMAND_OPERATOR + "list for a list of commands.");
+			this.calculator.outputErrorMessage("\"" + command + "\" is not a valid command. Type " + Constants.COMMAND_OPERATOR + "list for a list of commands.");
 		} else {
 			outputString = c.run(Arrays.copyOfRange(args, 1, args.length));
 		}
 		
 		if (!outputString.equals("")) {
-			this.calculator.outputMessage(outputString);
+			this.calculator.outputCommandMessage(outputString);
 		}
 	}
 	

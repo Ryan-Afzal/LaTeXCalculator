@@ -9,11 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -50,11 +52,11 @@ public class Calculator extends Application {
 	
 	//Console
 	private OutputArea outputArea;
+	private ScrollPane outputAreaScrollPane;
 	private TextField inputField;
 	
 	public Calculator() {
-		super();
-		
+		super();		
 		this.environment = new Environment(this);
 	}
 	
@@ -88,6 +90,14 @@ public class Calculator extends Application {
 	
 	public void outputMessage(String message) {
 		this.outputArea.addLine(message);
+	}
+	
+	public void outputErrorMessage(String message) {
+		this.outputArea.addLine(message, Color.RED);
+	}
+	
+	public void outputCommandMessage(String message) {
+		this.outputArea.addLine(Constants.COMMAND_CARAT + " " + message);
 	}
 	
 	@Override
@@ -160,7 +170,8 @@ public class Calculator extends Application {
 		VBox centerPane = new VBox();
 		
 		this.outputArea = new OutputArea();
-		centerPane.getChildren().add(this.outputArea);
+		this.outputAreaScrollPane = new ScrollPane(this.outputArea);
+		centerPane.getChildren().add(this.outputAreaScrollPane);
 		
 		this.inputField = new TextField();
 		inputField.setOnAction(new EventHandler<ActionEvent>() {
