@@ -2,6 +2,8 @@ package com.ryanafzal.io.calculator.environment;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
@@ -11,6 +13,7 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.IUPACNames;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
 import com.ryanafzal.io.calculator.resources.units.TemperatureUnit;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
@@ -22,7 +25,7 @@ public class Experiment implements Serializable {
 	private HashMap<String, IVariable> variables;
 	
 	public Experiment() {
-		this.variables = new HashMap<>();
+		this.variables = new HashMap<String, IVariable>();
 	}
 	
 	public void setVariable(String variable, IVariable value) {
@@ -31,6 +34,43 @@ public class Experiment implements Serializable {
 	
 	public void deleteVariable(String variable) {
 		this.variables.remove(variable);
+	}
+	
+	public Set<String> getKeySet() {
+		return this.variables.keySet();
+	}
+	
+	public HashMap<String, Value> getValueVariables() {
+		HashMap<String, Value> output = new HashMap<String, Value>();
+		this.variables.keySet()
+			.stream()
+			.filter(key -> this.variables.get(key) instanceof Value)
+			.collect(Collectors.toSet())
+			.forEach(key -> output.put(key, (Value) this.variables.get(key)));
+		
+		return output;
+	}
+	
+	public HashMap<String, IChemical> getChemicalVariables() {
+		HashMap<String, IChemical> output = new HashMap<String, IChemical>();
+		this.variables.keySet()
+			.stream()
+			.filter(key -> this.variables.get(key) instanceof IChemical)
+			.collect(Collectors.toSet())
+			.forEach(key -> output.put(key, (IChemical) this.variables.get(key)));
+		
+		return output;
+	}
+	
+	public HashMap<String, Function> getFunctionVariables() {
+		HashMap<String, Function> output = new HashMap<String, Function>();
+		this.variables.keySet()
+			.stream()
+			.filter(key -> this.variables.get(key) instanceof Function)
+			.collect(Collectors.toSet())
+			.forEach(key -> output.put(key, (Function) this.variables.get(key)));
+		
+		return output;
 	}
 	
 	/*public void addKeyword(String keyword) {

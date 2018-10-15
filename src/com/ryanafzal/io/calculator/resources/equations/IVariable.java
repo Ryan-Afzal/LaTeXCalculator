@@ -1,4 +1,5 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-public interface IVariable {
-}
+import java.io.Serializable;
+
+public interface IVariable extends Serializable {}

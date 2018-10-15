@@ -1,6 +1,5 @@
 package com.ryanafzal.io.calculator.environment;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,9 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
+import com.fathzer.soft.javaluator.DoubleEvaluator;
+import com.fathzer.soft.javaluator.StaticVariableSet;
 import com.ryanafzal.io.calculator.command.Command;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
@@ -165,15 +165,22 @@ public class Environment {
 	}
 	
 	public void processCommand(String command) {
-		String outputString = "";
+		//String outputString = "";
 		
-		String regex = "\\{([^\\{]*)\\}|(\\S+)";
+		//String regex_curlybraces = "\\{([^\\{]*)\\}|(\\S+)";
 		
-		
+		if (command.contains("=")) {
+			
+		} else {
+			this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment));
+		}
 		
 	}
 	
-	
+	public static String evaluateExpression(String expression, Experiment exp) {
+		//TODO
+		return "" + new DoubleEvaluator().evaluate(expression);
+	}
 	
 	public void setUnsaved() {
 		this.isSaved = false;
