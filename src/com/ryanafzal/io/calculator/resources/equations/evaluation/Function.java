@@ -13,8 +13,12 @@ public class Function {
 		this.expression = expression;
 	}
 	
-	public double evaluate(IVariable[] args) {
-		return 0.0;
+	public String evaluate(IVariable[] args) {
+		String output = "";
+		
+		
+		
+		return "(" + output + ")";
 	}
 	
 	public static Function getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {

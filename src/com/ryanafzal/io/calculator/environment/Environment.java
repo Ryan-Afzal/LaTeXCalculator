@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
@@ -14,6 +15,8 @@ import com.fathzer.soft.javaluator.StaticVariableSet;
 import com.ryanafzal.io.calculator.command.Command;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
+import com.ryanafzal.io.calculator.resources.equations.IVariable;
+import com.ryanafzal.io.calculator.resources.equations.Value;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -174,11 +177,17 @@ public class Environment {
 			String name = command.substring(0, equals_sign_index).trim();
 			String expression = command.substring(equals_sign_index).trim();
 			
+			//Ensure syntaxes
+			if (!ensureSyntaxes(name, expression)) {
+				this.calculator.outputErrorMessage("ERROR: Invalid Input");
+				return;
+			}
+			
 			
 			
 		} else {
 			try {
-				this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment));
+				this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment.getValueVariables()));
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.calculator.outputErrorMessage("ERROR: Invalid Input");
@@ -187,8 +196,24 @@ public class Environment {
 		
 	}
 	
-	public static String evaluateExpression(String expression, Experiment exp) {
-			return "" + new DoubleEvaluator().evaluate(expression);
+	private boolean ensureSyntaxes(String name, String expression) {
+		boolean exp_contains_curlybrace_left = expression.contains("{");
+		boolean exp_contains_curlybrace_right = expression.contains("}");
+		
+		if ((exp_contains_curlybrace_left ^ exp_contains_curlybrace_right) 
+				|| ((exp_contains_curlybrace_left && exp_contains_curlybrace_right) ^ (name.contains("(") && name.contains(")")))) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static String evaluateExpression(String expression, HashMap<String, Value> map) {
+		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
+		for (String variable : map.keySet()) {
+			variables.set(variable, ((Value) map.get(variable)).getValue());
+		}
+		return "" + new DoubleEvaluator().evaluate(expression);
 	}
 	
 	public void setUnsaved() {
