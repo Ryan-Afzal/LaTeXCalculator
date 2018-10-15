@@ -170,16 +170,25 @@ public class Environment {
 		//String regex_curlybraces = "\\{([^\\{]*)\\}|(\\S+)";
 		
 		if (command.contains("=")) {
+			int equals_sign_index = command.indexOf("=");
+			String name = command.substring(0, equals_sign_index).trim();
+			String expression = command.substring(equals_sign_index).trim();
+			
+			
 			
 		} else {
-			this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment));
+			try {
+				this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment));
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.calculator.outputErrorMessage("ERROR: Invalid Input");
+			}
 		}
 		
 	}
 	
 	public static String evaluateExpression(String expression, Experiment exp) {
-		//TODO
-		return "" + new DoubleEvaluator().evaluate(expression);
+			return "" + new DoubleEvaluator().evaluate(expression);
 	}
 	
 	public void setUnsaved() {
