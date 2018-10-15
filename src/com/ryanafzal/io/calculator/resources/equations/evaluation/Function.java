@@ -1,7 +1,5 @@
 package com.ryanafzal.io.calculator.resources.equations.evaluation;
 
-import com.ryanafzal.io.calculator.resources.equations.IVariable;
-
 //TODO
 public class Function {
 	
@@ -13,10 +11,12 @@ public class Function {
 		this.expression = expression;
 	}
 	
-	public String evaluate(IVariable[] args) {
-		String output = "";
+	public String evaluate(String[] args) {
+		String output = this.expression;
 		
-		
+		for (int i = 0; i < args.length; i++) {
+			output.replace(this.args[i], args[i]);
+		}
 		
 		return "(" + output + ")";
 	}
