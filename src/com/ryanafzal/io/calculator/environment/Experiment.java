@@ -25,9 +25,16 @@ public class Experiment implements Serializable {
 	public Experiment() {
 		this.variables = new HashMap<String, IVariable>();
 		this.keywords = new HashSet<String>();
+		//Mathematical Keywords
 		this.keywords.add("sin");
 		this.keywords.add("cos");
 		this.keywords.add("tan");
+		this.keywords.add("log");
+		this.keywords.add("lim");
+		this.keywords.add("ln");
+		this.keywords.add("int");
+		
+		//Builtin Functions
 		this.keywords.add("stoichiometry");
 	}
 	

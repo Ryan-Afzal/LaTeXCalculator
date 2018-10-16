@@ -16,9 +16,11 @@ import com.fathzer.soft.javaluator.StaticVariableSet;
 import com.ryanafzal.io.calculator.command.Command;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
+import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.AbstractChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IUPACNames;
+import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
@@ -191,7 +193,7 @@ public class Environment {
 					 * Needs a delimeter that is not space, for UnitValue and ChemicalValue.
 					 * TODO
 					 */
-					String[] keys = expression.split(" ");
+					String[] keys = expression.split("~");
 					double value = this.evaluateExpression(keys[0]);
 					
 					this.currentExperiment.setVariable(name, this.getValueFromKey(value, Arrays.copyOfRange(keys, 1, keys.length)));
@@ -273,31 +275,34 @@ public class Environment {
 	}
 	
 	public IVariable getValueFromKey(double value, String[] keys) {
-		if (keys.length == 4) {
-			//Chemical Value
-		}
-		
 		if (keys.length == 3) {
-			throw new IllegalArgumentException();
+			return new ChemicalValue(value, this.getUnitFromKey(keys[0]), this.getChemicalFromKey(keys[1]), ChemicalState.getStateFromString(keys[2]));
 		}
 		
 		if (keys.length == 2) {
-			//Unit value
-			for (Prefix p : Prefix.values()) {
-				if (p == Prefix.NONE) {
-					continue;
-				}
-				
-				int i = keys[0].indexOf(p.getSymbol());
-				
-				if (i != -1) {
-					return new UnitValue(value, Unit.getUnitFromString(keys[0].substring(i + p.getSymbol().length()), p));
-				}
-			}
-			return new UnitValue(value, Unit.getUnitFromString(keys[0]));
+			throw new IllegalArgumentException();
+		}
+		
+		if (keys.length == 1) {
+			return new UnitValue(value, this.getUnitFromKey(keys[0]));
 		}
 		
 		return new Value(value);
+	}
+	
+	public Unit getUnitFromKey(String key) {
+		for (Prefix p : Prefix.values()) {
+			if (p == Prefix.NONE) {
+				continue;
+			}
+			
+			int i = key.indexOf(p.getSymbol());
+			
+			if (i != -1) {
+				return Unit.getUnitFromString(key.substring(i + p.getSymbol().length()), p);
+			}
+		}
+		return Unit.getUnitFromString(key);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.ryanafzal.io.calculator.resources.chemistry;
 
+import java.util.Arrays;
+
 public enum ChemicalState {
 	
 	SOLID("s"),
@@ -15,6 +17,14 @@ public enum ChemicalState {
 	
 	public String getSymbol() {
 		return this.symbol;
+	}
+	
+	public static ChemicalState getStateFromString(String string) {
+		return Arrays.asList(ChemicalState.values())
+				.stream()
+				.filter(prefix -> prefix.getSymbol().equals(string))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(string + " is not a valid chemical state"));
 	}
 	
 }
