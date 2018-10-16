@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -15,8 +16,14 @@ import com.fathzer.soft.javaluator.StaticVariableSet;
 import com.ryanafzal.io.calculator.command.Command;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.AbstractChemical;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IUPACNames;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
+import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
+import com.ryanafzal.io.calculator.resources.units.Unit;
+import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -175,7 +182,7 @@ public class Environment {
 		if (command.contains("=")) {
 			int equals_sign_index = command.indexOf("=");
 			String name = command.substring(0, equals_sign_index).trim();
-			String expression = command.substring(equals_sign_index).trim();
+			String expression = command.substring(equals_sign_index + 1).trim();
 			
 			//Ensure syntaxes
 			if (!ensureSyntaxes(name, expression)) {
@@ -183,11 +190,31 @@ public class Environment {
 				return;
 			}
 			
-			
+			if (expression.contains("->")) {
+				//Chemical Equation
+			} else if (expression.contains("[")) {
+				this.currentExperiment.setVariable(
+						name, 
+						this.getChemicalFromKey(
+									expression.substring(
+												expression.indexOf("[") + 1, 
+												expression.indexOf("]"))));
+			} else if (expression.contains("{")) {
+				//Function
+			} else {
+				String[] keys = expression.split(" ");
+				double value = this.evaluateExpression(keys[0]);
+				
+				this.currentExperiment.setVariable(name, this.getValueFromKey(value, Arrays.copyOfRange(keys, 1, keys.length)));
+			}
 			
 		} else {
 			try {
-				this.calculator.outputCommandMessage(evaluateExpression(command, this.currentExperiment.getValueVariables()));
+				if (this.currentExperiment.doesVariableExist(command)) {
+					this.calculator.outputCommandMessage(this.currentExperiment.getVariable(command).toString());
+				} else {
+					this.calculator.outputCommandMessage(this.evaluateExpression(command) + "");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.calculator.outputErrorMessage("ERROR: Invalid Input");
@@ -196,28 +223,88 @@ public class Environment {
 		
 	}
 	
+	private String replaceFunctions(String input) {
+		return input;
+	}
+	
 	private boolean ensureSyntaxes(String name, String expression) {
 		boolean exp_contains_curlybrace_left = expression.contains("{");
 		boolean exp_contains_curlybrace_right = expression.contains("}");
 		
+		//Braces with no closures/Braces with no parentheses
 		if ((exp_contains_curlybrace_left ^ exp_contains_curlybrace_right) 
 				|| ((exp_contains_curlybrace_left && exp_contains_curlybrace_right) ^ (name.contains("(") && name.contains(")")))) {
+			return false;
+		}
+		
+		//Square Brackets with no closures
+		if (expression.contains("[") ^ expression.contains("]")) {
+			return false;
+		}
+		
+		//Ensure correct closures [[BASIC]]
+		if (expression.indexOf("}") < expression.indexOf("{") || expression.indexOf("]") < expression.indexOf("[")) {
+			return false;
+		}
+		
+		//Chemical equation arrow with no chemical brackets
+		if (expression.contains("->") && (!expression.contains("["))) {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public static String evaluateExpression(String expression, HashMap<String, Value> map) {
+	public double evaluateExpression(String expression) {
+		
+		expression = replaceFunctions(expression);
+		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
+		
 		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
-		for (String variable : map.keySet()) {
-			variables.set(variable, ((Value) map.get(variable)).getValue());
+		for (String variable : values.keySet()) {
+			variables.set(variable, values.get(variable).getValue());
 		}
-		return "" + new DoubleEvaluator().evaluate(expression);
+		return new DoubleEvaluator().evaluate(expression);
 	}
 	
 	public void setUnsaved() {
 		this.isSaved = false;
+	}
+	
+	public IChemical getChemicalFromKey(String input) {
+		if (Constants.isMolecularFormula(input)) {
+			return AbstractChemical.getAbstractChemicalFromString(input);
+		} else {
+			return IUPACNames.getChemicalFromIUPACName(input);
+		}
+	}
+	
+	public IVariable getValueFromKey(double value, String[] keys) {
+		if (keys.length == 4) {
+			//Chemical Value
+		}
+		
+		if (keys.length == 3) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (keys.length == 2) {
+			//Unit value
+			for (Prefix p : Prefix.values()) {
+				if (p == Prefix.NONE) {
+					continue;
+				}
+				
+				int i = keys[0].indexOf(p.getSymbol());
+				
+				if (i != -1) {
+					return new UnitValue(value, Unit.getUnitFromString(keys[0].substring(i + p.getSymbol().length()), p));
+				}
+			}
+			return new UnitValue(value, Unit.getUnitFromString(keys[0]));
+		}
+		
+		return new Value(value);
 	}
 	
 }

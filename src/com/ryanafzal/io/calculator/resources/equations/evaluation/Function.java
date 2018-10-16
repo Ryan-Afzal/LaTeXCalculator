@@ -1,7 +1,9 @@
 package com.ryanafzal.io.calculator.resources.equations.evaluation;
 
+import com.ryanafzal.io.calculator.resources.equations.IVariable;
+
 //TODO
-public class Function {
+public class Function implements IVariable {
 	
 	private String[] args;
 	private String expression;
