@@ -41,12 +41,8 @@ public class Environment {
 	
 	private Calculator calculator;
 	
-	private ArrayList<Command> commands;
-	
 	public Environment(Calculator calculator) {
 		this.calculator = calculator;
-		
-		this.commands = new ArrayList<Command>();
 		
 		this.makeNewExperiment();
 	}
@@ -162,22 +158,7 @@ public class Environment {
 		//TODO
 	}
 	
-	public Command getCommandAt(int i) {
-		return this.commands.get(i);
-	}
-	
-	public Command getCommandFromName(String name) {
-		return this.commands.stream().filter(command -> command.getName().equals(name)).findFirst().orElse(null);
-	}
-	
-	public int size() {
-		return this.commands.size();
-	}
-	
 	public void processCommand(String command) {
-		//String outputString = "";
-		
-		//String regex_curlybraces = "\\{([^\\{]*)\\}|(\\S+)";
 		
 		if (command.contains("=")) {
 			int equals_sign_index = command.indexOf("=");
@@ -193,6 +174,7 @@ public class Environment {
 			if (expression.contains("->")) {
 				//Chemical Equation
 			} else if (expression.contains("[")) {
+				//Chemical
 				this.currentExperiment.setVariable(
 						name, 
 						this.getChemicalFromKey(
@@ -202,10 +184,21 @@ public class Environment {
 			} else if (expression.contains("{")) {
 				//Function
 			} else {
-				String[] keys = expression.split(" ");
-				double value = this.evaluateExpression(keys[0]);
-				
-				this.currentExperiment.setVariable(name, this.getValueFromKey(value, Arrays.copyOfRange(keys, 1, keys.length)));
+				//Value
+				try {
+					/*
+					 * PROBLEM:
+					 * Needs a delimeter that is not space, for UnitValue and ChemicalValue.
+					 * TODO
+					 */
+					String[] keys = expression.split(" ");
+					double value = this.evaluateExpression(keys[0]);
+					
+					this.currentExperiment.setVariable(name, this.getValueFromKey(value, Arrays.copyOfRange(keys, 1, keys.length)));
+				} catch (Exception e) {
+					e.printStackTrace();
+					this.calculator.outputErrorMessage("ERROR: " + e.getMessage());
+				}
 			}
 			
 		} else {
@@ -256,7 +249,6 @@ public class Environment {
 	}
 	
 	public double evaluateExpression(String expression) {
-		
 		expression = replaceFunctions(expression);
 		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
 		
@@ -264,7 +256,8 @@ public class Environment {
 		for (String variable : values.keySet()) {
 			variables.set(variable, values.get(variable).getValue());
 		}
-		return new DoubleEvaluator().evaluate(expression);
+		
+		return new DoubleEvaluator().evaluate(expression, variables);
 	}
 	
 	public void setUnsaved() {

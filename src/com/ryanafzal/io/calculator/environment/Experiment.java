@@ -80,6 +80,17 @@ public class Experiment implements Serializable {
 		return output;
 	}
 	
+	public HashMap<String, ChemicalEquation> getChemicalEquationVariables() {
+		HashMap<String, ChemicalEquation> output = new HashMap<String, ChemicalEquation>();
+		this.variables.keySet()
+			.stream()
+			.filter(key -> this.variables.get(key) instanceof ChemicalEquation)
+			.collect(Collectors.toSet())
+			.forEach(key -> output.put(key, (ChemicalEquation) this.variables.get(key)));
+		
+		return output;
+	}
+	
 	public boolean isKeyword(String keyword) {
 		return this.keywords.contains(keyword);
 	}
