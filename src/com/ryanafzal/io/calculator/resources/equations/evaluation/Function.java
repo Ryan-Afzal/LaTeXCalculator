@@ -27,7 +27,7 @@ public class Function implements IVariable {
 			}
 		}
 		
-		return "(" + output + ")";
+		return output;
 	}
 	
 	public static Function getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {

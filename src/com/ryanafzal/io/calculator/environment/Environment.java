@@ -236,20 +236,24 @@ public class Environment {
 			
 			while (input.contains(function_name)) {
 				int indexOfFunction = input.indexOf(function_name);
-				String whole_function = input.substring(indexOfFunction, input.substring(indexOfFunction).indexOf(")") + 1);
+				
+				//String whole_function = input.substring(indexOfFunction, input.substring(indexOfFunction).indexOf(")") + 1);
+				String rest = input.substring(indexOfFunction);
+				int index_of_parentheses = rest.indexOf(")") + 1;
+				String whole_function = input.substring(indexOfFunction, index_of_parentheses);
+				
 				String[] args = whole_function.substring(whole_function.indexOf("(") + 1, whole_function.indexOf(")")).split(",");
+				
 				for (int i = 0; i < args.length; i++) {
-					if (!function_map.containsKey(args[i])) {
 						args[i] = replaceFunctions(args[i], function_map);
-					} else {
-						args[i] = function_map.get(args[i]).toString();
-					}
 				}
 				
 				input = 
-						input.substring(0, indexOfFunction) + 
-						function_map.get(function_name).evaluate(args) + 
-						input.substring(indexOfFunction + whole_function.length());
+						input.substring(0, indexOfFunction)
+						+ "("
+						+ replaceFunctions(function_map.get(function_name).evaluate(args), function_map)
+						+ ")"
+						+ input.substring(indexOfFunction + whole_function.length());
 			}
 		}
 		

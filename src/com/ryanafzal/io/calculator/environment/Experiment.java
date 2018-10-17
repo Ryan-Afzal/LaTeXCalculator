@@ -13,6 +13,9 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.CosecantFunction;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.CotangentFunction;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.FactorialFunction;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.MolarMassFunction;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.SecantFunction;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.StoichiometryFunction;
@@ -28,15 +31,37 @@ public class Experiment implements Serializable {
 	public Experiment() {
 		this.variables = new HashMap<String, IVariable>();
 		this.keywords = new HashSet<String>();
+		
 		//Mathematical Keywords
 		this.keywords.add("sin");
 		this.keywords.add("cos");
+		this.keywords.add("tan");
+		this.keywords.add("asin");
+		this.keywords.add("acos");
+		this.keywords.add("atan");
+		this.keywords.add("sinh");
+		this.keywords.add("cosh");
+		this.keywords.add("tanh");
 		this.keywords.add("csc");
 		this.keywords.add("sec");
 		this.keywords.add("cot");
+		
+
+		this.keywords.add("e");
+		this.keywords.add("pi");
+		this.keywords.add("abs");
 		this.keywords.add("log");
 		this.keywords.add("lim");
 		this.keywords.add("ln");
+
+		this.keywords.add("max");
+		this.keywords.add("min");
+		this.keywords.add("floor");
+		this.keywords.add("ceil");
+		this.keywords.add("round");
+		this.keywords.add("sum");
+		this.keywords.add("random");
+		
 		this.keywords.add("int");
 		this.keywords.add("!");
 		
@@ -45,11 +70,14 @@ public class Experiment implements Serializable {
 		this.keywords.add("molarmass");
 		
 		//Mathematical Keywords
+		this.variables.put("csc", new CosecantFunction());
 		this.variables.put("sec", new SecantFunction());
+		this.variables.put("cot", new CotangentFunction());
+		this.variables.put("!", new FactorialFunction());
 		
 		//Builtin Functions
 		this.variables.put("stoichiometry", new StoichiometryFunction(this));
-		this.variables.put("molarmass", new MolarMassFunction());
+		this.variables.put("molarmass", new MolarMassFunction(this));
 		
 	}
 	
