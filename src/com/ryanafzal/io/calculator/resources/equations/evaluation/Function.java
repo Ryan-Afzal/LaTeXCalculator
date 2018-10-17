@@ -17,16 +17,26 @@ public class Function implements IVariable {
 		String output = this.expression;
 		
 		for (int i = 0; i < args.length; i++) {
-			output.replace(this.args[i], args[i]);
+			int index = output.indexOf(this.args[i]);
+			while (index != -1) {
+				output = 
+						output.substring(0, index) + 
+						args[i] + 
+						output.substring(index + this.args[i].length());
+				index = output.indexOf(this.args[i]);
+			}
 		}
 		
 		return "(" + output + ")";
 	}
 	
 	public static Function getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {
+		signature = signature.replace(" ", "");
+		body = body.replace(" ", "");
 		
+		String[] args = signature.substring(signature.indexOf("(") + 1, signature.indexOf(")")).split(",");
 		
-		return null;
+		return new Function(args, body);
 	}
 	
 }

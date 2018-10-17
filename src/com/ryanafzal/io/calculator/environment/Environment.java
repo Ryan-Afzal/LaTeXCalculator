@@ -6,14 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
 import com.fathzer.soft.javaluator.StaticVariableSet;
-import com.ryanafzal.io.calculator.command.Command;
 import com.ryanafzal.io.calculator.main.Calculator;
 import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.chemistry.ChemicalState;
@@ -24,6 +22,7 @@ import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
@@ -161,6 +160,7 @@ public class Environment {
 	}
 	
 	public void processCommand(String command) {
+		command = command.replace(" ", "");
 		
 		if (command.contains("=")) {
 			int equals_sign_index = command.indexOf("=");
@@ -179,20 +179,26 @@ public class Environment {
 				//Chemical
 				this.currentExperiment.setVariable(
 						name, 
-						this.getChemicalFromKey(
+						getChemicalFromKey(
 									expression.substring(
 												expression.indexOf("[") + 1, 
 												expression.indexOf("]"))));
 			} else if (expression.contains("{")) {
 				//Function
+				this.currentExperiment
+				.setVariable(
+						name.substring(
+								0, 
+								name.indexOf("(")), 
+						Function.getFunctionFromDeclaration(
+								name, 
+								expression
+								.substring(
+										expression.indexOf("{") + 1, 
+										expression.indexOf("}"))));
 			} else {
 				//Value
 				try {
-					/*
-					 * PROBLEM:
-					 * Needs a delimeter that is not space, for UnitValue and ChemicalValue.
-					 * TODO
-					 */
 					String[] keys = expression.split("~");
 					double value = this.evaluateExpression(keys[0]);
 					
@@ -218,7 +224,35 @@ public class Environment {
 		
 	}
 	
-	private String replaceFunctions(String input) {
+	public static String replaceFunctions(String input, HashMap<String, Function> function_map) {
+		if (!input.contains("(")) {
+			return input;
+		}
+		
+		for (String function_name : function_map.keySet()) {
+			if (!input.contains(function_name)) {
+				continue;
+			}
+			
+			while (input.contains(function_name)) {
+				int indexOfFunction = input.indexOf(function_name);
+				String whole_function = input.substring(indexOfFunction, input.substring(indexOfFunction).indexOf(")") + 1);
+				String[] args = whole_function.substring(whole_function.indexOf("(") + 1, whole_function.indexOf(")")).split(",");
+				for (int i = 0; i < args.length; i++) {
+					if (!function_map.containsKey(args[i])) {
+						args[i] = replaceFunctions(args[i], function_map);
+					} else {
+						args[i] = function_map.get(args[i]).toString();
+					}
+				}
+				
+				input = 
+						input.substring(0, indexOfFunction) + 
+						function_map.get(function_name).evaluate(args) + 
+						input.substring(indexOfFunction + whole_function.length());
+			}
+		}
+		
 		return input;
 	}
 	
@@ -251,7 +285,7 @@ public class Environment {
 	}
 	
 	public double evaluateExpression(String expression) {
-		expression = replaceFunctions(expression);
+		expression = replaceFunctions(expression, this.currentExperiment.getFunctionVariables());
 		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
 		
 		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
@@ -266,7 +300,7 @@ public class Environment {
 		this.isSaved = false;
 	}
 	
-	public IChemical getChemicalFromKey(String input) {
+	public static IChemical getChemicalFromKey(String input) {
 		if (Constants.isMolecularFormula(input)) {
 			return AbstractChemical.getAbstractChemicalFromString(input);
 		} else {
@@ -276,7 +310,7 @@ public class Environment {
 	
 	public IVariable getValueFromKey(double value, String[] keys) {
 		if (keys.length == 3) {
-			return new ChemicalValue(value, this.getUnitFromKey(keys[0]), this.getChemicalFromKey(keys[1]), ChemicalState.getStateFromString(keys[2]));
+			return new ChemicalValue(value, this.getUnitFromKey(keys[0]), getChemicalFromKey(keys[1]), ChemicalState.getStateFromString(keys[2]));
 		}
 		
 		if (keys.length == 2) {

@@ -13,6 +13,9 @@ import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.MolarMassFunction;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.SecantFunction;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.StoichiometryFunction;
 import com.ryanafzal.io.calculator.resources.units.TemperatureUnit;
 
 public class Experiment implements Serializable {
@@ -28,14 +31,26 @@ public class Experiment implements Serializable {
 		//Mathematical Keywords
 		this.keywords.add("sin");
 		this.keywords.add("cos");
-		this.keywords.add("tan");
+		this.keywords.add("csc");
+		this.keywords.add("sec");
+		this.keywords.add("cot");
 		this.keywords.add("log");
 		this.keywords.add("lim");
 		this.keywords.add("ln");
 		this.keywords.add("int");
+		this.keywords.add("!");
 		
 		//Builtin Functions
 		this.keywords.add("stoichiometry");
+		this.keywords.add("molarmass");
+		
+		//Mathematical Keywords
+		this.variables.put("sec", new SecantFunction());
+		
+		//Builtin Functions
+		this.variables.put("stoichiometry", new StoichiometryFunction(this));
+		this.variables.put("molarmass", new MolarMassFunction());
+		
 	}
 	
 	public void setVariable(String variable, IVariable value) {
