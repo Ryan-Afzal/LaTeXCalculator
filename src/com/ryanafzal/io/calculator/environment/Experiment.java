@@ -46,14 +46,14 @@ public class Experiment implements Serializable {
 		this.keywords.add("sec");
 		this.keywords.add("cot");
 		
-
+		
 		this.keywords.add("e");
 		this.keywords.add("pi");
 		this.keywords.add("abs");
 		this.keywords.add("log");
 		this.keywords.add("lim");
 		this.keywords.add("ln");
-
+		
 		this.keywords.add("max");
 		this.keywords.add("min");
 		this.keywords.add("floor");
@@ -65,11 +65,11 @@ public class Experiment implements Serializable {
 		this.keywords.add("int");
 		this.keywords.add("!");
 		
-		//Builtin Functions
+		//Functions
 		this.keywords.add("stoichiometry");
 		this.keywords.add("molarmass");
 		
-		//Mathematical Keywords
+		//Mathematical Functions
 		this.variables.put("csc", new CosecantFunction());
 		this.variables.put("sec", new SecantFunction());
 		this.variables.put("cot", new CotangentFunction());

@@ -230,20 +230,15 @@ public class Environment {
 		}
 		
 		for (String function_name : function_map.keySet()) {
-			if (!input.contains(function_name)) {
-				continue;
-			}
-			
+			//While this function is contained:
 			while (input.contains(function_name)) {
-				int indexOfFunction = input.indexOf(function_name);
+				int indexOfFunction = input.indexOf(function_name);//Index of the first function call
 				
 				//String whole_function = input.substring(indexOfFunction, input.substring(indexOfFunction).indexOf(")") + 1);
 				String rest = input.substring(indexOfFunction);
-				int index_of_parentheses = rest.indexOf(")") + 1;
-				String whole_function = input.substring(indexOfFunction, index_of_parentheses);
-				
-				String[] args = whole_function.substring(whole_function.indexOf("(") + 1, whole_function.indexOf(")")).split(",");
-				
+				String parentheses_block = getParentheses(rest);
+				String[] args = parentheses_block.substring(parentheses_block.indexOf("(") + 1, parentheses_block.indexOf(")")).split(",");
+				String whole_function = rest.substring(0, rest.indexOf("(")) + parentheses_block;
 				for (int i = 0; i < args.length; i++) {
 						args[i] = replaceFunctions(args[i], function_map);
 				}
@@ -260,6 +255,32 @@ public class Environment {
 		return input;
 	}
 	
+	/**
+	 * Gets the outermost parentheses block.
+	 * @param input
+	 * @return
+	 */
+	private static String getParentheses(String input) {
+		if (!input.contains("(") || input.contains("(") ^ input.contains(")")) {
+			throw new IllegalArgumentException("Does not contain parentheses");
+		}
+		
+		int depth = 1;
+		int start = input.indexOf("(");
+		for (int i = start + 1; i < input.length(); i++) {
+			if (input.charAt(i) == '(') {
+				depth++;
+			} else if (input.charAt(i) == ')') {
+				depth--;
+				
+				if (depth == 0) {
+					return input.substring(start, i + 1);
+				}
+			}
+		}
+		
+		throw new IllegalArgumentException("Mismatched Parentheses");
+	}
 	private boolean ensureSyntaxes(String name, String expression) {
 		boolean exp_contains_curlybrace_left = expression.contains("{");
 		boolean exp_contains_curlybrace_right = expression.contains("}");
