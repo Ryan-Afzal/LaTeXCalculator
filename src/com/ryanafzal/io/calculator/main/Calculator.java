@@ -55,15 +55,27 @@ public class Calculator extends Application {
 	private ScrollPane outputAreaScrollPane;
 	private TextField inputField;
 	
+	/**
+	 * Creates a new calculator.
+	 */
 	public Calculator() {
 		super();		
 		this.environment = new Environment(this);
 	}
 	
+	/**
+	 * Returns the <tt>Environment</tt> of this object.
+	 * @return Returns the Environment
+	 */
 	protected Environment getEnvironment() {
 		return this.environment;
 	}
 	
+	/**
+	 * Chooses a file from an 'Open File' dialog.
+	 * @param name The name of the dialog window.
+	 * @return Returns the file chosen.
+	 */
 	public File getFileFromDialog(String name) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(name);
@@ -76,6 +88,11 @@ public class Calculator extends Application {
 		return fileChooser.showOpenDialog(this.primaryStage);
 	}
 	
+	/**
+	 * Chooses a file from a 'Save File' dialog.
+	 * @param name The name of the dialog window.
+	 * @return Returns the file chosen.
+	 */
 	public File getFileFromSaveDialog(String name) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(name);
@@ -88,14 +105,26 @@ public class Calculator extends Application {
 		return fileChooser.showSaveDialog(this.primaryStage);
 	}
 	
+	/**
+	 * Outputs a message.
+	 * @param message The message to output.
+	 */
 	public void outputMessage(String message) {
 		this.outputArea.addLine(message);
 	}
 	
+	/**
+	 * Outputs an error message.
+	 * @param message The message to output.
+	 */
 	public void outputErrorMessage(String message) {
 		this.outputArea.addLine(message, Color.RED);
 	}
 	
+	/**
+	 * Outputs a 'command formatted' message.
+	 * @param message The message to output.
+	 */
 	public void outputCommandMessage(String message) {
 		this.outputArea.addLine(Constants.COMMAND_CARAT + " " + message);
 	}
@@ -188,12 +217,46 @@ public class Calculator extends Application {
 		centerPane.getChildren().add(this.inputField);
 		
 		root.setCenter(centerPane);
-		primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT));
-		primaryStage.show();
+		this.primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT));
+		this.primaryStage.show();
+		
+		this.testAllInputs();
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	/**
+	 * Used to test inputs. Tests go between the two console outputs. 
+	 */
+	private void testAllInputs() {
+		System.out.println("======================");
+		System.out.println("####TESTING INPUTS####");
+		System.out.println("======================");
+		
+		//TESTS GO HERE
+		testInput("g(x) = {2*x}");
+		testInput("f(x) = {g(x) * x}");//f(x) = 2x^2
+		
+		testInput("g(2)");//Should output 4
+		testInput("f(2)");//Should output 8
+		testInput("(g(2))");//Should output 4
+		testInput("(f(2))");//Should output 8
+		
+		System.out.println("======================");
+		System.out.println("###FINISHED TESTING###");
+		System.out.println("======================");
+	}
+	
+	/**
+	 * Helper method used to input (via the calculator's command line) the specified String.
+	 * @param input The input string.
+	 */
+	private void testInput(String input) {
+		System.out.println("TESTING: " + input);
+		this.inputField.setText(input);
+		this.inputField.fireEvent(new ActionEvent());
 	}
 	
 }
