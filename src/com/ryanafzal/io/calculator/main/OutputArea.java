@@ -15,6 +15,7 @@ public class OutputArea extends VBox {
 				"-fx-background-color: #000000; "
 				+ "");
 		
+		
 		/*this.setStyle(
 				"-fx-control-inner-background:#000000; "
 				+ "-fx-font-family: Consolas; "

@@ -2,6 +2,7 @@ package com.ryanafzal.io.calculator.resources.equations.evaluation.builtin;
 
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
+import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
 
 public class MolarMassFunction extends Function {
@@ -21,8 +22,8 @@ public class MolarMassFunction extends Function {
 		
 		args[0].replace("[", "");
 		args[0].replace("]", "");
-		
-		return Environment.getChemicalFromKey(args[0]).getMolarMass() + "";
+		IChemical chemical = Environment.getChemicalFromKey(args[0]);
+		return chemical.getMolarMass() + "";
 	}
 	
 }

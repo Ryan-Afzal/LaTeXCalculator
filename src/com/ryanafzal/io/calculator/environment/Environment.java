@@ -160,8 +160,6 @@ public class Environment {
 	}
 	
 	public void processCommand(String command) {
-		command = command.replace(" ", "");
-		
 		if (command.contains("=")) {
 			int equals_sign_index = command.indexOf("=");
 			String name = command.substring(0, equals_sign_index).trim();
@@ -175,7 +173,7 @@ public class Environment {
 			
 			if (expression.contains("->")) {
 				//Chemical Equation
-			} else if (expression.contains("[")) {
+			} else if (expression.charAt(0) == '[') {
 				//Chemical
 				this.currentExperiment.setVariable(
 						name, 
@@ -184,18 +182,22 @@ public class Environment {
 												expression.indexOf("[") + 1, 
 												expression.indexOf("]"))));
 			} else if (expression.contains("{")) {
-				//Function
-				this.currentExperiment
-				.setVariable(
-						name.substring(
-								0, 
-								name.indexOf("(")), 
-						Function.getFunctionFromDeclaration(
-								name, 
-								expression
-								.substring(
-										expression.indexOf("{") + 1, 
-										expression.indexOf("}"))));
+				if (expression.contains("=")) {
+					//Equation
+				} else {
+					//Function
+					this.currentExperiment
+					.setVariable(
+							name.substring(
+									0, 
+									name.indexOf("(")), 
+							Function.getFunctionFromDeclaration(
+									name, 
+									expression
+									.substring(
+											expression.indexOf("{") + 1, 
+											expression.indexOf("}"))));
+				}
 			} else {
 				//Value
 				try {
@@ -218,7 +220,7 @@ public class Environment {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				this.calculator.outputErrorMessage("ERROR: Invalid Input");
+				this.calculator.outputErrorMessage("ERROR: " + e.getMessage());
 			}
 		}
 		
@@ -234,10 +236,9 @@ public class Environment {
 			while (input.contains(function_name)) {
 				int indexOfFunction = input.indexOf(function_name);//Index of the first function call
 				
-				//String whole_function = input.substring(indexOfFunction, input.substring(indexOfFunction).indexOf(")") + 1);
 				String rest = input.substring(indexOfFunction);
 				String parentheses_block = getParentheses(rest);
-				String[] args = parentheses_block.substring(parentheses_block.indexOf("(") + 1, parentheses_block.indexOf(")")).split(",");
+				String[] args = parentheses_block.substring(1, parentheses_block.length() - 1).split(",");
 				String whole_function = rest.substring(0, rest.indexOf("(")) + parentheses_block;
 				for (int i = 0; i < args.length; i++) {
 						args[i] = replaceFunctions(args[i], function_map);
@@ -326,6 +327,9 @@ public class Environment {
 	}
 	
 	public static IChemical getChemicalFromKey(String input) {
+		input = input.replace("[", "");
+		input = input.replace("]", "");
+		
 		if (Constants.isMolecularFormula(input)) {
 			return AbstractChemical.getAbstractChemicalFromString(input);
 		} else {
@@ -334,6 +338,12 @@ public class Environment {
 	}
 	
 	public IVariable getValueFromKey(double value, String[] keys) {
+		for (int i = 0; i < keys.length; i++) {
+			if (this.currentExperiment.doesVariableExist(keys[i])) {
+				keys[i] = this.currentExperiment.getVariable(keys[i]).toString();
+			}
+		}
+		
 		if (keys.length == 3) {
 			return new ChemicalValue(value, this.getUnitFromKey(keys[0]), getChemicalFromKey(keys[1]), ChemicalState.getStateFromString(keys[2]));
 		}

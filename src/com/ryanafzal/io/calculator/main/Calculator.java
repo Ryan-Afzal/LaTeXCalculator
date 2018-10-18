@@ -236,6 +236,31 @@ public class Calculator extends Application {
 		System.out.println("======================");
 		
 		//TESTS GO HERE
+		System.out.println("###TESTING CHEMICALS###");
+		testInput("H2O = [H2O]");
+		testInput("H2O");//Should output H2O
+		testInput("molarmass(H2O)");//Should output molar mass of water
+		testInput("H2O = [H2]");
+		testInput("molarmass([H2O])");//Should output molar mass of water
+		
+		System.out.println("###TESTING CHEMICAL EQUATIONS###");
+		//TODO
+		
+		System.out.println("###TESTING VALUES###");
+		testInput("x = 10");
+		testInput("x");//Should output 10
+		testInput("x = 10~kg");
+		testInput("x");//Should output 10 kg
+		testInput("x = 10~kg~[H2O]~l");
+		testInput("x");//Should output 10 kg H2O l
+		testInput("water = [H2O]");
+		testInput("x = 10~kg~water~l");
+		testInput("x");//Should output 10 kg H2O l
+		
+		System.out.println("###TESTING EQUATIONS###");
+		//TODO
+		
+		System.out.println("###TESTING FUNCTIONS###");
 		testInput("g(x) = {2*x}");
 		testInput("f(x) = {g(x) * x}");//f(x) = 2x^2
 		
@@ -243,6 +268,8 @@ public class Calculator extends Application {
 		testInput("f(2)");//Should output 8
 		testInput("(g(2))");//Should output 4
 		testInput("(f(2))");//Should output 8
+		testInput("(g((2)))");//Should output 4
+		testInput("(f((2)))");//Should output 8
 		
 		System.out.println("======================");
 		System.out.println("###FINISHED TESTING###");

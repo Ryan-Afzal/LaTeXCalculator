@@ -41,7 +41,7 @@ public class ChemicalValue extends UnitValue {
 	
 	@Override
 	public String toString() {
-		return super.toString() + this.chemical.getIUPACName() + "" + this.state.getSymbol();
+		return super.toString() + this.chemical.toString() + "" + this.state.getSymbol();
 	}
 
 }
