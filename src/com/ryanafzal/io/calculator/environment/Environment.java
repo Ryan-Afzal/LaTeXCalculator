@@ -282,6 +282,7 @@ public class Environment {
 		
 		throw new IllegalArgumentException("Mismatched Parentheses");
 	}
+	
 	private boolean ensureSyntaxes(String name, String expression) {
 		boolean exp_contains_curlybrace_left = expression.contains("{");
 		boolean exp_contains_curlybrace_right = expression.contains("}");
