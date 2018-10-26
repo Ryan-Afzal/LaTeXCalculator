@@ -2,15 +2,35 @@ package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
 public class Atom implements IChemical {
 	
+	/*
+	 * Prerequesites for electron storage
+	 * 
+	 * Easily obtain which bonds of which types, to which atoms
+	 * Stored in valence shell
+	 * 
+	 * ON: Oxidation Number
+	 * VE: Total # of valence electrons
+	 * LP: # of lone pairs
+	 * BE: # of bonded electrons belonging to this atom (electronegativity)
+	 * 
+	 * Easily calculate oxidation number : ON = VE - (LP + BE)
+	 * 
+	 * 
+	 * IMPLEMENTATIONS:
+	 * 1. Store bonds in the electrons, and iterate over the array to get all bonds. 
+	 * 2. Cache bonds in objects, 
+	 * 
+	 */
+	
 	private String name;
 	private String symbol;
 	private int number;
 	private double mass;
-	private int charge;
-	private double electronegativity;
+	private double electronegativity;//TODO
 	
-	private ElectronShell[] shells;
-	private ElectronShell valence;
+	private int oxidation_state;//TODO Cached
+	
+	private ElectronShell valence;//TODO
 	
 	
 	
@@ -47,14 +67,16 @@ public class Atom implements IChemical {
 	private class ElectronShell {
 		
 		private String name;
-		private boolean[] electrons;
+		private Atom parent;
+		private Electron[] electrons;
 		
-		public ElectronShell(ShellType type, int numElectrons) {
+		public ElectronShell(Atom parent, ShellType type, int numElectrons) {
 			this.name = type.getName();
-			this.electrons = new boolean[type.getNumElectrons()];
+			this.parent = parent;
+			this.electrons = new Electron[type.getNumElectrons()];
 			
 			for (int i = 0; i < numElectrons; i++) {
-				this.electrons[i] = true;
+				this.electrons[i] = new Electron(parent);
 			}
 		}
 		
@@ -65,9 +87,8 @@ public class Atom implements IChemical {
 		this.symbol = atom.getSymbol();
 		this.number = atom.getAtomicNumber();
 		this.mass = atom.getAtomicMass();
-		this.charge = charge;
 		
-		
+		this.valence = new ElectronShell(this, ShellType.S, 1);
 	}
 	
 	public String getName() {
@@ -91,33 +112,46 @@ public class Atom implements IChemical {
 		return this.getMolecularFormula();
 	}
 
+	@Deprecated
 	@Override
 	public double getMolarMass() {
 		return this.getAtomicMass();
 	}
 
+	@Deprecated
 	@Override
 	public String getMolecularFormula() {
 		return this.getSymbol();
 	}
 
+	@Deprecated
 	@Override
 	public String getEmpiricalFormula() {
 		return this.getMolecularFormula();
 	}
 
+	@Deprecated
 	@Override
 	public String getIUPACName() {
 		return this.getMolecularFormula();
 	}
 
+	@Deprecated
 	@Override
 	public int getCharge() {
-		return this.charge;
+		return 0;
 	}
 	
-	public void bond(Atom other) {
+	private boolean bond(Atom other) {
+		recalculateOxidationState();
+		return true;
+	}
+	
+	private void recalculateOxidationState() {
 		
 	}
 	
+	public static boolean bond(Atom atom1, Atom atom2) {
+		return atom1.bond(atom2) && atom2.bond(atom1);
+	}
 }

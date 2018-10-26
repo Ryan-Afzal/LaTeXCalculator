@@ -12,10 +12,6 @@ public abstract class IUPACNames {
 		return null;
 	}
 	
-	private static IonicChemical getIonicChemicalFromIUPACName(String name) {
-		return null;
-	}
-	
 	/**
 	 * Unless required by the functional group, this does not return Hydrogen atoms for groups such as Amines or Hydrocarbons.
 	 * Please call <tt>Group.replaceRValues()</tt>.

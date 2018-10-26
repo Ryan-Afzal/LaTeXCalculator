@@ -1,7 +1,5 @@
 package com.ryanafzal.io.calculator.resources;
 
-import java.io.Serializable;
-
 public interface ILaTeXValue {
 	/**
 	 * Returns a LaTeX {@code String} representing this object.

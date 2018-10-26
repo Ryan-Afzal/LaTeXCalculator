@@ -11,6 +11,7 @@ import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 
 //TODO Everything
+@Deprecated
 public class IonicChemical implements IChemical {
 	
 	private IChemical[] cations;

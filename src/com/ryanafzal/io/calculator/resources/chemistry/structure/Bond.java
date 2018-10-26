@@ -1,5 +1,6 @@
 package com.ryanafzal.io.calculator.resources.chemistry.structure;
 
+@Deprecated
 public class Bond {
 	
 	private IChemical atom1;
