@@ -12,6 +12,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
@@ -203,7 +205,7 @@ public class Calculator extends Application {
 		centerPane.getChildren().add(this.outputAreaScrollPane);
 		
 		this.inputField = new TextField();
-		inputField.setOnAction(new EventHandler<ActionEvent>() {
+		this.inputField.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				String text = inputField.getText();
@@ -211,6 +213,15 @@ public class Calculator extends Application {
 					outputArea.addLine(text);
 					environment.processCommand(text);
 					inputField.setText("");
+				}
+			}
+		});
+		this.inputField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.UP) {
+					inputField.setText(environment.getPreviousInput());
 				}
 			}
 		});

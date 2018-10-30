@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Optional;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
@@ -36,6 +37,9 @@ public class Environment {
 	//TODO Undo
 	//TODO Redo
 	
+	private LinkedList<String> previousInput;
+	private int previousIndex;
+	
 	private Experiment currentExperiment;
 	private File experimentFile = null;
 	private boolean isSaved = true;
@@ -44,6 +48,8 @@ public class Environment {
 	
 	public Environment(Calculator calculator) {
 		this.calculator = calculator;
+		this.previousInput = new LinkedList<String>();
+		this.previousIndex = 0;
 		
 		this.makeNewExperiment();
 	}
@@ -160,6 +166,9 @@ public class Environment {
 	}
 	
 	public void processCommand(String command) {
+		this.previousInput.push(command);
+		this.previousIndex = 0;
+		
 		if (command.contains("=")) {
 			int equals_sign_index = command.indexOf("=");
 			String name = command.substring(0, equals_sign_index).trim();
@@ -224,6 +233,11 @@ public class Environment {
 			}
 		}
 		
+	}
+	
+	public String getPreviousInput() {
+		this.previousIndex++;
+		return this.previousInput.get(this.previousIndex - 1);
 	}
 	
 	public static String replaceFunctions(String input, HashMap<String, Function> function_map) {
