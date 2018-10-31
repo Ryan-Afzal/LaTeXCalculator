@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -104,8 +105,6 @@ public class Environment {
 		} else {
 			return false;
 		}
-		
-		
 	}
 	
 	private void writeToFile(File file, Experiment experiment) {		
@@ -240,7 +239,11 @@ public class Environment {
 		return this.previousInput.get(this.previousIndex - 1);
 	}
 	
-	public static String replaceFunctions(String input, HashMap<String, Function> function_map) {
+	private static String replaceFunctionsRecursive(String input, HashSet<String> keywords, HashMap<String, Function> function_map) {
+		for (String keyword : keywords) {
+			input.replace(keyword, keyword + "|");
+		}
+		
 		if (!input.contains("(")) {
 			return input;
 		}
@@ -255,19 +258,24 @@ public class Environment {
 				String[] args = parentheses_block.substring(1, parentheses_block.length() - 1).split(",");
 				String whole_function = rest.substring(0, rest.indexOf("(")) + parentheses_block;
 				for (int i = 0; i < args.length; i++) {
-						args[i] = replaceFunctions(args[i], function_map);
+						args[i] = replaceFunctionsRecursive(args[i], keywords, function_map);
 				}
 				
 				input = 
 						input.substring(0, indexOfFunction)
 						+ "("
-						+ replaceFunctions(function_map.get(function_name).evaluate(args), function_map)
+						+ replaceFunctionsRecursive(function_map.get(function_name).evaluate(args), keywords, function_map)
 						+ ")"
 						+ input.substring(indexOfFunction + whole_function.length());
 			}
 		}
 		
+		input.replace("|", "");
 		return input;
+	}
+	
+	private static String replaceFunctions(String input) {
+		return null;
 	}
 	
 	/**
@@ -276,7 +284,7 @@ public class Environment {
 	 * @return
 	 */
 	private static String getParentheses(String input) {
-		if (!input.contains("(") || input.contains("(") ^ input.contains(")")) {
+		if (!input.contains("(") || !input.contains(")")) {
 			throw new IllegalArgumentException("Does not contain parentheses");
 		}
 		
@@ -326,7 +334,7 @@ public class Environment {
 	}
 	
 	public double evaluateExpression(String expression) {
-		expression = replaceFunctions(expression, this.currentExperiment.getFunctionVariables());
+		expression = replaceFunctionsRecursive(expression, this.currentExperiment.getKeywords(), this.currentExperiment.getFunctionVariables());
 		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
 		
 		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();

@@ -141,6 +141,10 @@ public class Experiment implements Serializable {
 		return output;
 	}
 	
+	protected HashSet<String> getKeywords() {
+		return this.keywords;
+	}
+	
 	public boolean isKeyword(String keyword) {
 		return this.keywords.contains(keyword);
 	}
