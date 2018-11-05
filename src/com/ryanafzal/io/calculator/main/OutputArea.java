@@ -11,9 +11,9 @@ public class OutputArea extends VBox {
 	
 	public OutputArea() {
 		super();
-		this.setStyle(
-				"-fx-background-color: #000000; "
-				+ "");
+		this.setStyle(""
+				//+ "-fx-background-color: #000000; "
+				);
 		
 		
 		/*this.setStyle(
@@ -33,6 +33,7 @@ public class OutputArea extends VBox {
 		text.setText(line);
 		text.setFont(Font.font("Consolas", 20));
 		text.setFill(color);
+		
 		this.getChildren().add(text);
 	}
 	

@@ -18,6 +18,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -128,7 +130,7 @@ public class Calculator extends Application {
 	 * @param message The message to output.
 	 */
 	public void outputCommandMessage(String message) {
-		this.outputArea.addLine(Constants.COMMAND_CARAT + " " + message);
+		this.outputArea.addLine(Constants.COMMAND_CARAT + " " + message, Color.BLUE);
 	}
 	
 	@Override
@@ -202,6 +204,9 @@ public class Calculator extends Application {
 		
 		this.outputArea = new OutputArea();
 		this.outputAreaScrollPane = new ScrollPane(this.outputArea);
+		/*this.outputAreaScrollPane.setStyle(
+				"-fx-background-color: #000000; "
+				+ "");*/
 		centerPane.getChildren().add(this.outputAreaScrollPane);
 		
 		this.inputField = new TextField();
@@ -217,7 +222,7 @@ public class Calculator extends Application {
 			}
 		});
 		this.inputField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
+			
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.UP) {
@@ -228,7 +233,7 @@ public class Calculator extends Application {
 		centerPane.getChildren().add(this.inputField);
 		
 		root.setCenter(centerPane);
-		this.primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT));
+		this.primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT, Color.BLACK));
 		this.primaryStage.show();
 		
 		this.testAllInputs();
@@ -281,6 +286,9 @@ public class Calculator extends Application {
 		testInput("(f(2))");//Should output 8
 		testInput("(g((2)))");//Should output 4
 		testInput("(f((2)))");//Should output 8
+		
+		System.out.println("###TESTING BUILTINS###");
+		testInput("log(1)");//Should output 0
 		
 		System.out.println("======================");
 		System.out.println("###FINISHED TESTING###");
