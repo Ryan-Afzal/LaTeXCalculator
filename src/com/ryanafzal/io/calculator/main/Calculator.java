@@ -56,7 +56,6 @@ public class Calculator extends Application {
 	
 	//Console
 	private OutputArea outputArea;
-	private ScrollPane outputAreaScrollPane;
 	private TextField inputField;
 	
 	/**
@@ -203,11 +202,7 @@ public class Calculator extends Application {
 		VBox centerPane = new VBox();
 		
 		this.outputArea = new OutputArea();
-		this.outputAreaScrollPane = new ScrollPane(this.outputArea);
-		/*this.outputAreaScrollPane.setStyle(
-				"-fx-background-color: #000000; "
-				+ "");*/
-		centerPane.getChildren().add(this.outputAreaScrollPane);
+		centerPane.getChildren().add(this.outputArea);
 		
 		this.inputField = new TextField();
 		this.inputField.setOnAction(new EventHandler<ActionEvent>() {
