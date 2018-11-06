@@ -29,7 +29,7 @@ public class OutputArea extends ScrollPane {
 	}
 	
 	public void addLine(String line) {
-		addLine(line, BASE_TEXT_COLOR);
+		this.addLine(line, BASE_TEXT_COLOR);
 	}
 	
 	public void addLine(String line, Color color) {
