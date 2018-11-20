@@ -228,7 +228,7 @@ public class Calculator extends Application {
 		this.primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT, Color.BLACK));
 		this.primaryStage.show();
 		
-		this.testAllInputs();
+		//this.testAllInputs();
 	}
 	
 	public static void main(String[] args) {
