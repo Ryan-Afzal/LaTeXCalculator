@@ -239,38 +239,47 @@ public class Environment {
 		return this.previousInput.get(this.previousIndex - 1);
 	}
 	
-	private static String replaceFunctionsRecursive(String input, HashSet<String> keywords, HashMap<String, Function> function_map) {
-		for (String keyword : keywords) {
-			input.replace(keyword, keyword + "|");
-		}
-		
+	private static String replaceFunctionsRecursive(String input, HashMap<String, Function> function_map) {		
 		if (!input.contains("(")) {
 			return input;
 		}
 		
 		for (String function_name : function_map.keySet()) {
 			//While this function is contained:
-			while (input.contains(function_name)) {
-				int indexOfFunction = input.indexOf(function_name);//Index of the first function call
+			int min = 0;
+			String validArea = input.substring(min);
+			
+			while (validArea.contains(function_name)) {
+				int indexOfFunction = validArea.indexOf(function_name);//Index of the first function call
 				
-				String rest = input.substring(indexOfFunction);
+				
+				
+				String rest = validArea.substring(indexOfFunction);
 				String parentheses_block = getParentheses(rest);
 				String[] args = parentheses_block.substring(1, parentheses_block.length() - 1).split(",");
 				String whole_function = rest.substring(0, rest.indexOf("(")) + parentheses_block;
+				
+				if (indexOfFunction != 0 && isValidFunctionPart(input.charAt(indexOfFunction - 1))) {
+					min += whole_function.length();
+					validArea = input.substring(min);
+					continue;
+				}
+				
 				for (int i = 0; i < args.length; i++) {
-						args[i] = replaceFunctionsRecursive(args[i], keywords, function_map);
+						args[i] = replaceFunctionsRecursive(args[i], function_map);
 				}
 				
 				input = 
 						input.substring(0, indexOfFunction)
 						+ "("
-						+ replaceFunctionsRecursive(function_map.get(function_name).evaluate(args), keywords, function_map)
+						+ replaceFunctionsRecursive(function_map.get(function_name).evaluate(args), function_map)
 						+ ")"
 						+ input.substring(indexOfFunction + whole_function.length());
+				
+				validArea = input.substring(min);
 			}
 		}
 		
-		input.replace("|", "");
 		return input;
 	}
 	
@@ -334,7 +343,7 @@ public class Environment {
 	}
 	
 	public double evaluateExpression(String expression) {
-		expression = replaceFunctionsRecursive(expression, this.currentExperiment.getKeywords(), this.currentExperiment.getFunctionVariables());
+		expression = replaceFunctionsRecursive(expression, /*this.currentExperiment.getKeywords(), */this.currentExperiment.getFunctionVariables());
 		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
 		
 		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
@@ -395,6 +404,10 @@ public class Environment {
 			}
 		}
 		return Unit.getUnitFromString(key);
+	}
+	
+	private static boolean isValidFunctionPart(char input) {
+		return Character.isAlphabetic(input) || Character.isDigit(input);
 	}
 	
 }

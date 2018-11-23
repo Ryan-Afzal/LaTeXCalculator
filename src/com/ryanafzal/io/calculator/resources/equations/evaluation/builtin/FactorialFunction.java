@@ -1,8 +1,8 @@
 package com.ryanafzal.io.calculator.resources.equations.evaluation.builtin;
 
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
 
-public class FactorialFunction extends Function {
+public class FactorialFunction extends NumericalFunction {
 
 	public FactorialFunction() {
 		super(new String[] {"x"}, "!(x)");

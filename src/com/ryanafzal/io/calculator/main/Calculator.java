@@ -3,6 +3,8 @@ package com.ryanafzal.io.calculator.main;
 import java.io.File;
 
 import com.ryanafzal.io.calculator.environment.Environment;
+import com.ryanafzal.io.calculator.graph.GraphPane;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -54,6 +56,9 @@ public class Calculator extends Application {
 	//Console
 	private OutputArea outputArea;
 	private TextField inputField;
+	
+	//Graphing
+	private GraphPane graphPane;
 	
 	/**
 	 * Creates a new calculator.
@@ -224,11 +229,14 @@ public class Calculator extends Application {
 		});
 		centerPane.getChildren().add(this.inputField);
 		
+		this.graphPane = new GraphPane();
+		root.setRight(this.graphPane);
+		
 		root.setCenter(centerPane);
 		this.primaryStage.setScene(new Scene(root, Constants.WIDTH, Constants.HEIGHT, Color.BLACK));
 		this.primaryStage.show();
 		
-		//this.testAllInputs();
+		this.testAllInputs();
 	}
 	
 	public static void main(String[] args) {
@@ -281,6 +289,9 @@ public class Calculator extends Application {
 		
 		System.out.println("###TESTING BUILTINS###");
 		testInput("log(1)");//Should output 0
+		
+		System.out.println("###TESTING GRAPHING###");
+		this.graphPane.graph(Function.getFunctionFromDeclaration("stuff(x)", "log(x)"));
 		
 		System.out.println("======================");
 		System.out.println("###FINISHED TESTING###");

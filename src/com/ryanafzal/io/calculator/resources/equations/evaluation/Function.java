@@ -13,6 +13,10 @@ public class Function implements IVariable {
 		this.expression = expression;
 	}
 	
+	public int numArgs() {
+		return this.args.length;
+	}
+	
 	public String evaluate(String[] args) {
 		String output = this.expression;
 		
@@ -20,9 +24,11 @@ public class Function implements IVariable {
 			int index = output.indexOf(this.args[i]);
 			while (index != -1) {
 				output = 
-						output.substring(0, index) + 
-						args[i] + 
-						output.substring(index + this.args[i].length());
+						output.substring(0, index)
+						+ "("
+						+ args[i]
+						+ ")"
+						+ output.substring(index + this.args[i].length());
 				index = output.indexOf(this.args[i]);
 			}
 		}
@@ -30,13 +36,13 @@ public class Function implements IVariable {
 		return output;
 	}
 	
-	public static Function getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {
+	public static NumericalFunction getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {
 		signature = signature.replace(" ", "");
 		body = body.replace(" ", "");
 		
 		String[] args = signature.substring(signature.indexOf("(") + 1, signature.indexOf(")")).split(",");
 		
-		return new Function(args, body);
+		return new NumericalFunction(args, body);
 	}
 	
 }
