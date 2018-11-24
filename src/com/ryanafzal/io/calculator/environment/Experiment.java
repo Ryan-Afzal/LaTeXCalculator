@@ -6,9 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.ryanafzal.io.calculator.main.Constants;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
-import com.ryanafzal.io.calculator.resources.chemistry.structure.AbstractChemical;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.Value;
@@ -45,7 +43,6 @@ public class Experiment implements Serializable {
 		this.keywords.add("csc");
 		this.keywords.add("sec");
 		this.keywords.add("cot");
-		
 		
 		this.keywords.add("e");
 		this.keywords.add("pi");

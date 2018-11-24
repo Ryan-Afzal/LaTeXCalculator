@@ -5,6 +5,7 @@ import java.io.File;
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.graph.GraphPane;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.FunctionException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -247,55 +248,64 @@ public class Calculator extends Application {
 	 * Used to test inputs. Tests go between the two console outputs. 
 	 */
 	private void testAllInputs() {
-		System.out.println("======================");
-		System.out.println("####TESTING INPUTS####");
-		System.out.println("======================");
-		
-		//TESTS GO HERE
-		System.out.println("###TESTING CHEMICALS###");
-		testInput("H2O = [H2O]");
-		testInput("H2O");//Should output H2O
-		testInput("molarmass(H2O)");//Should output molar mass of water
-		testInput("H2O = [H2]");
-		testInput("molarmass([H2O])");//Should output molar mass of water
-		
-		System.out.println("###TESTING CHEMICAL EQUATIONS###");
-		//TODO
-		
-		System.out.println("###TESTING VALUES###");
-		testInput("x = 10");
-		testInput("x");//Should output 10
-		testInput("x = 10~kg");
-		testInput("x");//Should output 10 kg
-		testInput("x = 10~kg~[H2O]~l");
-		testInput("x");//Should output 10 kg H2O l
-		testInput("water = [H2O]");
-		testInput("x = 10~kg~water~l");
-		testInput("x");//Should output 10 kg H2O l
-		
-		System.out.println("###TESTING EQUATIONS###");
-		//TODO
-		
-		System.out.println("###TESTING FUNCTIONS###");
-		testInput("g(x) = {2*x}");
-		testInput("f(x) = {g(x) * x}");//f(x) = 2x^2
-		
-		testInput("g(2)");//Should output 4
-		testInput("f(2)");//Should output 8
-		testInput("(g(2))");//Should output 4
-		testInput("(f(2))");//Should output 8
-		testInput("(g((2)))");//Should output 4
-		testInput("(f((2)))");//Should output 8
-		
-		System.out.println("###TESTING BUILTINS###");
-		testInput("log(1)");//Should output 0
-		
-		System.out.println("###TESTING GRAPHING###");
-		this.graphPane.graph(Function.getFunctionFromDeclaration("stuff(x)", "log(x)"));
-		
-		System.out.println("======================");
-		System.out.println("###FINISHED TESTING###");
-		System.out.println("======================");
+		try {
+			System.out.println("======================");
+			System.out.println("####TESTING INPUTS####");
+			System.out.println("======================");
+			
+			//TESTS GO HERE
+			System.out.println("###TESTING CHEMICALS###");
+			testInput("H2O = [H2O]");
+			testInput("H2O");//Should output H2O
+			testInput("molarmass(H2O)");//Should output molar mass of water
+			testInput("H2O = [H2]");
+			testInput("molarmass([H2O])");//Should output molar mass of water
+			
+			System.out.println("###TESTING CHEMICAL EQUATIONS###");
+			//TODO
+			
+			System.out.println("###TESTING VALUES###");
+			testInput("x = 10");
+			testInput("x");//Should output 10
+			testInput("x = 10~kg");
+			testInput("x");//Should output 10 kg
+			testInput("x = 10~kg~[H2O]~l");
+			testInput("x");//Should output 10 kg H2O l
+			testInput("water = [H2O]");
+			testInput("x = 10~kg~water~l");
+			testInput("x");//Should output 10 kg H2O l
+			
+			System.out.println("###TESTING EQUATIONS###");
+			//TODO
+			
+			System.out.println("###TESTING FUNCTIONS###");
+			testInput("g(x) = {2*x}");
+			testInput("f(x) = {g(x) * x}");//f(x) = 2x^2
+			
+			testInput("g(2)");//Should output 4
+			testInput("f(2)");//Should output 8
+			testInput("(g(2))");//Should output 4
+			testInput("(f(2))");//Should output 8
+			testInput("(g((2)))");//Should output 4
+			testInput("(f((2)))");//Should output 8
+			
+			System.out.println("###TESTING BUILTINS###");
+			testInput("log(1)");//Should output 0
+			
+			System.out.println("###TESTING GRAPHING###");
+			testGraphInput("testLinear(x)", "x", Color.BLACK);
+			testGraphInput("testQuadratic(x)", "x^2", Color.RED);
+			testGraphInput("testRoot(x)", "x^(1/2)", Color.PURPLE);
+			testGraphInput("testRational(x)", "(x^2 - x) / (x - 1)", Color.GREEN);
+			testGraphInput("testExponential(x)", "2^x", Color.BLUE);
+			testGraphInput("testLogarithm(x))", "log(x)", Color.YELLOW);
+			
+			System.out.println("======================");
+			System.out.println("###FINISHED TESTING###");
+			System.out.println("======================");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -306,6 +316,11 @@ public class Calculator extends Application {
 		System.out.println("TESTING: " + input);
 		this.inputField.setText(input);
 		this.inputField.fireEvent(new ActionEvent());
+	}
+	
+	private void testGraphInput(String name, String body, Color color) throws FunctionException {
+		System.out.println("TESTING: " + name);
+		this.graphPane.graph(Function.getFunctionFromDeclaration(name, body), color);
 	}
 	
 }

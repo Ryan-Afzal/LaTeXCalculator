@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
@@ -14,6 +13,7 @@ import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoad;
 import com.ryanafzal.io.calculator.resources.equations.railroad.RailRoadComponent;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.units.InvalidUnitException;
 import com.ryanafzal.io.calculator.resources.units.MoleUnit;
 import com.ryanafzal.io.calculator.resources.units.QuantityUnit;

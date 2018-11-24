@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.w3c.dom.Document;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 
 import net.sourceforge.jeuclid.LayoutContext;
 import net.sourceforge.jeuclid.MathMLParserSupport;

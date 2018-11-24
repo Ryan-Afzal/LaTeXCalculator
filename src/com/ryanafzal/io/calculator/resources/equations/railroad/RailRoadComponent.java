@@ -1,7 +1,7 @@
 package com.ryanafzal.io.calculator.resources.equations.railroad;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 
 public class RailRoadComponent implements ILaTeXValue {
 	

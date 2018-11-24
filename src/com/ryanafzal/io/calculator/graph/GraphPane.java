@@ -1,9 +1,10 @@
 package com.ryanafzal.io.calculator.graph;
 
+import com.ryanafzal.io.calculator.resources.equations.evaluation.FunctionException;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.FunctionException;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public class GraphPane extends Pane {
 
@@ -16,11 +17,17 @@ public class GraphPane extends Pane {
 		this.getChildren().add(this.graph);
 	}
 	
-	public void graph(NumericalFunction function) {
+	/**
+	 * Graphs the input function using the specified color.
+	 * @param function The function to graph.
+	 * @param color The color to use.
+	 * @throws FunctionException If the 
+	 */
+	public void graph(NumericalFunction function, Color color) throws FunctionException {
 		try {
-			this.graph.graph(function);
-		} catch (FunctionException e) {
-			e.printStackTrace();
+			this.graph.graph(function, color);
+		} catch (IllegalArgumentException e) {
+			throw new FunctionException(e);
 		}
 	}
 	

@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.equations.ISolvable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 
 public class RailRoad implements ILaTeXValue, ISolvable {

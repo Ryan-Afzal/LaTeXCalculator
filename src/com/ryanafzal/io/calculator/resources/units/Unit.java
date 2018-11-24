@@ -2,7 +2,7 @@ package com.ryanafzal.io.calculator.resources.units;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 
 public abstract class Unit implements ILaTeXValue {

@@ -3,11 +3,11 @@ package com.ryanafzal.io.calculator.resources.chemistry.equation;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 
 /**
  * Represents a chemical equation. 

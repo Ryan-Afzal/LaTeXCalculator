@@ -1,4 +1,4 @@
-package com.ryanafzal.io.calculator.resources;
+package com.ryanafzal.io.calculator.resources.misc;
 
 public interface ILaTeXValue {
 	/**

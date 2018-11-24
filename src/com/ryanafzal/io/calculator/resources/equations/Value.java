@@ -1,6 +1,6 @@
 package com.ryanafzal.io.calculator.resources.equations;
 
-import com.ryanafzal.io.calculator.resources.ILaTeXValue;
+import com.ryanafzal.io.calculator.resources.misc.ILaTeXValue;
 
 public class Value implements ILaTeXValue, IVariable {
 	
