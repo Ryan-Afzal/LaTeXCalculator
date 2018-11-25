@@ -19,13 +19,6 @@ public class OutputArea extends ScrollPane {
 				+ "-fx-background-color: #000000; "
 				);
 		this.setContent(this.box);
-		
-		/*this.setStyle(
-				"-fx-control-inner-background:#000000; "
-				+ "-fx-font-family: Consolas; "
-				+ "-fx-highlight-fill: #00ff00; "
-				+ "-fx-highlight-text-fill: #000000; "
-				+ "-fx-text-fill: #00ff00;");*/
 	}
 	
 	public void addLine(String line) {
@@ -39,7 +32,8 @@ public class OutputArea extends ScrollPane {
 		text.setFill(color);
 		
 		this.box.getChildren().add(text);
-		this.setVvalue(this.vmaxProperty().get());
+		this.layout();
+		this.setVvalue(this.getVmax());
 	}
 	
 }
