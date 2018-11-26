@@ -1,7 +1,6 @@
 package com.ryanafzal.io.calculator.graph;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.FunctionException;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
 
 import javafx.scene.canvas.Canvas;
@@ -30,7 +29,7 @@ public class Graph extends Canvas {
 		this.ymin = -10;
 		this.ymax = 10;
 		
-		this.precision = 0;
+		this.precision = -1;
 		
 		this.refreshPane();
 	}
@@ -44,7 +43,7 @@ public class Graph extends Canvas {
 	}
 	
 	public void graph(NumericalFunction function, Color color) {
-		if (function.numArgs() == 0) {
+		/*if (function.numArgs() == 0) {
 			GraphicsContext gc = this.getGraphicsContext2D();
 			double output = new DoubleEvaluator().evaluate(function.evaluate(new String[] {}));
 			
@@ -60,14 +59,16 @@ public class Graph extends Canvas {
 			
 			for (int index = 0; index < this.getNumValues(); index++) {
 				try {
+					System.out.println("INDEX: " + index + ", X: " + x);
 					args[0] = x + "";
 					values[index][0] = x;
 					values[index][1] = eval.evaluate(function.evaluate(args));
-					x += this.getPrecisionIncrement();
 				} catch (IllegalArgumentException e) {
 					if (!e.getMessage().equals("Invalid argument passed to log")) {
 						throw e;
 					}
+				} finally {
+					x += this.getPrecisionIncrement();
 				}
 			}
 			
@@ -78,7 +79,7 @@ public class Graph extends Canvas {
 			}
 		} else {
 			throw new IllegalArgumentException("Cannot graph a function with more than one parameter.");
-		}
+		}*/
 	}
 	
 	private void graph(double x1, double y1, double x2, double y2, Color color) {

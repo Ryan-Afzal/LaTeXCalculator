@@ -343,7 +343,7 @@ public class Environment {
 	}
 	
 	public double evaluateExpression(String expression) {
-		expression = replaceFunctionsRecursive(expression, /*this.currentExperiment.getKeywords(), */this.currentExperiment.getFunctionVariables());
+		expression = replaceFunctionsRecursive(expression, this.currentExperiment.getFunctionVariables());
 		HashMap<String, Value> values = this.currentExperiment.getValueVariables();
 		
 		StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
