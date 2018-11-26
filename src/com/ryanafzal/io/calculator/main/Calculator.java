@@ -280,6 +280,7 @@ public class Calculator extends Application {
 			System.out.println("###TESTING FUNCTIONS###");
 			testInput("g(x) = {2*x}");
 			testInput("f(x) = {g(x) * x}");//f(x) = 2x^2
+			testInput("log2(x) = {(log(x) / log(2))}");
 			
 			testInput("g(2)");//Should output 4
 			testInput("f(2)");//Should output 8
@@ -287,6 +288,10 @@ public class Calculator extends Application {
 			testInput("(f(2))");//Should output 8
 			testInput("(g((2)))");//Should output 4
 			testInput("(f((2)))");//Should output 8
+			
+			testInput("log2(0.5)");//Should output -1
+			testInput("log2(1)");//Should output 0
+			testInput("log2(2)");//Should output 1
 			
 			System.out.println("###TESTING BUILTINS###");
 			testInput("log(1)");//Should output 0
@@ -297,7 +302,7 @@ public class Calculator extends Application {
 			testGraphInput("testRoot(x)", "x^(1/2)", Color.PURPLE);
 			testGraphInput("testRational(x)", "(x^2 - x) / (x - 1)", Color.GREEN);
 			testGraphInput("testExponential(x)", "2^x", Color.BLUE);
-			testGraphInput("testLogarithm(x))", "log(x)", Color.YELLOW);
+			testGraphInput("testLogarithm(x))", "log(x) / log(2)", Color.YELLOW);
 			
 			System.out.println("======================");
 			System.out.println("###FINISHED TESTING###");

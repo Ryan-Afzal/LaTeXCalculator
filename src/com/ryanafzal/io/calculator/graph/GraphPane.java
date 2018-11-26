@@ -27,7 +27,7 @@ public class GraphPane extends Pane {
 		try {
 			this.graph.graph(function, color);
 		} catch (IllegalArgumentException e) {
-			throw new FunctionException(e);
+			throw new FunctionException("Error graphing function " + function.toString(), e);
 		}
 	}
 	

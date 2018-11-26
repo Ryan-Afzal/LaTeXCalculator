@@ -25,10 +25,10 @@ public class Graph extends Canvas {
 		this.setHeight(HEIGHT);
 		this.setWidth(WIDTH);
 		
-		this.xmin = -100;
-		this.xmax = 100;
-		this.ymin = -100;
-		this.ymax = 100;
+		this.xmin = -10;
+		this.xmax = 10;
+		this.ymin = -10;
+		this.ymax = 10;
 		
 		this.refreshPane();
 	}
@@ -94,11 +94,11 @@ public class Graph extends Canvas {
 	}
 	
 	private double applyXTransformation(double input) {
-		return (input * ((this.getWidth()) / (this.xmax - this.xmin)));
+		return ((input - this.xmin) * ((this.getWidth()) / (this.xmax - this.xmin)));
 	}
 	
 	private double applyYTransformation(double input) {
-		return (input * ((this.getHeight()) / (this.ymax - this.ymin)));
+		return ((input - this.ymin) * ((this.getHeight()) / (this.ymax - this.ymin)));
 	}
 	
 	private void refreshPane() {

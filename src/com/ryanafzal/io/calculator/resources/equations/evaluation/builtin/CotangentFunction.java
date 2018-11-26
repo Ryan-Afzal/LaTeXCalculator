@@ -5,7 +5,7 @@ import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunct
 public class CotangentFunction extends NumericalFunction {
 
 	public CotangentFunction() {
-		super(new String[] {"x"}, "1/tan(x)");
+		super("cot", new String[] {"x"}, "1/tan(x)");
 	}
 	
 }

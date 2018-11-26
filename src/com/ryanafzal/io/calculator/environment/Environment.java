@@ -259,7 +259,7 @@ public class Environment {
 				String[] args = parentheses_block.substring(1, parentheses_block.length() - 1).split(",");
 				String whole_function = rest.substring(0, rest.indexOf("(")) + parentheses_block;
 				
-				if (indexOfFunction != 0 && isValidFunctionPart(input.charAt(indexOfFunction - 1))) {
+				if (indexOfFunction != 0 && isValidFunctionPart(validArea.charAt(indexOfFunction - 1))) {
 					min += whole_function.length();
 					validArea = input.substring(min);
 					continue;

@@ -36,13 +36,17 @@ public class Function implements IVariable {
 		return output;
 	}
 	
+	public String getExpression() {
+		return this.expression;
+	}
+	
 	public static NumericalFunction getFunctionFromDeclaration(String signature, String body) throws IllegalArgumentException {
 		signature = signature.replace(" ", "");
 		body = body.replace(" ", "");
 		
 		String[] args = signature.substring(signature.indexOf("(") + 1, signature.indexOf(")")).split(",");
 		
-		return new NumericalFunction(args, body);
+		return new NumericalFunction(signature.substring(0, signature.indexOf("(")), args, body);
 	}
 	
 }

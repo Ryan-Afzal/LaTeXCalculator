@@ -5,7 +5,7 @@ import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunct
 public class FactorialFunction extends NumericalFunction {
 
 	public FactorialFunction() {
-		super(new String[] {"x"}, "!(x)");
+		super("!", new String[] {"x"}, "!(x)");
 	}
 	
 	@Override

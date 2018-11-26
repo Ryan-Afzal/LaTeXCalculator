@@ -5,7 +5,7 @@ import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunct
 public class CosecantFunction extends NumericalFunction {
 
 	public CosecantFunction() {
-		super(new String[] {"x"}, "1/sin(x)");
+		super("csc", new String[] {"x"}, "1/sin(x)");
 	}
 
 }

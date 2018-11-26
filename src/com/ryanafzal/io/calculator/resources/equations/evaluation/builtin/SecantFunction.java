@@ -5,7 +5,7 @@ import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunct
 public class SecantFunction extends NumericalFunction {
 
 	public SecantFunction() {
-		super(new String[] {"x"}, "1/cos(x)");
+		super("sec", new String[] {"x"}, "1/cos(x)");
 	}
 
 }
