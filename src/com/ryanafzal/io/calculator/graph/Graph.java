@@ -18,7 +18,7 @@ public class Graph extends Canvas {
 	private double ymin;
 	private double ymax;
 	
-	
+	private int precision;
 	
 	public Graph() {
 		super();
@@ -30,11 +30,17 @@ public class Graph extends Canvas {
 		this.ymin = -10;
 		this.ymax = 10;
 		
+		this.precision = 0;
+		
 		this.refreshPane();
 	}
 	
+	private double getPrecisionIncrement() {
+		return Math.pow(10, this.precision);
+	}
+	
 	public int getNumValues() {
-		return (int) (this.xmax - this.xmin) + 1;
+		return (int) ((this.xmax - this.xmin) * (1 / this.getPrecisionIncrement())) + 1;
 	}
 	
 	public void graph(NumericalFunction function, Color color) {
@@ -50,11 +56,14 @@ public class Graph extends Canvas {
 			DoubleEvaluator eval = new DoubleEvaluator();
 			String[] args = {""};
 			
-			for (int i = (int) this.xmin; i <= xmax; i++) {
+			double x = this.xmin;
+			
+			for (int index = 0; index < this.getNumValues(); index++) {
 				try {
-					args[0] = i + "";
-					values[(int) (i - this.xmin)][0] = i;
-					values[(int) (i - this.xmin)][1] = eval.evaluate(function.evaluate(args));
+					args[0] = x + "";
+					values[index][0] = x;
+					values[index][1] = eval.evaluate(function.evaluate(args));
+					x += this.getPrecisionIncrement();
 				} catch (IllegalArgumentException e) {
 					if (!e.getMessage().equals("Invalid argument passed to log")) {
 						throw e;
