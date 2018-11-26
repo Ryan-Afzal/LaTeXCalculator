@@ -220,7 +220,6 @@ public class Calculator extends Application {
 			}
 		});
 		this.inputField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.UP) {
