@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -24,6 +23,7 @@ import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.ExtendedDoubleEvaluator;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
@@ -33,6 +33,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 
+/**
+ * Calculator component which handles File I/O, command processing, and evaluation.
+ * This class takes user input and performs actions. 
+ * @author s-afzalr
+ *
+ */
 public class Environment {
 
 	//TODO Undo
@@ -351,7 +357,7 @@ public class Environment {
 			variables.set(variable, values.get(variable).getValue());
 		}
 		
-		return new DoubleEvaluator().evaluate(expression, variables);
+		return new ExtendedDoubleEvaluator().evaluate(expression, variables);
 	}
 	
 	public void setUnsaved() {

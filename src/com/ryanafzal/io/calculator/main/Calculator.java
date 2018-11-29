@@ -2,6 +2,7 @@ package com.ryanafzal.io.calculator.main;
 
 import java.io.File;
 
+
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.graph.GraphPane;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
@@ -24,6 +25,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * Main class for {@code LaTeXCalculator}. This handles the main window, and handles the user interface. 
+ * @author s-afzalr
+ *
+ */
 public class Calculator extends Application {
 	
 	private Stage primaryStage;

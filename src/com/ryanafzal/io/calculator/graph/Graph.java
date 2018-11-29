@@ -1,6 +1,9 @@
 package com.ryanafzal.io.calculator.graph;
 
+import java.math.BigDecimal;
+
 import com.fathzer.soft.javaluator.DoubleEvaluator;
+import com.ryanafzal.io.calculator.resources.equations.evaluation.ExtendedDoubleEvaluator;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
 
 import javafx.scene.canvas.Canvas;
@@ -43,7 +46,7 @@ public class Graph extends Canvas {
 	}
 	
 	public void graph(NumericalFunction function, Color color) {
-		/*if (function.numArgs() == 0) {
+		if (function.numArgs() == 0) {
 			GraphicsContext gc = this.getGraphicsContext2D();
 			double output = new DoubleEvaluator().evaluate(function.evaluate(new String[] {}));
 			
@@ -51,24 +54,23 @@ public class Graph extends Canvas {
 		} else if (function.numArgs() == 1) {
 			double[][] values = new double[this.getNumValues()][2];
 			
-			System.out.println("Values List Size: " + values.length);
-			DoubleEvaluator eval = new DoubleEvaluator();
+			DoubleEvaluator eval = new ExtendedDoubleEvaluator();
 			String[] args = {""};
 			
-			double x = this.xmin;
+			BigDecimal x = BigDecimal.valueOf(this.xmin);
 			
 			for (int index = 0; index < this.getNumValues(); index++) {
 				try {
 					System.out.println("INDEX: " + index + ", X: " + x);
 					args[0] = x + "";
-					values[index][0] = x;
+					values[index][0] = x.doubleValue();
 					values[index][1] = eval.evaluate(function.evaluate(args));
 				} catch (IllegalArgumentException e) {
 					if (!e.getMessage().equals("Invalid argument passed to log")) {
 						throw e;
 					}
 				} finally {
-					x += this.getPrecisionIncrement();
+					x.add(BigDecimal.valueOf(this.getPrecisionIncrement()));
 				}
 			}
 			
@@ -79,17 +81,17 @@ public class Graph extends Canvas {
 			}
 		} else {
 			throw new IllegalArgumentException("Cannot graph a function with more than one parameter.");
-		}*/
+		}
 	}
 	
 	private void graph(double x1, double y1, double x2, double y2, Color color) {
-		System.out.println("PRE(" + x1 + ", " + y1 + ") -> (" + x2 + ", " + y2 + ")");
-		x1 = this.applyXTransformation(x1);
-		y1 = this.applyYTransformation(y1);
-		x2 = this.applyXTransformation(x2);
-		y2 = this.applyYTransformation(y2);
+		//System.out.println("PRE(" + x1 + ", " + y1 + ") -> (" + x2 + ", " + y2 + ")");
+		x1 = this.applyXToPixelsTransformation(x1);
+		y1 = this.applyYToPixelsTransformation(y1);
+		x2 = this.applyXToPixelsTransformation(x2);
+		y2 = this.applyYToPixelsTransformation(y2);
 		
-		System.out.println("POST(" + x1 + ", " + y1 + ") -> (" + x2 + ", " + y2 + ")");
+		//System.out.println("POST(" + x1 + ", " + y1 + ") -> (" + x2 + ", " + y2 + ")");
 		
 		GraphicsContext gc = this.getGraphicsContext2D();
 		gc.setStroke(color);
@@ -97,21 +99,40 @@ public class Graph extends Canvas {
 		
 	}
 	
+	/**
+	 * Plots a point at the specified {@code x} and {@code y} values, in the specified {@code Color}.
+	 * @param x The x-value.
+	 * @param y The y-value.
+	 * @param color The color to draw the point in.
+	 */
 	private void plot(double x, double y, Color color) {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		gc.setStroke(color);
-		gc.strokeOval(this.applyXTransformation(x), this.applyYTransformation(y), 3, 3);
+		gc.strokeOval(this.applyXToPixelsTransformation(x), this.applyYToPixelsTransformation(y), 3, 3);
 	}
 	
-	private double applyXTransformation(double input) {
+	/**
+	 * Applies the transformation to the x-output of an equation. The function turns a regular coordinate into a pixel value. Used when plotting coordinates.
+	 * @param input The coordinate x-value
+	 * @return The x-value in pixels
+	 */
+	private double applyXToPixelsTransformation(double input) {
 		return ((input - this.xmin) * ((this.getWidth()) / (this.xmax - this.xmin)));
 	}
 	
-	private double applyYTransformation(double input) {
+	/**
+	 * Applies the transformation to the y-output of an equation. The function turns a regular coordinate into a pixel value. Used when plotting coordinates.
+	 * @param input The coordinate y-value
+	 * @return The y-value in pixels
+	 */
+	private double applyYToPixelsTransformation(double input) {
 		return ((input - this.ymin) * ((this.getHeight()) / (this.ymax - this.ymin)));
 	}
 	
-	private void refreshPane() {
+	/**
+	 * Clears the graph pane and redraws the axes.
+	 */
+	private void clearPane() {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
 		//Wipe pane
@@ -120,6 +141,15 @@ public class Graph extends Canvas {
 		//Redraw Axes
 		gc.strokeLine(0, this.getHeight() / 2, this.getWidth(), this.getHeight() / 2);//X-Axis
 		gc.strokeLine(this.getWidth() / 2, 0, this.getWidth() / 2, this.getHeight());
+		
+		//Draw stroke lines
+	}
+	
+	/**
+	 * Redraws the pane, clearing it and redrawing all functions and points.
+	 */
+	private void refreshPane() {
+		this.clearPane();
 	}
 	
 }
