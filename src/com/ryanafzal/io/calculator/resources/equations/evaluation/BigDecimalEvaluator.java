@@ -33,8 +33,8 @@ public class BigDecimalEvaluator extends AbstractEvaluator<BigDecimal> {
 		
 		PARAMETERS.addExpressionBracket(BracketPair.PARENTHESES);
 	}
-	   
-	protected BigDecimalEvaluator() {
+	
+	public BigDecimalEvaluator() {
 		super(PARAMETERS);
 	}
 	   

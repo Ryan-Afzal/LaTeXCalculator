@@ -49,7 +49,7 @@ public class Render {
 			Document document = MathMLParserSupport.parseString(session.buildXMLString());
 			return Converter.getInstance().render(document, LayoutContextImpl.getDefaultLayoutContext());
 		} catch (Exception e) {
-			throw new RenderException(e);
+			throw new RenderException("Error rendering LaTeX", e);
 		}
 	}
 	

@@ -330,7 +330,7 @@ public class Calculator extends Application {
 	
 	private void testGraphInput(String name, String body, Color color) throws FunctionException {
 		System.out.println("TESTING: " + name);
-		this.graphPane.graph(Function.getFunctionFromDeclaration(name, body), color);
+		//this.graphPane.graph(Function.getFunctionFromDeclaration(name, body), color);
 	}
 	
 }
