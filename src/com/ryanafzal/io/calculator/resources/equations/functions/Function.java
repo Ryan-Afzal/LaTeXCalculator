@@ -1,4 +1,4 @@
-package com.ryanafzal.io.calculator.resources.equations.evaluation;
+package com.ryanafzal.io.calculator.resources.equations.functions;
 
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 

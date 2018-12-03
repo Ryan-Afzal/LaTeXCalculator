@@ -24,7 +24,7 @@ import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.UnitValue;
 import com.ryanafzal.io.calculator.resources.equations.Value;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.ExtendedDoubleEvaluator;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.functions.Function;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 import com.ryanafzal.io.calculator.resources.units.prefix.Prefix;
 

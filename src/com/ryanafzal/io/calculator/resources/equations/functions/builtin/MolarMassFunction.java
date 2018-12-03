@@ -1,9 +1,9 @@
-package com.ryanafzal.io.calculator.resources.equations.evaluation.builtin;
+package com.ryanafzal.io.calculator.resources.equations.functions.builtin;
 
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.functions.Function;
 
 public class MolarMassFunction extends Function {
 	

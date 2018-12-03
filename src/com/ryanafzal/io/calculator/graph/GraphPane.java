@@ -1,7 +1,7 @@
 package com.ryanafzal.io.calculator.graph;
 
-import com.ryanafzal.io.calculator.resources.equations.evaluation.FunctionException;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.FunctionException;
+import com.ryanafzal.io.calculator.resources.equations.functions.NumericalFunction;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

@@ -10,13 +10,13 @@ import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation
 import com.ryanafzal.io.calculator.resources.chemistry.structure.IChemical;
 import com.ryanafzal.io.calculator.resources.equations.IVariable;
 import com.ryanafzal.io.calculator.resources.equations.Value;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.CosecantFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.CotangentFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.FactorialFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.MolarMassFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.SecantFunction;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.builtin.StoichiometryFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.CosecantFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.CotangentFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.FactorialFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.MolarMassFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.SecantFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.builtin.StoichiometryFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.Function;
 import com.ryanafzal.io.calculator.resources.units.TemperatureUnit;
 
 public class Experiment implements Serializable {

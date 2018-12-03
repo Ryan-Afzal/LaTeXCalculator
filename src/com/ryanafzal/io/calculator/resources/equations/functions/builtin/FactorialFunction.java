@@ -1,6 +1,6 @@
-package com.ryanafzal.io.calculator.resources.equations.evaluation.builtin;
+package com.ryanafzal.io.calculator.resources.equations.functions.builtin;
 
-import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.NumericalFunction;
 
 public class FactorialFunction extends NumericalFunction {
 

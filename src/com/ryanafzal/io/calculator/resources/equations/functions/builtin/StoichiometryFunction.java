@@ -1,11 +1,11 @@
-package com.ryanafzal.io.calculator.resources.equations.evaluation.builtin;
+package com.ryanafzal.io.calculator.resources.equations.functions.builtin;
 
 import com.ryanafzal.io.calculator.environment.Experiment;
 import com.ryanafzal.io.calculator.resources.chemistry.equation.ChemicalEquation;
 import com.ryanafzal.io.calculator.resources.chemistry.stoichiometry.Stoichiometry;
 import com.ryanafzal.io.calculator.resources.equations.ChemicalValue;
 import com.ryanafzal.io.calculator.resources.equations.EquationException;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
+import com.ryanafzal.io.calculator.resources.equations.functions.Function;
 import com.ryanafzal.io.calculator.resources.units.InvalidUnitException;
 import com.ryanafzal.io.calculator.resources.units.Unit;
 

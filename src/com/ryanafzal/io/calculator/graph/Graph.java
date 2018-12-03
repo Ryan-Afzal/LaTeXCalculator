@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
 import com.ryanafzal.io.calculator.resources.equations.evaluation.ExtendedDoubleEvaluator;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.NumericalFunction;
+import com.ryanafzal.io.calculator.resources.equations.functions.NumericalFunction;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

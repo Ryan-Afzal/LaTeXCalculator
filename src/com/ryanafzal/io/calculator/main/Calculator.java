@@ -5,8 +5,8 @@ import java.io.File;
 
 import com.ryanafzal.io.calculator.environment.Environment;
 import com.ryanafzal.io.calculator.graph.GraphPane;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.Function;
-import com.ryanafzal.io.calculator.resources.equations.evaluation.FunctionException;
+import com.ryanafzal.io.calculator.resources.equations.functions.Function;
+import com.ryanafzal.io.calculator.resources.equations.functions.FunctionException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
