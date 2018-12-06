@@ -29,7 +29,7 @@ public class Atom implements IChemical {
 	private double electronegativity;//TODO
 	
 	private int oxidation_state;//TODO Cached
-	
+	 
 	private ElectronShell valence;//TODO
 	
 	
